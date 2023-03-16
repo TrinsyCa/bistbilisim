@@ -201,7 +201,7 @@ header .wrapper
 }
 header .wrapper .wrapper-col
 {
-   background: linear-gradient(to top,transparent,rgba(0, 0, 0, 0.25));
+   background: linear-gradient(to top,transparent,rgba(0, 0, 0, 0.5));
    width: 100%;
    height: 100%;
    display: flex;
@@ -228,11 +228,11 @@ header .wrapper .wrapper-col .header-txt
 .fields
 {
    width: 100%;
-   margin: 7vh 0;
+   margin: 8vh 0;
    text-align: center;
    display: flex;
    flex-direction: column;
-   gap: 50px;
+   gap: 55px;
 }
 .fields .fields-row
 {
@@ -350,6 +350,10 @@ header .wrapper .wrapper-col .header-txt
 {
    background: #a03de7;
 }
+.student a:hover .student-banner-bg
+{
+   opacity: 0.5;
+}
 .student-banner-bg
 {
    position: absolute;
@@ -358,6 +362,7 @@ header .wrapper .wrapper-col .header-txt
    height: 100%;
    top: 0;
    opacity: 0.25;
+   transition: 0.5s;
 }
 .student-inf button
 {
