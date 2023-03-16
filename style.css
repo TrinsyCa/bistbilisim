@@ -321,10 +321,22 @@ header .wrapper .wrapper-col .header-txt
 /*Student*/
 .students
 {
+   width: 100%;
+   height: 85vh;
+   background: linear-gradient(to bottom left,#63159b,#2A0869);
+   user-select: none;
+}
+.students-detail
+{
    padding: 7vh 0;
    width: 100%;
-   height: 80vh;
-   background: linear-gradient(to top left,#63159b,#2A0869);
+   height: 100%;
+   background: linear-gradient(to bottom right, transparent,rgba(0, 0, 0, 0.5));
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   gap: 60px;
 }
 .student a:hover .student-img
 {
@@ -332,18 +344,54 @@ header .wrapper .wrapper-col .header-txt
    border-radius: 40px;
    width: 150px;
    height: 150px;
+   box-shadow: 0 0 10px  var(--studentcolor2),0 0 10px  var(--studentcolor2),0 0 10px 3px black;
 }
 .student a:hover .student-img img
 {
    border-radius: 40px;
 }
+.student-inf
+{
+   color: white;
+   padding: 10px;
+   text-align: center;
+   position: absolute;
+   top: 82%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   width: 100%;
+   font-weight: bold;
+   transition: 0.4s;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
 .student a:hover .student-inf
 {
-   top: 77%;
+   top: 70%;
    gap: 20px;
+}
+.student-inf button
+{
+   width: 97%;
+   border-radius: 50px;
+   padding: 5px 0;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   text-shadow: 0 0 2px black,0 0 2px black;
+   opacity: 1;
+   transition: 0.4s;
+   border: none;
+   position: absolute;
+   bottom: -50%;
+   left: 50%;
+   transform: translateX(-50%);
 }
 .student a:hover .student-inf button
 {
+   bottom: -43%;
    opacity: 1;
 }
 .student-inf button:hover
@@ -363,20 +411,6 @@ header .wrapper .wrapper-col .header-txt
    top: 0;
    opacity: 0.25;
    transition: 0.5s;
-}
-.student-inf button
-{
-   width: 100%;
-   border-radius: 50px;
-   padding: 5px 0;
-   background: var(--studentcolor2);
-   color: white;
-   font-size: 20px;
-   font-weight: bold;
-   text-shadow: 0 0 2px black,0 0 2px black;
-   opacity: 0;
-   transition: 0.4s;
-   border: none;
 }
 .students-col
 {
@@ -412,22 +446,7 @@ header .wrapper .wrapper-col .header-txt
    background: linear-gradient(to bottom, var(--studentcolor1) 50%,#511080);
    border-radius: 25px;
    overflow: hidden;
-}
-.student-inf
-{
-   color: white;
-   padding: 10px;
-   text-align: center;
-   position: absolute;
-   top: 86%;
-   left: 50%;
-   transform: translate(-50%,-50%);
-   width: 100%;
-   font-weight: bold;
-   transition: 0.4s;
-   display: flex;
-   flex-direction: column;
-   gap: 10px;
+   position: relative;
 }
 .student-inf h3
 {
@@ -437,6 +456,7 @@ header .wrapper .wrapper-col .header-txt
 .student-inf span
 {
    background-color: #63159b;
+   box-shadow: 0 0 5px black;
    border-radius: 10px;
    padding: 5px 10px;
    width: fit-content;
@@ -482,4 +502,40 @@ header .wrapper .wrapper-col .header-txt
    height: 100%;
    border-radius: 100%;
    transition: 0.5s;
+   background-color: var(--studentcolor1);
+}
+.students-detail .tittle h2
+{
+   color: white;
+   font-size: 38px;
+   font-weight: bold;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
+   letter-spacing: 1px;
+}
+.students-detail .btn a
+{
+   border-radius: 50px;
+   padding: 10px 20px;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   text-shadow: 0 0 1px white,0 0 2px white,0 0 2px white;
+   letter-spacing: 1px;
+   text-decoration: none;
+   box-shadow:0 0 15px 5px #511080;
+   border: 2px solid transparent;
+   transition: 0.35s;
+}
+.students-detail .btn a:hover
+{
+   box-shadow:0 0 15px 5px #a03de7;
+   border: 2px solid #a03de7;
+   background: #a03de7;
+   font-size: 22px;
+}
+.students-detail .btn
+{
+   width: 100%;
+   height: 100%;
 }
