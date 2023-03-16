@@ -1,0 +1,480 @@
+*
+{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Nunito', sans-serif;
+}
+:root
+{
+   --studentcolor1:#2A0869;
+   --studentcolor2:#9130D8;
+}
+::-webkit-scrollbar
+{
+   width: 0;
+}
+::selection
+{
+   background-color: #1576AA;
+   color: white;
+   text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
+}
+.slide
+{
+   height: 80vh;
+   box-shadow: 0 0 20px black;
+}
+.slide .carousel-item::after
+{
+   content: '';
+   position: absolute;
+   top: 0; left: 0; bottom: 0; right: 0;
+   box-shadow: inset 0px 0px 150px black;
+}
+.slide img
+{
+   height: 80vh;
+   object-fit: cover;
+   object-position: center;
+   user-select: none;
+   pointer-events: none;
+}
+.slide button
+{
+   width: 200px;
+   transition: 0.35s;
+}
+.slide .carousel-control-prev:hover
+{
+   background: linear-gradient(to right,rgba(0, 0, 0, 0.5),transparent);
+}
+.slide .carousel-control-next:hover
+{
+   background: linear-gradient(to left,rgba(0, 0, 0, 0.5),transparent);
+}
+.carousel-control-prev
+{
+   transition: none;
+}
+.carousel-control-next
+{
+   transition: none;
+}
+.carousel-control-prev-icon
+{
+   transition: 0.35s;
+}
+.carousel-control-next-icon
+{
+   transition: 0.35s;
+}
+.carousel-control-next:hover .carousel-control-next-icon
+{
+   transform:scale(1.7);
+}
+.carousel-control-prev:hover .carousel-control-prev-icon
+{
+   transform:scale(1.7);
+}
+.carousel-wrapper
+{
+   position: absolute;
+   top: 65%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   text-align: center;
+   color: white;
+   z-index: 100;
+}
+.carousel-wrapper h1
+{
+   color: white;
+   font-size: 52px;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white, 0 0 5px black,0 0 5px black;
+   font-weight: 700;
+}
+.carousel-wrapper p
+{
+   color: rgb(220, 220, 220);
+   font-size: 20px;
+   text-shadow: 0 0 5px black,0 0 5px black;
+   font-weight: 600;
+}
+.linkbutton
+{
+   padding: 8px 15px;
+   background-color: #1576AA;
+   color: white;
+   border-radius: 10px;
+   text-decoration: none;
+   font-size: 18px;
+   text-shadow: 0 0 3px black,0 0 3px black;
+   outline: 2px solid #1576AA;
+   box-shadow: 0 0 5px black;
+   transition: 0.35s;
+   text-align: center;
+   text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
+   user-select: none;
+}
+.linkbutton:hover
+{
+   outline: 2px solid white;
+   background-color: blue;
+   box-shadow: 0 0 15px 5px blue;
+}
+/*Translate*/
+.goog-te-gadget-icon {
+   border-radius: 50px;
+ }
+ 
+ 
+.goog-te-gadget-simple {
+     background-color: transparent !important;
+     border:0 !important;
+     font-size: 10pt;
+    font-weight:800;
+     display: inline-block;
+     padding:0 10px !important;
+     cursor: pointer;
+     zoom: 1;
+     border-radius: 12px;
+ }
+ 
+ .goog-te-gadget-simple  span {
+    color:white !important;
+}
+/*.goog-te-gadget-simple span:nth-child(1)
+{
+   display: none;
+}*/
+.translate
+{
+   background: transparent;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   border-radius: 20px;
+   transition: 0.35s;
+}
+/*Translate*/
+nav
+{
+   position: absolute;
+   z-index: 2000;
+   padding: 10px 11%;
+   width: 100%;
+   transition: 0.35s;
+   border-radius: 0 0 12px 12px;
+}
+.nav-anim
+{
+   position: fixed;
+   background-color: rgba(0, 0, 100, 0.5);
+   box-shadow: 0 2px 10px 0 rgba(0, 0, 255, 0.5);
+}
+nav img
+{
+   height: 80px;
+}
+.nav-wrapper
+{
+   position: relative;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+header
+{
+   width: 100%;
+   background: url(img/Pictures/water.jpg) center center no-repeat;
+   background-size: cover;
+   user-select: none;
+}
+header .wrapper
+{
+   background: rgba(1, 65, 111, .8);
+   color: white;
+   text-align: center;
+   width: 100%;
+   height: 100%;
+}
+header .wrapper .wrapper-col
+{
+   background: linear-gradient(to top,transparent,rgba(0, 0, 0, 0.25));
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+header .wrapper .wrapper-col .header-sticky
+{
+   height: 20vh;
+   width: 100%;
+   position: relative;
+}
+header .wrapper .wrapper-col .header-txt
+{
+   width: 100%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   text-shadow: 0 0 3px white,0 0 3px white,0 0 3px white,0 0 3px white,0 0 3px white,0 0 3px;
+}
+/*Fields*/
+.fields
+{
+   width: 100%;
+   margin: 7vh 0;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   gap: 50px;
+}
+.fields .fields-row
+{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 40px;
+}
+.fields .fields-col
+{
+   width: 350px;
+   height: 570px;
+   border-radius: 40px;
+   overflow: hidden;
+   position: relative;
+   display: block;
+   transition: 0.35s;
+   object-fit: cover;
+   object-position: center;
+   box-shadow: 0 0 30px #1576AA;
+   outline: 2px solid #1576AA;
+   background-color: #1576AA;
+}
+.fields .fields-col:nth-child(2)
+{
+   width: 380px;
+   height: 620px;
+}
+.fields .fields-col:hover
+{
+   width: 400px;
+}
+.fields .fields-col:nth-child(2):hover
+{
+   width: 470px;
+}
+.fields .fields-col img
+{
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+}
+.layer h3
+{
+    width: 100%;
+    margin: auto;
+    color: white;
+    font-weight: 500;
+    font-size: 26px;
+    bottom: 20%;
+    text-align: center;
+    position: absolute;
+    transition: 0.5s;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.layer
+{
+    text-shadow: 0 0 20px black,0 0 20px black,0 0 20px black;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.35s;
+}
+
+.layer:hover
+{
+    background-color: #1544aa70;
+}
+
+.layer:hover h3
+{
+    bottom: 50%;
+    opacity: 1;
+}
+/*Fields*/
+
+/*Student*/
+.students
+{
+   padding: 7vh 0;
+   width: 100%;
+   height: 80vh;
+   background: linear-gradient(to top left,#63159b,#2A0869);
+}
+.student a:hover .student-img
+{
+   top: 25%;
+   border-radius: 40px;
+   width: 150px;
+   height: 150px;
+}
+.student a:hover .student-img img
+{
+   border-radius: 40px;
+}
+.student a:hover .student-inf
+{
+   top: 77%;
+   gap: 20px;
+}
+.student a:hover .student-inf button
+{
+   opacity: 1;
+}
+.student-inf button:hover
+{
+   background: #a03de7;
+}
+.student-banner-bg
+{
+   position: absolute;
+   background: var(--studentcolor1);
+   width: 100%;
+   height: 100%;
+   top: 0;
+   opacity: 0.25;
+}
+.student-inf button
+{
+   width: 100%;
+   border-radius: 50px;
+   padding: 5px 0;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   text-shadow: 0 0 2px black,0 0 2px black;
+   opacity: 0;
+   transition: 0.4s;
+   border: none;
+}
+.students-col
+{
+   margin: auto;
+   display: flex;
+   justify-content: center;
+   gap: 50px;
+   width: 80%;
+}
+.student a:hover .student-nav
+{
+   background: var(--studentcolor2);
+}
+.student a:hover .student-border
+{
+   background: var(--studentcolor2);
+}
+.student-border
+{
+   width: 350px;
+   height: 400px;
+   position: relative;
+   background: linear-gradient(to right,var(--studentcolor2) ,#511080,var(--studentcolor2));
+   border-radius: 25px;
+   padding: 5px;
+   box-shadow: 0 0 30px black;
+   transition: 0.5s;
+}
+.student-card
+{
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(to bottom, var(--studentcolor1) 50%,#511080);
+   border-radius: 25px;
+   overflow: hidden;
+}
+.student-inf
+{
+   color: white;
+   padding: 10px;
+   text-align: center;
+   position: absolute;
+   top: 86%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   width: 100%;
+   font-weight: bold;
+   transition: 0.4s;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+.student-inf h3
+{
+   font-size: 32px;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
+}
+.student-inf span
+{
+   background-color: #63159b;
+   border-radius: 10px;
+   padding: 5px 10px;
+   width: fit-content;
+   margin: auto;
+}
+.student-nav
+{
+   width: 100%;
+   height: 200px;
+   background: linear-gradient(to right,var(--studentcolor2) ,var(--studentcolor1),var(--studentcolor2));
+   padding-bottom: 4px;
+   transition: 0.5s;
+}
+.student-banner
+{
+   width: 100%;
+   height: 100%;
+   position: relative;
+}
+.student-banner img
+{
+   width: 100%;
+   height: 100%;
+}
+.student-img
+{
+   background: linear-gradient(to right,var(--studentcolor2) ,var(--studentcolor1),var(--studentcolor2));
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   width: 110px;
+   height: 110px;
+   border-radius: 100%;
+   overflow: hidden;
+   padding: 4px;
+   transition: 0.4s;
+   box-shadow: 0 0 10px 3px black;
+}
+.student-img img
+{
+   width: 100%;
+   height: 100%;
+   border-radius: 100%;
+   transition: 0.5s;
+}
