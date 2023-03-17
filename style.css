@@ -325,13 +325,6 @@ header .wrapper .wrapper-col .header-txt
 .students
 {
    width: 100%;
-   height: 85vh;
-   background: linear-gradient(to bottom left,#63159b,#2A0869);
-   user-select: none;
-}
-.students-detail
-{
-   width: 100%;
    height: 95vh;
    background: linear-gradient(to bottom left,#63159b,#2A0869);
    user-select: none;
@@ -340,8 +333,21 @@ header .wrapper .wrapper-col .header-txt
 .students-detail
 {
    width: 100%;
-   height: 80vh;
-   background: linear-gradient(to top left,#63159b,#2A0869);
+   height: 100%;
+   background: linear-gradient(to bottom right, transparent,rgba(0, 0, 0, 0.5));
+   position: relative;
+}
+.students-center
+{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   gap: 60px;
 }
 .student a:hover .student-img
 {
@@ -375,6 +381,24 @@ header .wrapper .wrapper-col .header-txt
 {
    top: 70%;
    gap: 20px;
+}
+.student-inf button
+{
+   width: 97%;
+   border-radius: 50px;
+   padding: 5px 0;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   text-shadow: 0 0 2px black,0 0 2px black;
+   opacity: 0;
+   transition: 0.4s;
+   border: none;
+   position: absolute;
+   bottom: -51%;
+   left: 50%;
+   transform: translateX(-50%);
 }
 .student a:hover .student-inf button
 {
@@ -489,4 +513,364 @@ header .wrapper .wrapper-col .header-txt
    height: 100%;
    border-radius: 100%;
    transition: 0.5s;
+   background-color: var(--studentcolor1);
+}
+.students-detail .tittle h2
+{
+   color: white;
+   font-size: 38px;
+   font-weight: bold;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
+   letter-spacing: 1px;
+}
+.students-detail .btn a
+{
+   border-radius: 50px;
+   padding: 10px 20px;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   text-shadow: 0 0 1px white,0 0 2px white,0 0 2px white;
+   letter-spacing: 1px;
+   text-decoration: none;
+   box-shadow:0 0 15px 5px #511080;
+   transition: 0.35s;
+}
+.students-detail .btn a:hover
+{
+   box-shadow:0 0 15px 5px #a03de7;
+   background: #a03de7;
+   font-size: 22px;
+   padding: 12px 22px;
+}
+.students-detail .btn
+{
+   width: 100%;
+   height: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+/*Media*/
+.media
+{
+   width: 100%;
+   height: 90vh;
+}
+.media-col
+{
+   width: 100%;
+   height: 100%;
+   background: url(img/Pictures/social-media-background.png);
+   position: relative;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: 1000px;
+}
+.media-detail
+{
+   margin: auto;
+   width: 96%;
+   height: 100%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+.gallery
+{
+   width: 620px;
+   padding: 15px;
+   background: rgba(0, 0, 0, 0.5);
+   border-radius: 20px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   position: relative;
+}
+.gallery h2
+{
+   color: white;
+   text-shadow: 0 0 10px black;
+   text-align: center;
+   font-size: 46px;
+   user-select: none;
+}
+.gallery-col
+{
+   width: 100%;
+   height: 100%;
+   border-radius: 25px;
+   background: rgb(80, 80, 80);
+   box-shadow: 0 0 5px black;
+   padding: 5px;
+}
+.gallery-detail
+{
+   display: flex;
+   gap: 5px;
+   flex-direction: row;
+   flex-wrap: wrap;
+   width: 100%;
+   justify-content: center;
+}
+.gallery-detail img
+{
+   flex-basis: 32.71926%;
+   width: 175px;
+   height: 175px;
+   object-fit: cover;
+   object-position: center;
+   user-select: none;
+}
+.gallery-detail img:nth-child(1)
+{
+   border-top-left-radius: 25px;
+}
+.gallery-detail img:nth-child(3)
+{
+   border-top-right-radius: 25px;
+}
+.gallery-detail img:nth-child(7)
+{
+   border-bottom-left-radius: 25px;
+}
+.gallery-detail img:nth-child(9)
+{
+   border-bottom-right-radius: 25px;
+}
+.gallery-btn
+{
+   height: 50px;
+}
+.gallery .btn
+{
+   position: absolute;
+   bottom: -20px;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   text-align: center;
+   color: white;
+   z-index: 100;
+   width: 100%;
+}
+.gallery .btn .linkbutton
+{
+   display: block;
+   border-radius: 50px;
+   z-index: 100;
+}
+.insta
+{
+   height: 710px;
+   width: 500px;
+   background: rgba(0, 0, 0, 0.5);
+   border-radius: 20px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+   position: relative;
+   z-index: 100;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;
+}
+.instagram-media
+{
+   height: 690px;
+   scale: 1.048;
+}
+.vision
+{
+   background: url(img/Pictures/vision.jpeg);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+   height: 47vh;
+}
+.vision-col
+{
+   background: rgba(0, 0, 0, 0.35);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   z-index: 50;
+}
+.vision-detail
+{
+   position: relative;
+   background: black;
+}
+.vision-detail .school
+{
+   position: relative;
+   height: 100%;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.vision-detail .school img
+{
+   position: absolute;
+   height: 42vh;
+   border-radius: 25px;
+   border: 3px solid #1576AA;
+   box-shadow: 0 0 20px 5px #1576AA;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.4s;
+   z-index: 10;
+   user-select: none;
+}
+.vision-detail .content
+{
+   color: white;
+   position: absolute;
+   width: 300px;
+   top: 50%;
+   left: 50%;
+   transform: translate(30%,-50%);
+   transition: 0.4s;
+   opacity: 0;
+   z-index: 5;
+}
+.vision-detail .content h2
+{
+   font-size: 40px;
+   font-weight: bold;
+}
+.vision-detail .content p
+{
+   font-size: 20px;
+}
+.vision-col:hover .school img
+{
+   transform: translate(-70%,-50%);
+}
+.vision-col:hover .content
+{
+   transform: translate(100%,-50%);
+   opacity: 1;
+}
+.teachers
+{
+   margin: auto;
+    padding: 7vh 0;
+    width: 100%;
+    transition: 0.3s;
+    text-align: center;
+}
+.teachers h2
+{
+   text-align: center;
+   color: rgb(60, 60, 60);
+   text-shadow: 0 0 2px rgb(60, 60, 60),0 0 2px rgb(60, 60, 60),0 0 2px rgb(60, 60, 60),0 0 2px rgb(60, 60, 60);
+   letter-spacing: 1px;
+   font-size: 38px;
+   font-weight: bold;
+}
+.teachers-row
+{
+    padding-top: 4%;
+    margin: auto;
+}
+.teachers-col
+{
+   margin: auto;
+   margin-top: 1.5%;
+   display: flex;
+   justify-content: space-between;
+   user-select: none;
+}
+.teachers-detail
+{
+   margin-right: auto;
+   display: flex;
+   text-align: left;
+   justify-content: space-between;
+   height: 100%;
+   align-items: center;
+   flex-basis: 55%;
+   border-radius: 0 100px 100px 0;
+   padding: 15px;
+   background-color: rgba(0, 0, 0, 0.20);
+   cursor: default;
+   transition: 0.4s;
+   border: 3px solid rgba(0, 0, 0, 0.05);
+   border-left: 0;
+}
+.teachers-col:hover .teachers-detail
+{
+   flex-basis: 60%;
+}
+.teachers-col:hover .teachers-detail-r
+{
+   flex-basis: 60%;
+}
+.teachers-detail-r
+{
+   margin-left: auto;
+   display: flex;
+   text-align: left;
+   justify-content: space-between;
+   height: 100%;
+   align-items: center;
+   flex-basis: 55%;
+   border-radius: 100px 0 0 100px;
+   padding: 15px;
+   background-color: rgba(0, 0, 0, 0.20);
+   cursor: default;
+   transition: 0.4s;
+   border: 3px solid rgba(0, 0, 0, 0.05);
+   border-left: 0;
+}
+.teachers-detail img
+{
+    max-width: 110px;
+    max-height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+    margin-left: 35px;
+    border-radius: 50%;
+    transition: 0.35s;
+    user-select: none;
+    border:2px solid rgba(0, 0, 0, 0.2);
+}
+.teachers-detail-r img
+{
+    max-width: 110px;
+    max-height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+    margin-right: 35px;
+    border-radius: 50%;
+    transition: 0.35s;
+    user-select: none;
+    border:2px solid rgba(0, 0, 0, 0.2);
+}
+.teachers-txt
+{
+   text-align: center;
+   width: 100%;
+}
+.teachers-txt h3
+{
+   font-size: 36px;
+}
+.teachers-txt
+{
+   text-align: center;
+   width: 100%;
+}
+.teachers-txt h3
+{
+   font-size: 36px;
+}
+.teachers-txt p
+{
+   color: grey;
+   font-size: 20px;
 }
