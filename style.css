@@ -18,7 +18,6 @@
 {
    background-color: #1576AA;
    color: white;
-   text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
 }
 .slide
 {
@@ -110,7 +109,6 @@
    text-decoration: none;
    font-size: 18px;
    text-shadow: 0 0 3px black,0 0 3px black;
-   outline: 2px solid #1576AA;
    box-shadow: 0 0 5px black;
    transition: 0.35s;
    text-align: center;
@@ -119,7 +117,6 @@
 }
 .linkbutton:hover
 {
-   outline: 2px solid rgba(255, 255, 255, 0.7);
    background-color: blue;
    box-shadow: 0 0 15px 2px blue;
 }
@@ -514,6 +511,8 @@ header .wrapper .wrapper-col .header-txt
    border-radius: 100%;
    transition: 0.5s;
    background-color: var(--studentcolor1);
+   object-fit: cover;
+   object-position: center;
 }
 .students-detail .tittle h2
 {
@@ -766,11 +765,12 @@ header .wrapper .wrapper-col .header-txt
 .teachers h2
 {
    text-align: center;
-   color: rgb(60, 60, 60);
-   text-shadow: 0 0 2px rgb(60, 60, 60),0 0 2px rgb(60, 60, 60),0 0 2px rgb(60, 60, 60),0 0 2px rgb(60, 60, 60);
+   color: rgb(80, 80, 80);
+   text-shadow: 0 0 2px rgb(80, 80, 80),0 0 2px rgb(80, 80, 80),0 0 2px rgb(80, 80, 80),0 0 2px rgb(80, 80, 80);
    letter-spacing: 1px;
    font-size: 38px;
    font-weight: bold;
+   user-select: none;
 }
 .teachers-row
 {
@@ -783,7 +783,6 @@ header .wrapper .wrapper-col .header-txt
    margin-top: 1.5%;
    display: flex;
    justify-content: space-between;
-   user-select: none;
 }
 .teachers-detail
 {
@@ -793,22 +792,32 @@ header .wrapper .wrapper-col .header-txt
    justify-content: space-between;
    height: 100%;
    align-items: center;
-   flex-basis: 55%;
+   flex-basis: 58%;
    border-radius: 0 100px 100px 0;
    padding: 15px;
    background-color: rgba(0, 0, 0, 0.20);
    cursor: default;
-   transition: 0.4s;
-   border: 3px solid rgba(0, 0, 0, 0.05);
+   transition: 0.45s;
+   border: 4px solid rgba(0, 0, 0, 0.08);
    border-left: 0;
 }
 .teachers-col:hover .teachers-detail
 {
-   flex-basis: 60%;
+   flex-basis: 65%;
+   border-radius: 0 40px 40px 0;
 }
 .teachers-col:hover .teachers-detail-r
 {
-   flex-basis: 60%;
+   flex-basis: 65%;
+   border-radius: 40px 0 0 40px;
+}
+.teachers-col:hover .teachers-detail img
+{
+   border-radius: 30px;
+}
+.teachers-col:hover .teachers-detail-r img
+{
+   border-radius: 30px;
 }
 .teachers-detail-r
 {
@@ -818,13 +827,13 @@ header .wrapper .wrapper-col .header-txt
    justify-content: space-between;
    height: 100%;
    align-items: center;
-   flex-basis: 55%;
+   flex-basis: 56%;
    border-radius: 100px 0 0 100px;
    padding: 15px;
    background-color: rgba(0, 0, 0, 0.20);
    cursor: default;
-   transition: 0.4s;
-   border: 3px solid rgba(0, 0, 0, 0.05);
+   transition: 0.45s;
+   border: 4px solid rgba(0, 0, 0, 0.08);
    border-left: 0;
 }
 .teachers-detail img
@@ -835,9 +844,11 @@ header .wrapper .wrapper-col .header-txt
     min-height: 110px;
     margin-left: 35px;
     border-radius: 50%;
-    transition: 0.35s;
+    transition: 0.5s;
     user-select: none;
-    border:2px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    object-position: center;
 }
 .teachers-detail-r img
 {
@@ -847,9 +858,9 @@ header .wrapper .wrapper-col .header-txt
     min-height: 110px;
     margin-right: 35px;
     border-radius: 50%;
-    transition: 0.35s;
+    transition: 0.5s;
     user-select: none;
-    border:2px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.15);
 }
 .teachers-txt
 {
@@ -859,11 +870,6 @@ header .wrapper .wrapper-col .header-txt
 .teachers-txt h3
 {
    font-size: 36px;
-}
-.teachers-txt
-{
-   text-align: center;
-   width: 100%;
 }
 .teachers-txt h3
 {
