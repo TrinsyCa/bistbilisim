@@ -164,6 +164,11 @@
    border-radius: 20px;
    transition: 0.4s;
 }
+.translate:hover
+{
+   background: rgba(0, 0, 0, 0.3);
+   box-shadow: 0 0 5px 2px #000;
+}
 /*Translate*/
 nav
 {
@@ -366,14 +371,14 @@ header .wrapper .wrapper-col .header-txt
 .student a:hover .student-img
 {
    top: 25%;
-   border-radius: 40px;
+   border-radius: 45px;
    width: 150px;
    height: 150px;
    box-shadow: 0 0 10px  var(--studentcolor2),0 0 10px  var(--studentcolor2),0 0 10px 3px black;
 }
 .student a:hover .student-img img
 {
-   border-radius: 40px;
+   border-radius: 45px;
 }
 .student-inf
 {
@@ -799,6 +804,8 @@ header .wrapper .wrapper-col .header-txt
    font-size: 38px;
    font-weight: bold;
    user-select: none;
+   opacity: 0;
+   scale: 0;
 }
 .teachers-row
 {
@@ -808,7 +815,7 @@ header .wrapper .wrapper-col .header-txt
 .teachers-col
 {
    margin: auto;
-   margin-top: 1.5%;
+   margin-top: 2%;
    display: flex;
    justify-content: space-between;
 }
@@ -828,24 +835,6 @@ header .wrapper .wrapper-col .header-txt
    transition: 0.45s;
    border: 4px solid rgba(0, 0, 0, 0.08);
    border-left: 0;
-}
-.teachers-col:hover .teachers-detail
-{
-   flex-basis: 65%;
-   border-radius: 0 40px 40px 0;
-}
-.teachers-col:hover .teachers-detail-r
-{
-   flex-basis: 65%;
-   border-radius: 40px 0 0 40px;
-}
-.teachers-col:hover .teachers-detail img
-{
-   border-radius: 30px;
-}
-.teachers-col:hover .teachers-detail-r img
-{
-   border-radius: 30px;
 }
 .teachers-detail-r
 {
@@ -874,6 +863,7 @@ header .wrapper .wrapper-col .header-txt
     border-radius: 50%;
     transition: 0.5s;
     user-select: none;
+    pointer-events: none;
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.15);
     object-fit: cover;
     object-position: center;
@@ -888,6 +878,7 @@ header .wrapper .wrapper-col .header-txt
     border-radius: 50%;
     transition: 0.5s;
     user-select: none;
+    pointer-events: none;
     box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.15);
     object-fit: cover;
     object-position: center;
@@ -896,17 +887,34 @@ header .wrapper .wrapper-col .header-txt
 {
    text-align: center;
    width: 100%;
+   position: relative;
 }
 .teachers-txt h3
 {
    font-size: 36px;
-}
-.teachers-txt h3
-{
-   font-size: 36px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.35s;
 }
 .teachers-txt p
 {
    color: grey;
    font-size: 20px;
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   transform: translate(-50%,160%);
+   transition: 0.35s;
+   opacity: 0;
+}
+.teachers-col:hover .teachers-txt h3
+{
+   transform: translate(-50%,-90%);
+}
+.teachers-col:hover .teachers-txt p
+{
+   transform: translate(-50%,30%);
+   opacity: 1;
 }

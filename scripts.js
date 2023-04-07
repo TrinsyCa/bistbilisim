@@ -7,6 +7,7 @@ const fieldsRow = document.querySelector('.fields .fields-row');
 const stTitle = document.querySelector('.students-detail .title h2');
 const fieldsTitle = document.querySelector('.fields h2');
 const galleryTitle = document.querySelector('.gallery h2');
+const teachersTitle = document.querySelector('.teachers h2');
 
 window.addEventListener('scroll' , () =>
 {
@@ -34,7 +35,7 @@ window.addEventListener('scroll' , () =>
    }
    if(window.pageYOffset > 800)
    {
-      headertxt.style.paddingTop = '80px';
+      headertxt.style.paddingTop = '4%';
    }
    if(window.pageYOffset < 800)
    {
@@ -63,6 +64,11 @@ window.addEventListener('scroll' , () =>
    {
       stTitle.style.opacity = '0';
       stTitle.style.scale = '0';
+   }
+   if(window.pageYOffset > 3000)
+   {
+      teachersTitle.style.opacity = '1';
+      teachersTitle.style.scale = '1';
    }
    nav.classList.toggle('nav-anim',window.scrollY > 900);
 });
