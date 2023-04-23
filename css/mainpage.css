@@ -1,0 +1,1488 @@
+*
+{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Nunito', sans-serif;
+}
+body
+{
+   width: 100vw;
+   height: 100vh;
+   overflow-x: hidden;
+   pointer-events: none;
+   user-select: none;
+   overflow-y: hidden;
+}
+.us
+{
+   user-select: text;
+}
+#preloader
+{
+   position: fixed;
+   width: 100vw;
+   height: 100vh;
+   z-index: 5000;
+   user-select: none;
+   pointer-events: none;
+   background: #1b1b1b;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   animation: animateBg 4s linear infinite;
+   opacity: 1;
+   bottom: 0;
+   scale: 1;
+   overflow: hidden;
+}
+@keyframes animateBg {
+   0%
+   {
+      filter: hue-rotate(0deg);
+   }
+   100%
+   {
+      filter: hue-rotate(360deg);
+   }
+}
+#loader
+{
+   position: fixed;
+   width: 130px;
+   height: 130px;
+   background-size: 100%;
+   transition: 1.2s;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+#loader span
+{
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   transform: rotate(calc(18deg * var(--i)));
+}
+#loader span::before
+{
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 15px;
+   height: 15px;
+   border-radius: 50%;
+   background: #1c99cb;
+   box-shadow: 0 0 5px #1c99cb,
+               0 0 10px #1c99cb,
+               0 0 15px #1c99cb,
+               0 0 20px #1c99cb,
+               0 0 30px #1c99cb,
+               0 0 40px #1c99cb,
+               0 0 50px #1c99cb,
+               0 0 60px #1c99cb,
+               0 0 70px #1c99cb,
+               0 0 80px #1c99cb,
+               0 0 90px #1c99cb,
+               0 0 100px #1c99cb,
+               0 0 110px #1c99cb,
+               0 0 120px #1c99cb;
+   animation: loadanimate 2s linear infinite;
+   animation-delay: calc(0.1s * var(--i));
+}
+@keyframes loadanimate {
+   50%
+   {
+      transform: scale(1);
+   }
+   80%,100%
+   {
+      transform: scale(0);
+   }
+}
+#loader img
+{
+   width: 120px;
+}
+:root
+{
+   --studentcolor1:#2A0869;
+   --studentcolor2:#9130D8;
+}
+::-webkit-scrollbar
+{
+   width: 0;
+}
+::selection
+{
+   background-color: #3586FF;
+   color: white;
+}
+.linkbutton
+{
+  width: 135px;
+  height: 40px;
+  color: #fff;
+  border-radius: 7px;
+  padding: 7px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset -1px -1px 5px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+  text-decoration: none;
+  font-size: 19px;
+
+   background-color: #3586ff;
+   background-image: linear-gradient(315deg, #6996da 0%, #3586ff 74%);
+  border: none;
+  z-index: 1;
+}
+.linkbutton::after
+{
+   position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 7px;
+   background-color: #689eee;
+background-image: linear-gradient(315deg, #689eee 0%, #6cb0c9 74%);
+  box-shadow:
+   0 0 20px 0px #fff9,
+   0 0 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.linkbutton:hover
+{
+   color: #fff;
+}
+.linkbutton:hover:after
+{
+   top: 0;
+   height: 100%;
+}
+.linkbutton:active
+{
+   top: 2px;
+}
+/*Translate*/
+.goog-te-gadget-icon {
+   border-radius: 50px;
+ }
+ 
+ 
+.goog-te-gadget-simple {
+     background-color: transparent !important;
+     border:0 !important;
+     font-size: 10pt;
+    font-weight:800;
+     display: inline-block;
+     padding:0 10px !important;
+     cursor: pointer;
+     zoom: 1;
+     border-radius: 12px;
+ }
+ 
+ .goog-te-gadget-simple  span {
+    color:white !important;
+}
+.goog-te-gadget-simple span:nth-child(3)
+{
+   display: none;
+}
+.translate
+{
+   background: transparent;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   border-radius: 20px;
+   transition: 0.4s;
+}
+.translate:hover
+{
+   background: rgba(0, 0, 0, 0.3);
+   box-shadow: 0 0 5px 2px #000;
+}
+/*Translate*/
+nav
+{
+   position: absolute;
+   z-index: 2000;
+   padding: 10px 11%;
+   width: 100%;
+   transition: 0.4s;
+}
+.nav-anim
+{
+   position: fixed;
+   background-color: rgba(0, 0, 80, 0.65);
+   box-shadow: 0 0 10px 0 rgba(0, 0, 80, 1);
+}
+nav img
+{
+   height: 80px;
+   transition: 0.3s;
+}
+.nav-wrapper
+{
+   position: relative;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+header
+{
+   width: 100%;
+   background: url(../img/tools/water.jpg) center center no-repeat;
+   background-size: cover;
+   user-select: none;
+}
+header .wrapper
+{
+   background: rgba(1, 65, 111, .8);
+   color: white;
+   text-align: center;
+   width: 100%;
+   height: 100%;
+}
+header .wrapper .wrapper-col
+{
+   background: linear-gradient(to top,transparent,rgba(0, 0, 0, 0.5));
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+header .wrapper .wrapper-col .header-sticky
+{
+   height: 220px;
+   width: 100%;
+   position: relative;
+}
+header .wrapper .wrapper-col .header-txt
+{
+   width: 100%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   text-shadow: 0 0 3px white,0 0 3px white,0 0 3px white,0 0 3px white,0 0 3px white,0 0 3px;
+   transition: 0.3s;
+}
+header .wrapper .wrapper-col .header-txt h1
+{
+   transition: 0.5s;
+}
+/*Fields*/
+.fields
+{
+   width: 100%;
+   padding: 5% 0;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   gap: 35px;
+}
+.fields h2
+{
+   opacity: 0;
+   transition: 0.35s;
+}
+.fields .fields-row
+{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 40px;
+   scale: 0;
+   opacity: 0;
+   transition: 0.5s;
+}
+.fields .fields-col
+{
+   width: 350px;
+   height: 570px;
+   border-radius: 50px;
+   overflow: hidden;
+   position: relative;
+   display: block;
+   transition: 0.32s;
+   box-shadow: 0 0 30px #296dd3;
+   outline: 2px solid #296dd3;
+   background-color: #296dd3;
+}
+.fields .fields-col:nth-child(2)
+{
+   width: 390px;
+   height: 600px;
+}
+.fields .fields-col:hover
+{
+   /*width: 400px;*/
+   scale: 1.03;
+}
+.fields .fields-col:nth-child(2):hover
+{
+   /*width: 450px;*/
+   scale: 1.05;
+}
+.fields .fields-col img
+{
+   object-fit: cover;
+   object-position: center;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+}
+.layer h3
+{
+    width: 100%;
+    margin: auto;
+    color: white;
+    font-weight: 500;
+    font-size: 28px;
+    bottom: 20%;
+    text-align: center;
+    position: absolute;
+    transition: 0.5s;
+    opacity: 0;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+
+.layer
+{
+    text-shadow: 0 0 20px black,0 0 20px black,0 0 20px black;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.35s;
+}
+
+.layer:hover
+{
+    background-color: #1544aa70;
+}
+
+.layer:hover h3
+{
+    bottom: 50%;
+    opacity: 1;
+}
+/*Fields*/
+
+/*Student*/
+.students
+{
+   width: 100%;
+   height: 800px;
+   background: linear-gradient(to bottom left,#63159b,#2A0869);
+   user-select: none;
+   position: relative;
+}
+.students-detail
+{
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(to bottom right, transparent,rgba(0, 0, 0, 0.5));
+   position: relative;
+   overflow: hidden;
+}
+.students-col
+{
+   /*margin: auto;
+   display: flex;
+   justify-content: center;
+   gap: 70px;
+   opacity: 0;
+   transition: 0.5s;
+   scale: 0.4;
+   width: 100%;*/
+}
+.swiper {
+   width: 1000px;
+   height: 100%;
+ }
+ .swip-slider
+ {
+   position: relative;
+   width: 100%;
+   height: 435px;
+   opacity: 0;
+   scale: 0.3;
+   transition: 0.5s;
+ }
+ .swip-slider .swiper-button-next
+ {
+   position: absolute;
+   top: 45%;
+   right: -4%;
+ }
+ .swip-slider .swiper-navBtn
+ {
+   color: #9130D8;
+   transition: color 0.15s ease-in-out;
+ }
+ .swip-slider .swiper-pagination-bullet
+ {
+   background-color: #9130D8;
+   opacity: 1;
+ }
+ .swip-slider .swiper-navBtn:hover
+ {
+   color: #a03de7;
+ }
+ .swip-slider .swiper-navBtn:active
+ {
+   color: #63159b;
+ }
+ .swip-slider .swiper-navBtn::before,
+ .swip-slider .swiper-navBtn::after
+ {
+   font-size: 36px;
+   font-weight: bold;
+   padding: 190px 15px;
+ }
+ .swip-slider .swiper-button-prev
+ {
+   position: absolute;
+   top: 45%;
+   left: -4%;
+ }
+ .swip-slider .swiper-pagination
+ {
+   position: absolute;
+   bottom: -50%;
+   transform: translate(-50%,-50%);
+ }
+ .swiper-slide {
+   text-align: center;
+   font-size: 18px;
+   border-radius: 25px;
+   /* Center slide text vertically */
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: -webkit-flex;
+   display: flex;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   -webkit-align-items: center;
+   align-items: center;
+ }
+ .swiper-slide img {
+   display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+ /*Gallery Swiper*/
+ .gswiper {
+   width: 541px;
+   height: 540px;
+   position: relative;
+   left: 50%;
+   top: 50%;
+   margin-left: -150px;
+   margin-top: -500px;
+ }
+.gallery-pics
+{
+   position: relative;
+   height: 1000px;
+   width: 300px;
+   user-select: none;
+}
+ .gswiper.swiper-slide {
+   background-position: center;
+   background-size: cover;
+   text-align: center;
+ }
+ .gswiper .swiper-slide img {
+   display: block;
+   width: 100%;
+   border-radius: 25px;
+   overflow: hidden;
+ }
+ /*Slider Swiper*/
+ .sswiper {
+   width: 100%;
+   height: 80vh;
+   box-shadow: 0 0 20px black;
+ }
+
+ .sswiper .swiper-slide {
+   background-position: center;
+   background-size: cover;
+   border-radius: 0;
+ }
+ .sswiper .swiper-slide::after
+ {
+   content: '';
+   position: absolute;
+   top: 0; left: 0; bottom: 0; right: 0;
+   box-shadow: inset 0px 0px 10px 2px black;
+ }
+ .sswiper .swiper-slide img {
+   display: block;
+   width: 100%;
+ }
+ .sswiper .autoplay-progress {
+   position: absolute;
+   right: 16px;
+   bottom: 16px;
+   z-index: 10;
+   width: 48px;
+   height: 48px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-weight: bold;
+   color: var(--swiper-theme-color);
+ }
+
+ .sswiper .autoplay-progress svg {
+   --progress: 0;
+   position: absolute;
+   left: 0;
+   top: 0px;
+   z-index: 10;
+   width: 100%;
+   height: 100%;
+   stroke-width: 4px;
+   stroke: var(--swiper-theme-color);
+   fill: none;
+   stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
+   stroke-dasharray: 125.6;
+   transform: rotate(-90deg);
+ }
+.sswiper .swiper-slide-txt
+{
+   position: absolute;
+   top: 75%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   text-align: center;
+   color: white;
+   z-index: 100;
+}
+.sswiper .swiper-slide-txt h1
+{
+   color: white;
+   font-size: 45px;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white, 0 0 5px black,0 0 5px black;
+   font-weight: 700;
+}
+.sswiper .swiper-slide-txt p
+{
+   color: rgb(220, 220, 220);
+   font-size: 20px;
+   text-shadow: 0 0 5px black,0 0 5px black;
+   font-weight: 600;
+}
+.sswiper .swiper-button-next
+{
+   position: absolute;
+   top: 0;
+   right: 0;
+   padding: 0 45px;
+   height: 100%;
+   opacity: 0;
+   transition: 0.35s;
+}
+.sswiper .swiper-button-prev
+{
+   position: absolute;
+   top: 0;
+   left: 0;
+   padding: 0 45px;
+   height: 100%;
+   opacity: 0;
+   transition: 0.35s;
+}
+.sswiper .swiper-button-next:hover,
+.sswiper .swiper-button-prev:hover
+{
+   padding: 0 70px;
+}
+.sswiper .swiper-button-next::after,
+.sswiper .swiper-button-prev::after
+{
+   font-size: 36px;
+   font-weight: bold;
+   transition: 0.35s;
+}
+.sswiper .swiper-button-next:hover:after,
+.sswiper .swiper-button-prev:hover:after
+{
+   font-size: 60px;
+}
+.sswiper:hover .swiper-button-next,
+.sswiper:hover .swiper-button-prev
+{
+   opacity: 1;
+}
+.sswiper .swiper-button-next .button-bg
+{
+   width: 100%;
+   height: 105.2%;
+   position: absolute;
+   opacity: 0;
+   background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.6));
+   transition: 0.3s;
+}
+.sswiper .swiper-button-prev .button-bg
+{
+   width: 100%;
+   height: 105.2%;
+   position: absolute;
+   opacity: 0;
+   background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.6));
+   transition: 0.3s;
+}
+.sswiper .swiper-button-next:hover .button-bg,
+.sswiper .swiper-button-prev:hover .button-bg
+{
+   opacity: 1;
+}
+.students-detail::after
+{
+   content: '';
+   position: absolute;
+   top: 0; left: 0; bottom: 0; right: 0;
+   box-shadow: inset 0px 0px 50px -15px black;
+}
+.students-detail .bg-img
+{
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: end;
+   padding: 0 15px;
+   position: absolute;
+   top: 140%;
+   transform: translateY(-50%);
+   opacity: 0;
+   transition: 0.8s;
+   z-index: 500;
+}
+.students-detail .bg-img img
+{
+   height: 600px;
+   pointer-events: none;
+   user-select: none;
+}
+.students-detail .hexbg
+{
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   z-index: 499;
+   opacity: 0.17;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+}
+.students-detail .hexbg img
+{
+   object-fit: cover;
+   object-position: center;
+}
+.students-center
+{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   gap: 40px;
+   z-index: 501;
+}
+.student a:hover .student-img
+{
+   top: 25%;
+   border-radius: 45px;
+   width: 150px;
+   height: 150px;
+   box-shadow: 0 0 10px  var(--studentcolor2),0 0 10px  var(--studentcolor2),0 0 10px 3px black;
+}
+.student a:hover .student-img img
+{
+   border-radius: 45px;
+}
+.student-inf
+{
+   color: white;
+   padding: 10px;
+   text-align: center;
+   position: absolute;
+   top: 82%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   width: 100%;
+   font-weight: bold;
+   transition: 0.4s;
+   display: flex;
+   flex-direction: column;
+   gap: 0;
+}
+.student-inf p
+{
+   text-decoration: underline;
+   font-style: italic;
+   font-size: 13px;
+   color: rgb(170, 170, 170);
+}
+.student a:hover .student-inf
+{
+   top: 68.5%;
+   gap: 4px;
+}
+.student-inf button
+{
+   width: 97%;
+   border-radius: 50px;
+   padding: 5px 0;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 20px;
+   font-weight: bold;
+   text-shadow: 0 0 2px black,0 0 2px black;
+   opacity: 0;
+   transition: 0.4s;
+   border: none;
+   position: absolute;
+   bottom: -51%;
+   left: 50%;
+   transform: translateX(-50%);
+}
+.student a:hover .student-inf button
+{
+   bottom: -32%;
+   opacity: 1;
+}
+.student-inf button:hover
+{
+   background: #a03de7;
+}
+.student a:hover .student-banner-bg
+{
+   opacity: 0.5;
+}
+.student-banner-bg
+{
+   position: absolute;
+   background: var(--studentcolor1);
+   width: 100%;
+   height: 100%;
+   top: 0;
+   opacity: 0.25;
+   transition: 0.5s;
+}
+.student a:hover .student-card
+{
+   outline: 6px solid var(--studentcolor2);
+}
+.student-border
+{
+   height: 400px;
+   position: relative;
+   background: linear-gradient(to right,var(--studentcolor2) ,#511080,var(--studentcolor2));
+   border-radius: 28px;
+   padding: 5px;
+   transition: 0.5s;
+}
+.student-card
+{
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(to bottom, var(--studentcolor1) 50%,#511080);
+   border-radius: 24px;
+   overflow: hidden;
+   position: relative;
+   outline: 6px solid transparent;
+   transition: 0.5s;
+}
+.student-card:active
+{
+   opacity: 0.8;
+   transition: 0.25s;
+}
+.student-inf h3
+{
+   text-transform: capitalize;
+   font-size: 32px;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
+}
+.student-inf span
+{
+   background-color: #63159b;
+   box-shadow: 0 0 15px -5px black;
+   border-radius: 13px;
+   padding: 5px 10px;
+   width: fit-content;
+   margin: auto;
+}
+.student a:hover .student-nav
+{
+   height: 195px;
+   padding: 0;
+}
+.student-nav
+{
+   width: 100%;
+   height: 200px;
+   background: linear-gradient(to right,var(--studentcolor2) ,var(--studentcolor1),var(--studentcolor2));
+   padding-bottom: 5px;
+   transition: 0.5s;
+}
+.student-banner
+{
+   width: 100%;
+   height: 100%;
+   position: relative;
+}
+.student-banner img
+{
+   width: 100%;
+   height: 100%;
+}
+.student-img
+{
+   background: linear-gradient(to right,var(--studentcolor2) ,var(--studentcolor1),var(--studentcolor2));
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   width: 110px;
+   height: 110px;
+   border-radius: 100%;
+   overflow: hidden;
+   padding: 4px;
+   transition: 0.4s;
+   box-shadow: 0 0 10px 3px black;
+}
+.student-img img
+{
+   width: 100%;
+   height: 100%;
+   border-radius: 100%;
+   transition: 0.5s;
+   background-color: #210753;
+   object-fit: cover;
+   object-position: center;
+}
+.students-detail .title h2
+{
+   color: white;
+   font-size: 38px;
+   font-weight: bold;
+   text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
+   letter-spacing: 1px;
+   opacity: 0;
+   scale: 0;
+   transition: 0.35s;
+   text-transform: capitalize;
+}
+.students-detail .btn
+{
+   width: fit-content;
+   height: 60px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: none;
+   transition: 0.3s;
+}
+.students-detail .btn a
+{
+   padding: 15px 25px;
+   border-radius: 25px;
+   background: var(--studentcolor2);
+   color: white;
+   font-size: 19px;
+   font-weight: bold;
+   text-shadow: 0 0 1px white,0 0 2px white,0 0 2px white;
+   letter-spacing: 1px;
+   text-decoration: none;
+   box-shadow:0 0 15px 5px #511080;
+   transition: 0.35s;
+   scale: 0.1;
+   opacity: 0;
+}
+.students-detail .btn a:hover
+{
+   box-shadow:0 0 15px 5px #a03de7;
+   background: #a03de7;
+}
+.students-detail .btn:active
+{
+   opacity: 0.85;
+}
+/*Media*/
+.media
+{
+   width: 100%;
+}
+.media-col
+{
+   width: 100%;
+   height: 100%;
+   background: url(../img/tools/social-media-background.png);
+   position: relative;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: 1000px;
+   padding: 182px 0;
+}
+.media-detail
+{
+   margin: auto;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+.gallery
+{
+   width: 580px;
+   height: 700px;
+   padding: 15px;
+   background: rgba(0, 0, 0, 0.5);
+   border-radius: 30px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+   display: flex;
+   flex-direction: column;
+   position: relative;
+}
+.gallery h2
+{
+   color: white;
+   text-shadow: 0 0 10px black;
+   text-align: center;
+   font-size: 46px;
+   user-select: none;
+}
+.gallery-col
+{
+   width: 100%;
+   height: 100%;
+   border-radius: 25px;
+   background: rgb(80, 80, 80);
+   box-shadow: 0 0 5px black;
+   padding: 5px;
+   position: relative;
+}
+.gallery .gallery-btn
+{
+   height: 70px;
+}
+.gallery .btn
+{
+   position: absolute;
+   bottom: -20px;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   text-align: center;
+   color: white;
+   z-index: 100;
+   width: 100%;
+}
+.gallery .btn .linkbutton
+{
+   display: block;
+   z-index: 100;
+   width: 100%;
+   border-radius: 50px;
+   overflow: hidden;
+}
+.insta
+{
+   height: 710px;
+   width: 500px;
+   background: rgba(0, 0, 0, 0.5);
+   border-radius: 20px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+   position: relative;
+   z-index: 100;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;
+   user-select: none;
+}
+.instagram-media
+{
+   height: 690px;
+   scale: 1.048;
+}
+.vision
+{
+   background: url(../img/tools/vision.jpeg);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+   height: fit-content;
+}
+.vision-col
+{
+   background: rgba(0, 0, 0, 0.35);
+   box-shadow: inset 0 0 20px 2px black;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 0;
+   padding: 0;
+   position: relative;
+   overflow: hidden;
+   transition:0.5s;
+}
+.vision-detail
+{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   gap: 30px;
+}
+.vision-detail .school
+{
+   position: relative;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: black;
+   border-radius: 25px;
+   animation: imgbtn 10s infinite ease-in-out;
+   transition: 0.3s;
+}
+.vision-detail .school img
+{
+   height: 285px;
+   border-radius: 25px;
+   box-shadow: 0 0 50px -2px black;
+   transition: 0.5s;
+   z-index: 10;
+   user-select: none;
+}
+.vision-detail .school:hover
+{
+   scale: 1.025;
+}
+.vision-detail .school img:hover
+{
+   opacity: 0.8;
+}
+.vision-detail .school:active
+{
+   background: grey;
+   transition: 0.1s;
+}
+.vision-detail .content
+{
+   width: 550px;
+   transition: 0.5s;
+}
+.vision-detail .content-txt
+{
+   position: relative;
+   width: 550px;
+   transition: 0.5s;
+}
+.vision-detail #content-txt-wrapper
+{
+   position: absolute;
+   width: 550px;
+   color: white;
+   transition: 0.5s;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-22%);
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+}
+.vision-detail #content-txt-wrapper h3
+{
+   font-size: 40px;
+   font-weight: bold;
+   padding-left: 12px;
+   text-transform: capitalize;
+}
+.vision-detail #content-txt-wrapper p
+{
+   font-size: 22px;
+}
+.teachers
+{
+   margin: auto;
+    padding: 7vh 0;
+    width: 100%;
+    transition: 0.3s;
+    text-align: center;
+}
+.teachers h2
+{
+   text-align: center;
+   color: rgb(80, 80, 80);
+   text-shadow: 0 0 2px rgb(80, 80, 80),0 0 2px rgb(80, 80, 80),0 0 2px rgb(80, 80, 80),0 0 2px rgb(80, 80, 80);
+   letter-spacing: 1px;
+   font-size: 38px;
+   font-weight: bold;
+   user-select: none;
+   opacity: 0;
+   scale: 0;
+   transition: 0.35s;
+   text-transform: capitalize;
+}
+.teachers-row
+{
+    padding-top: 4%;
+    margin: auto;
+}
+.teachers-col
+{
+   margin: auto;
+   margin-top: 2%;
+   display: flex;
+   justify-content: space-between;
+}
+.teachers .btn
+{
+   margin-top: 3.5%;
+   width: 100%;
+}
+.teachers .btn a
+{
+   text-align: center;
+   text-decoration: none;
+   color: grey;
+   background-color: rgba(0, 0, 0, 0.20);
+   padding: 15px 25px;
+   border-radius: 25px;
+   border: 4px solid rgba(0, 0, 0, 0.08);
+   font-size: 19px;
+   font-weight: bold;
+   transition:0.35s;
+}
+.teachers .btn a:hover
+{
+   background-color: rgba(0, 0, 0, 0.3);
+}
+.teachers-detail
+{
+   margin-right: auto;
+   display: flex;
+   text-align: left;
+   justify-content: space-between;
+   height: 100%;
+   align-items: center;
+   flex-basis: 58%;
+   border-radius: 0 100px 100px 0;
+   padding: 15px;
+   background-color: rgba(0, 0, 0, 0.20);
+   cursor: default;
+   transition: 0.45s;
+   border: 4px solid rgba(0, 0, 0, 0.08);
+   border-left: 0;
+}
+.teachers-detail-r
+{
+   margin-left: auto;
+   display: flex;
+   text-align: left;
+   justify-content: space-between;
+   height: 100%;
+   align-items: center;
+   flex-basis: 56%;
+   border-radius: 100px 0 0 100px;
+   padding: 15px;
+   background-color: rgba(0, 0, 0, 0.20);
+   cursor: default;
+   transition: 0.45s;
+   border: 4px solid rgba(0, 0, 0, 0.08);
+   border-right: 0;
+}
+.teachers-detail img
+{
+    max-width: 110px;
+    max-height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+    margin-left: 35px;
+    border-radius: 50%;
+    transition: 0.5s;
+    user-select: none;
+    pointer-events: none;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    object-position: center;
+    background: rgba(255, 255, 255, 0.35);
+}
+.teachers-detail-r img
+{
+    max-width: 110px;
+    max-height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+    margin-right: 35px;
+    border-radius: 50%;
+    transition: 0.5s;
+    user-select: none;
+    pointer-events: none;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    object-position: center;
+}
+.teachers-txt
+{
+   text-align: center;
+   width: 100%;
+   position: relative;
+}
+.teachers-txt h3
+{
+   font-size: 36px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.35s;
+   width: 100%;
+}
+.teachers-txt p
+{
+   color: grey;
+   font-size: 20px;
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   transform: translate(-50%,160%);
+   transition: 0.35s;
+   opacity: 0;
+   width: 100%;
+}
+.teachers-col:hover .teachers-txt h3
+{
+   transform: translate(-50%,-90%);
+}
+.teachers-col:hover .teachers-txt p
+{
+   transform: translate(-50%,30%);
+   opacity: 1;
+}
+footer
+{
+   position: relative;
+   width: 100%;
+   background: #3586ff;
+   min-height: 100px;
+   padding: 20px 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   margin-top: 120px;
+}
+footer .wrapper
+{
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+}
+footer .social-icon,
+footer .menu
+{
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 25px;
+   text-transform: capitalize;
+}
+footer .social-icon span a
+{
+   font-size: 2.2em;
+   color: white;
+   display: block;
+   text-decoration: none;
+   transition: 0.35s;
+   width: 50px;
+   height: 50px;
+}
+footer .menu span a
+{
+   font-size: 1.6em;
+   color: white;
+   display: block;
+   text-decoration: none;
+   transition: 0.35s;
+   opacity: 0.4;
+}
+footer .menu span a:hover
+{
+   opacity: 1;
+}
+footer .social-icon span a:hover
+{
+   transform: translateY(-8px);
+   scale: 1.18;
+}
+footer p
+{
+   color: white;
+   text-align: center;
+   font-size: 1.1em;
+   opacity: 0.5;
+   pointer-events: none;
+   user-select: none;
+}
+footer .wave
+{
+   position: absolute;
+   top: -95px;
+   left: 0;
+   width: 100%;
+   height: 100px;
+   background: url(../img/tools/wave.png);
+   background-size: 1000px 100px;
+}
+footer .wave#wave1
+{
+   z-index: 800;
+   opacity: 1;
+   bottom: 0;
+   animation: animateWave 4s linear infinite;
+}
+footer .wave#wave2
+{
+   z-index: 799;
+   opacity: 0.5;
+   bottom: 10px;
+   animation: animateWave_2 4s linear infinite;
+}
+footer .wave#wave3
+{
+   z-index: 800;
+   opacity: 0.2;
+   bottom: 15px;
+   animation: animateWave 3s linear infinite;
+}
+footer .wave#wave4
+{
+   z-index: 799;
+   opacity: 0.7;
+   bottom: 20px;
+   animation: animateWave_2 3s linear infinite;
+}
+@keyframes animateWave {
+   0%
+   {
+      background-position-x: 1000px;
+   }
+   100%
+   {
+      background-position-x: 0;
+   }
+}
+@keyframes animateWave_2 {
+   0%
+   {
+      background-position-x: 0;
+   }
+   100%
+   {
+      background-position-x: 1000px;
+   }
+}
+@media (max-width:1225px)
+{
+   header .wrapper .wrapper-col .header-txt
+   {
+      text-shadow: 0 0 3px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px;
+   }
+   header .wrapper .wrapper-col .header-txt h1
+   {
+      font-size: 30px;
+   }
+   .student-inf h3
+   {
+      font-size: 32px;
+      text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
+   }
+   .students-col
+   {
+      overflow: hidden;
+      border-radius: 30px;
+      gap: 30px;
+   }
+   .student-card
+   {
+      outline: 6px solid var(--studentcolor2);
+   }
+   .student-inf
+   {
+      top: 68.5%;
+      gap: 4px;
+   }
+   .student-inf button
+   {
+      bottom: -32%;
+      opacity: 1;
+   }
+   .student-banner-bg
+   {
+      opacity: 0.5;
+   }
+   .student-nav
+   {
+      height: 195px;
+      padding: 0;
+   }
+   .student-img
+   {
+      top: 25%;
+      border-radius: 45px;
+      width: 150px;
+      height: 150px;
+      box-shadow: 0 0 10px  var(--studentcolor2),0 0 10px  var(--studentcolor2),0 0 10px 3px black;   
+   }
+   .student-img img
+   {
+      border-radius: 45px;
+   }
+}
