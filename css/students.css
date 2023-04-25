@@ -16,6 +16,17 @@ body
    user-select: none;
    overflow-y: hidden;
 }
+.circle {
+   height: 24px;
+   width: 24px;
+   border-radius: 24px;
+   background-color: #9c27f0;
+   position: fixed; 
+   top: 0;
+   left: 0;
+   pointer-events: none;
+   z-index: 4999;
+}
 #preloader
 {
    position: fixed;
