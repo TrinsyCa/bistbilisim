@@ -1033,13 +1033,14 @@ header .wrapper .wrapper-col .header-txt h1
 {
    height: 710px;
    width: 500px;
-   background: rgba(0, 0, 0, 0.5);
+   padding: 8px;
+   background: white;
    border-radius: 20px;
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
    position: relative;
    z-index: 100;
    display: flex;
-   align-items: center;
+   align-items: baseline;
    justify-content: center;
    overflow: hidden;
    user-select: none;
@@ -1484,5 +1485,47 @@ footer .wave#wave4
    .student-img img
    {
       border-radius: 45px;
+   }
+   .media-detail
+   {
+      gap: 150px;
+      flex-direction: column;
+   }
+   .insta
+   {
+      width: 570px;
+      height: 720px;
+   }
+   .instagram-media
+   {
+      height: 100%;
+      width: 100%;
+   }
+   .gswiper {
+      width: 105.2%;
+      height: 100%;
+      position: relative;
+      left: 150px;
+      top: 50%;
+      transform: translateY(28.5%);
+    }
+    .gallery
+   {
+      width: 97%;
+      height: 800px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+   }
+   .gallery-pics
+   {
+      position: relative;
+      height: 100%;
+      width: 95%;
+      user-select: none;
    }
 }
