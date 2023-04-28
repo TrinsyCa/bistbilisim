@@ -42,7 +42,7 @@ const contentTxt = document.getElementById('content-txt-wrapper');
 
 window.addEventListener('scroll' , () =>
 {
-   if(window.innerWidth >= 1250)
+   if(window.innerWidth >= 1180)
    {
       if(window.pageYOffset > 600 /*&& window.pageYOffset < 1500*/)
       {

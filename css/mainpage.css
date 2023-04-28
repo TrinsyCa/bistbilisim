@@ -1099,6 +1099,8 @@ header .wrapper .wrapper-col .header-txt h1
    transition: 0.5s;
    z-index: 10;
    user-select: none;
+   object-fit: cover;
+   object-position: bottom;
 }
 .vision-detail .school:hover
 {
@@ -1212,7 +1214,7 @@ header .wrapper .wrapper-col .header-txt h1
    justify-content: space-between;
    height: 100%;
    align-items: center;
-   flex-basis: 58%;
+   flex-basis: 56%;
    border-radius: 0 100px 100px 0;
    padding: 15px;
    background-color: rgba(0, 0, 0, 0.20);
@@ -1244,7 +1246,7 @@ header .wrapper .wrapper-col .header-txt h1
     max-height: 110px;
     min-width: 110px;
     min-height: 110px;
-    margin-left: 35px;
+    margin-left: 10px;
     border-radius: 50%;
     transition: 0.5s;
     user-select: none;
@@ -1260,7 +1262,7 @@ header .wrapper .wrapper-col .header-txt h1
     max-height: 110px;
     min-width: 110px;
     min-height: 110px;
-    margin-right: 35px;
+    margin-right: 10px;
     border-radius: 50%;
     transition: 0.5s;
     user-select: none;
@@ -1430,7 +1432,7 @@ footer .wave#wave4
       background-position-x: 1000px;
    }
 }
-@media (max-width:1225px)
+@media (max-width:1180px)
 {
    header .wrapper .wrapper-col .header-txt
    {
@@ -1498,7 +1500,7 @@ footer .wave#wave4
    }
    .insta
    {
-      width: 570px;
+      width: 565px;
       height: 720px;
    }
    .instagram-media
@@ -1510,9 +1512,9 @@ footer .wave#wave4
       width: 100%;
       height: 100%;
       position: relative;
-      left: 130px;
+      left: 150px;
       top: 50%;
-      transform: translateY(28.5%);
+      transform: translateY(42.5%);
     }
    .gswiper .swiper-pagination
    {
@@ -1520,7 +1522,7 @@ footer .wave#wave4
    }
    .gallery
    {
-      width: 97%;
+      width: 565px;
       height: 700px;
       padding: 15px;
       background: rgba(0, 0, 0, 0.5);
@@ -1533,13 +1535,13 @@ footer .wave#wave4
    .gallery-pics
    {
       position: relative;
-      height: 600px;
-      width: 102.5%;
+      height: 100%;
+      width: 100%;
       user-select: none;
    }
    .gswiper .swiper-slide img
    {
-      width: 110%;
+      width: 100%;
    }
    .sswiper .swiper-button-next,
    .sswiper .swiper-button-prev
@@ -1585,7 +1587,7 @@ footer .wave#wave4
       transform: translate(-44%,0);
       width: 200%;
       justify-content: space-between;
-      gap: 50px;
+      gap: 150px;
    }
    .vision-detail #content-txt-wrapper h3
    {
@@ -1602,7 +1604,61 @@ footer .wave#wave4
    .vision-detail .school
    {
       align-items: baseline;
+      width: 80%;
+      height: 400px;
+   }
+   .vision-detail .school img
+   {
+      min-height: 100%;
+   }
+   footer .menu
+   {
+      flex-direction: column;
+      gap: 15px;
+   }
+   footer .menu span a
+   {
+      font-size: 1.4em;
+   }
+   footer
+   {
+      padding: 20px 15px;
+   }
+   footer p
+   {
+      font-size: 1em;
+   }
+}
+@media (max-width:800px)
+{
+   .vision
+   {
+      height: 71%;
+   }
+   .vision-detail .school
+   {
+      height: 310px;
+   }
+}
+@media (max-width:570px)
+{
+   .gallery
+   {
       width: 90%;
+   }
+   
+   .vision-detail #content-txt-wrapper
+   {
+      gap: 70px;
+   }
+   .vision-detail .school
+   {
+      align-items: baseline;
+      width: 90%;
+      height: 200px;
+   }
+   .vision-detail .school img
+   {
       height: 200px;
    }
    .teachers-row
@@ -1621,6 +1677,10 @@ footer .wave#wave4
       border-radius: 30px;
       border: 4px solid rgba(0, 0, 0, 0.08);
    }
+   .teachers-txt h3
+   {
+      font-size: 28px;
+   }
    .teachers-detail img
    {
       border-radius: 25px;
@@ -1637,12 +1697,9 @@ footer .wave#wave4
    {
       border-radius: 25px;
    }
-}
-@media (max-width:600px)
-{
    .insta
    {
-      width: 350px;
+      width: 90%;
       height: 550px;
    }
 }
