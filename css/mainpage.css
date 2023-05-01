@@ -1013,14 +1013,14 @@ header .wrapper .wrapper-col .header-txt h1
 }
 .gallery .btn
 {
-   position: absolute;
-   bottom: -20px;
-   left: 50%;
-   transform: translate(-50%,-50%);
-   text-align: center;
-   color: white;
-   z-index: 100;
+   width: fit-content;
    width: 100%;
+   height: 40px;
+   display: flex;
+   padding-top: 15px;
+   justify-content: center;
+   border: none;
+   transition: 0.3s;
 }
 .gallery .btn .linkbutton
 {
@@ -1186,8 +1186,15 @@ header .wrapper .wrapper-col .header-txt h1
 }
 .teachers .btn
 {
+   margin: auto;
    margin-top: 65px;
-   width: 100%;
+   width: fit-content;
+   height: 60px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: none;
+   transition: 0.3s;
 }
 .teachers .btn a
 {
@@ -1205,6 +1212,10 @@ header .wrapper .wrapper-col .header-txt h1
 .teachers .btn a:hover
 {
    background-color: rgba(0, 0, 0, 0.3);
+}
+.teachers .btn a:active
+{
+   opacity: 0.8;
 }
 .teachers-detail
 {
@@ -1298,6 +1309,7 @@ header .wrapper .wrapper-col .header-txt h1
    transition: 0.35s;
    opacity: 0;
    width: 100%;
+   text-transform: capitalize;
 }
 .teachers-col:hover .teachers-txt h3
 {
@@ -1668,6 +1680,14 @@ footer .wave#wave4
    .teachers-col
    {
       justify-content: center;
+   }
+   .teachers-col:hover .teachers-txt h3
+   {
+      transform: translate(-50%,-50%);
+   }
+   .teachers-col:hover .teachers-txt p
+   {
+      display: none;
    }
    .teachers-detail
    {
