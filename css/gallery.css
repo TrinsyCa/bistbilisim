@@ -160,7 +160,7 @@ nav
 {
    position: absolute;
    z-index: 2000;
-   padding: 10px 11%;
+   padding: 5px 11%;
    width: 100%;
    background: rgba(0, 0, 0, 0.2);
    box-shadow: 0 0 5px black;
@@ -173,7 +173,7 @@ body:hover nav
 }
 nav img
 {
-   height: 75px;
+   height: 65px;
    transition: 0.3s;
 }
 .nav-wrapper

@@ -1348,6 +1348,11 @@ footer .menu
    align-items: center;
    gap: 25px;
    text-transform: capitalize;
+   flex-wrap: wrap;
+}
+footer .menu
+{
+   margin-right: 20px;
 }
 footer .social-icon span a
 {
@@ -1358,6 +1363,12 @@ footer .social-icon span a
    transition: 0.35s;
    width: 50px;
    height: 50px;
+}
+footer .menu span
+{
+   display: flex;
+   flex-direction: row;
+   gap: 25px;
 }
 footer .menu span a
 {
@@ -1446,6 +1457,14 @@ footer .wave#wave4
 }
 @media (max-width:1180px)
 {
+   .media-col
+   {
+      padding: 30px 0;
+   }
+   .teachers
+   {
+      padding: 30px 0;
+   }
    header .wrapper .wrapper-col .header-txt
    {
       text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px;
@@ -1625,8 +1644,11 @@ footer .wave#wave4
    }
    footer .menu
    {
-      flex-direction: column;
-      gap: 15px;
+      gap: 12px;
+   }
+   footer .menu span
+   {
+      gap: 12px;
    }
    footer .menu span a
    {
@@ -1640,6 +1662,34 @@ footer .wave#wave4
    {
       font-size: 1em;
    }
+   .fields .fields-col
+{
+   width: 230px;
+   height: 400px;
+   border-radius: 50px;
+   overflow: hidden;
+   position: relative;
+   display: block;
+   transition: 0.32s;
+   box-shadow: 0 0 30px #296dd3;
+   outline: 2px solid #296dd3;
+   background-color: #296dd3;
+}
+.fields .fields-col:nth-child(2)
+{
+   width: 260px;
+   height: 430px;
+}
+.fields .fields-col:hover
+{
+   /*width: 400px;*/
+   scale: 1;
+}
+.fields .fields-col:nth-child(2):hover
+{
+   /*width: 450px;*/
+   scale: 1;
+}
 }
 @media (max-width:800px)
 {
@@ -1651,9 +1701,40 @@ footer .wave#wave4
    {
       height: 310px;
    }
+   .fields-row
+   {
+      flex-wrap: wrap;
+   }
+   .fields .fields-col:nth-child(2)
+   {
+      width: 230px;
+      height: 400px;
+   }
 }
 @media (max-width:570px)
 {
+   footer .menu
+   {
+      gap: 10px;
+      flex-direction: column;
+      margin-right: 15px;
+   }
+   footer .menu span
+   {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+   }
+   footer .menu span:nth-child(2)
+   {
+      gap: 45px;
+      margin-right: 10px;
+   }
+   footer .menu span a
+   {
+      font-size: 1.3em;
+   }
    .gallery
    {
       width: 90%;
@@ -1721,5 +1802,28 @@ footer .wave#wave4
    {
       width: 90%;
       height: 550px;
+   }
+   .fields .fields-col
+   {
+      width: 230px;
+      height: 320px;
+   }
+   .fields .fields-col:nth-child(2)
+   {
+      width: 230px;
+      height: 320px;
+   }
+}
+@media (max-width:500px)
+{
+   .fields .fields-col
+   {
+      width: 70%;
+      height: 380px;
+   }
+   .fields .fields-col:nth-child(2)
+   {
+      width: 70%;
+      height: 380px;
    }
 }
