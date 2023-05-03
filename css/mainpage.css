@@ -844,7 +844,7 @@ header .wrapper .wrapper-col .header-txt h1
 .student-inf h3
 {
    text-transform: capitalize;
-   font-size: 25px;
+   font-size: 24px;
    text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
 }
 .student-inf span
@@ -1509,7 +1509,7 @@ footer .wave#wave4
    }
    .student-inf h3
    {
-      font-size: 25px;
+      font-size: 24px;
       text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
    }
    .students-col
