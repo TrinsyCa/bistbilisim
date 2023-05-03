@@ -159,11 +159,10 @@ footer
    position: fixed;
    bottom: 0;
    width: 100%;
-   height: 100%;
+   height: 5%;
    display: flex;
    align-items: end;
-   background: linear-gradient(to bottom,transparent 80%,rgba(0, 0, 0, 0.9));
-   pointer-events: none;
+   background: linear-gradient(to bottom,transparent ,rgba(0, 0, 0, 0.9));
 }
 footer p
 {
@@ -188,13 +187,24 @@ footer p
 {
    opacity: 0.5;
 }
-.trinsyca b
+.trinsyca a
 {
    color: #E4B063;
-   font-size: 16px;
+   font-size: 18px;
    letter-spacing: 1px;
-   text-shadow: 0 0 10px #E4B063,0 0 10px #E4B063;
-   opacity: 0.8;
+   text-shadow: 0 0 10px #E4B063,0 0 10px #E4B063,0 0 10px #E4B063;
+   opacity: 1;
+   text-decoration: none;
+   transition: all 0.2s ease-in-out;
+}
+.trinsyca a:hover
+{
+   color: red;
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
+}
+.trinsyca a:active
+{
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
 }
 @media (max-width: 1100px)
 {
@@ -204,11 +214,15 @@ footer p
    }
    .bist
    {
-      bottom: 2.5%;
+      bottom: 65%;
    }
    .trinsyca
    {
       text-align: center;
+   }
+   .trinsyca a
+   {
+      font-size: 16px;
    }
 }
 nav

@@ -329,7 +329,7 @@ body:hover .swiper-button-prev
       opacity: 0;
       transition: 0.35s;
    }
-footer
+footer .txt
 {
    width: 100%;
    user-select: none;
@@ -342,7 +342,7 @@ footer
    opacity: 0;
    transition: 0.3s;
 }
-footer p
+footer .txt p
 {
    color: white;
    opacity: 0.5;
@@ -351,7 +351,37 @@ footer p
    text-align: center;
    padding: 0 8px;
 }
-body:hover footer
+.trinsyca
+{
+   text-align: center;
+   font-size: 16px;
+   color: white;
+   padding: 10px 0;
+}
+.trinsyca g
+{
+   opacity: 0.5;
+}
+.trinsyca a
+{
+   color: #E4B063;
+   font-size: 18px;
+   letter-spacing: 1px;
+   text-shadow: 0 0 10px #E4B063,0 0 10px #E4B063,0 0 10px #E4B063;
+   opacity: 1;
+   text-decoration: none;
+   transition: all 0.2s ease-in-out;
+}
+.trinsyca a:hover
+{
+   color: red;
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
+}
+.trinsyca a:active
+{
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
+}
+body:hover footer .txt
 {
    opacity: 1;
    bottom: 10px;
@@ -375,7 +405,7 @@ body:hover footer
    {
       opacity: 0.5;
    }
-   footer
+   footer .txt
    {
       opacity: 1;
       bottom: 10px;

@@ -222,7 +222,7 @@ footer .social-icon span a:hover
    transform: translateY(-8px);
    scale: 1.18;
 }
-footer p
+footer .bist
 {
    color: white;
    text-align: center;
@@ -230,6 +230,35 @@ footer p
    opacity: 0.5;
    pointer-events: none;
    user-select: none;
+}
+.trinsyca
+{
+   text-align: center;
+   font-size: 16px;
+   color: white;
+}
+.trinsyca g
+{
+   opacity: 0.5;
+}
+.trinsyca a
+{
+   color: #E4B063;
+   font-size: 18px;
+   letter-spacing: 1px;
+   text-shadow: 0 0 10px #E4B063,0 0 10px #E4B063,0 0 10px #E4B063;
+   opacity: 1;
+   text-decoration: none;
+   transition: all 0.2s ease-in-out;
+}
+.trinsyca a:hover
+{
+   color: red;
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
+}
+.trinsyca a:active
+{
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
 }
 footer .wave
 {
@@ -443,7 +472,7 @@ nav img
    {
       padding: 20px 15px;
    }
-   footer p
+   footer .bist
    {
       font-size: 1em;
    }

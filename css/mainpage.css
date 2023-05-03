@@ -230,12 +230,12 @@ nav
 .nav-anim
 {
    position: fixed;
-   background-color: rgba(0, 0, 80, 0.65);
-   box-shadow: 0 0 10px 0 rgba(0, 0, 80, 1);
+   background-color: rgba(0, 0, 0, 0.4);
+   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 1);
 }
 nav img
 {
-   height: 80px;
+   height: 65px;
    transition: 0.3s;
 }
 .nav-wrapper
@@ -844,7 +844,7 @@ header .wrapper .wrapper-col .header-txt h1
 .student-inf h3
 {
    text-transform: capitalize;
-   font-size: 32px;
+   font-size: 25px;
    text-shadow: 0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white,0 0 2px white;
 }
 .student-inf span
@@ -1388,7 +1388,7 @@ footer .social-icon span a:hover
    transform: translateY(-8px);
    scale: 1.18;
 }
-footer p
+footer .bist
 {
    color: white;
    text-align: center;
@@ -1396,6 +1396,35 @@ footer p
    opacity: 0.5;
    pointer-events: none;
    user-select: none;
+}
+.trinsyca
+{
+   text-align: center;
+   font-size: 16px;
+   color: white;
+}
+.trinsyca g
+{
+   opacity: 0.5;
+}
+.trinsyca a
+{
+   color: #E4B063;
+   font-size: 18px;
+   letter-spacing: 1px;
+   text-shadow: 0 0 10px #E4B063,0 0 10px #E4B063,0 0 10px #E4B063;
+   opacity: 1;
+   text-decoration: none;
+   transition: all 0.2s ease-in-out;
+}
+.trinsyca a:hover
+{
+   color: red;
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
+}
+.trinsyca a:active
+{
+   text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
 }
 footer .wave
 {
@@ -1480,7 +1509,7 @@ footer .wave#wave4
    }
    .student-inf h3
    {
-      font-size: 32px;
+      font-size: 25px;
       text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
    }
    .students-col
@@ -1658,7 +1687,7 @@ footer .wave#wave4
    {
       padding: 20px 15px;
    }
-   footer p
+   footer .bist
    {
       font-size: 1em;
    }
