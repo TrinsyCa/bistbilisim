@@ -5,7 +5,7 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-   <link rel="stylesheet" href="css/contact.css">
+   <link rel="stylesheet" href="../css/contact.css">
 
     <!--Google Fonts-->
    <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,12 +14,12 @@
    <!--Google Fonts-->
 
    <title>İletişim - Bist Bilişim | Borsa İstanbul MTALa</title>
-   <link rel="shortcut icon" href="img/logo/BIST_Icon.png">
+   <link rel="shortcut icon" href="../img/logo/BIST_Icon.png">
 </head>
 <body>
     <div id="preloader">
         <div id="loader">
-           <img src="img/logo/BIST_Icon.png">
+           <img src="../img/logo/BIST_Icon.png">
            <span style="--i:1;"></span>
            <span style="--i:2;"></span>
            <span style="--i:3;"></span>
@@ -45,7 +45,7 @@
     <nav>
        <div class="nav-wrapper">
           <a href="/">
-             <img src="img/logo/BIST_Logo_Beyaz.png">
+             <img src="../img/logo/BIST_Logo_Beyaz.png">
           </a>
           <!--Translate-->
        <div class="translate">
@@ -67,11 +67,16 @@
          </div>
 			<div class="right">
 				<h1>İletişim</h1>
-				<input type="text" class="field" placeholder="Ad Soyad">
-				<input type="text" class="field" placeholder="E-Mail">
-				<input type="text" class="field" placeholder="Telefon">
-				<textarea placeholder="Mesajınız" class="field"></textarea>
-				<button type="button" class="btn btn-outline-success">Gönder</button>
+				<form method="post" action="sendmail.php">
+               <?php if(isset($_GET['success'])) : ?>
+                  <div class="alert alert-success field">Mesaj Başarıyla Gönderilmiştir</div>
+               <?php endif?>
+               <input type="text" name="name_surname" class="field" placeholder="Ad Soyad">
+				   <input type="email" name="email" class="field" placeholder="E-Mail">
+				   <input type="text" name="phone" class="field" placeholder="Telefon">
+				   <textarea placeholder="Mesajınız" name="subject" class="field"></textarea>
+				   <button type="submit" class="btn btn-outline-success">Gönder</button>
+            </form>
 			</div>
 		</div>
 	</div>
@@ -81,6 +86,6 @@
    </footer>
    <!-- JavaScript -->
    <script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
-   <script src="scripts/page.js"></script>
+   <script src="../scripts/page.js"></script>
 </body>
 </html>

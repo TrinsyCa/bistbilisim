@@ -520,8 +520,8 @@ footer p
 {
    background-color: #63159b;
    box-shadow: 0 0 15px -5px black;
-   border-radius: 13px;
-   padding: 5px 10px;
+   border-radius: 12px;
+   padding: 5px 12px;
    width: fit-content;
    margin: auto;
 }

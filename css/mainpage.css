@@ -791,7 +791,7 @@ header .wrapper .wrapper-col .header-txt h1
 }
 .student a:hover .student-inf button
 {
-   bottom: -32%;
+   bottom: -36%;
    opacity: 1;
 }
 .student-inf button:hover
@@ -1529,7 +1529,7 @@ footer .wave#wave4
    }
    .student-inf button
    {
-      bottom: -32%;
+      bottom: -36%;
       opacity: 1;
    }
    .student-banner-bg

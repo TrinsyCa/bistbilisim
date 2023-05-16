@@ -17,6 +17,11 @@ body
 {
    width: 0;
 }
+::selection
+{
+   background-color: #1c99cb;
+   color: white;
+}
 .mywrapper
 {
    background-color: #F1F6F9;
@@ -334,10 +339,6 @@ h1:after{
 {
    transition: .3s;
 }
-.field:hover::placeholder
-{
-   color: rgba(255, 255, 255, 0.6);
-}
 
 textarea{
 	min-height: 150px;
@@ -365,6 +366,18 @@ textarea{
 .field:focus{
     border: 2px solid rgba(30,85,250,0.47);
     background-color: #fff;
+}
+.alert
+{
+   padding: 5px 0;
+   width: 100%;
+   border-radius: 8px;
+   color: rgba(255, 255, 255, 0.5);
+}
+.alert-success
+{
+   background: rgb(112, 187, 112);
+   border: 2px solid lightgreen;
 }
 @media (max-width: 880px){
 	.contact-box{
