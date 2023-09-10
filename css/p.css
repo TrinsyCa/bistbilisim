@@ -1,0 +1,322 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+nav
+{
+    background: transparent;
+}
+.wrap
+{
+    display: flex;
+    justify-content: center;
+}
+.wrapper
+{
+    padding: 50px 15px;
+}
+.bg-img
+{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: blur(20px);
+    width: 100%;
+    scale: 1.11;
+    user-select: none;
+    pointer-events: none;
+}
+.t_box
+{
+    background: linear-gradient(to bottom , white 30%, transparent);
+    border-radius: 25px 25px 0 0 ;
+    height: 100vh;
+    padding-top: 5px;
+}
+.row
+{
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.row .t_box p
+{
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    pointer-events: none;
+}
+.row h2
+{
+    font-size: 20px;
+}
+.row .t_box .kapak-border
+{
+    height: 100%;
+    position: relative;
+}
+.row .t_box .kapak
+{
+    min-height: 78%;
+    max-height: 78%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 30px;
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+}
+.row .metin img
+{
+    height: 550px;
+    width: 90%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 30px;
+    user-select: none;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin: 20px;
+    box-shadow: 0 0 15px black;
+}
+.row .metin
+{
+    font-size: 20px;
+    font-weight: 400;
+}
+.row center
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+}
+.row iframe
+{
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    width: 800px;
+    height: 450px;
+}
+.row p b
+{
+    color: #89C6FC;
+}
+.row .details
+{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    flex-direction: column;
+    position: relative;
+    
+}
+.details .info
+{
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow:  0 0 5px rgba(0, 0, 0, 0.6);
+    width: 370px;
+    min-width: 370px;
+    max-width: 370px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-height: 300px;
+    overflow-y: scroll;
+    position: relative;
+}
+.show-after::after
+{
+    opacity: 1;
+    content: '';
+    pointer-events: none;
+    border-radius: 20px;
+    position: absolute;
+    top:0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.35),transparent 15%);
+    transition: 0.2s;
+}
+.details.scroll-bottom::after
+{
+    opacity: 0;
+    transition: 0.2s;
+}
+.details .info h1
+{
+    width: 100%;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 5px 10px;
+    transition: 0.2s;
+}
+.details .info h1:hover
+{
+    background: rgba(0, 0, 0, 0.2);
+}
+.details .info h3
+{
+    font-size: 24px;
+}
+.details .info .keys_title
+{
+    display: flex;
+    justify-content: center;
+}
+.details .info .keys
+{
+    width: fit-content;
+    position: relative;
+    font-weight: bold;
+    padding: 0;
+    user-select: none;
+    margin-bottom: 5px;
+}
+.details .info p
+{
+    margin: 0;
+}
+.paylas
+{ 
+    padding: 6px 8px; border-radius: 17px; background: transparent; border:3px solid #89C6FC; color: #89C6FC; transition: 0.3s;
+}
+.paylas:hover 
+{ 
+    background-color:#89C6FC; color: white;
+    box-shadow: 0 0 5px 3px #89C6FC;
+}
+.links
+{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+.author-date-link
+{
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+    gap: 10px;
+}
+.author-date-link p
+{
+    color: rgba(0, 0, 0, 0.5);
+    padding: 0;
+    margin: 0;
+}
+.author-date-link p a
+{
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    transition: 0.25s;
+    position: relative;
+}
+.author-date-link p a:hover
+{
+    color: #89C6FC;
+}
+.author-date-link p a::after
+{
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; margin: auto;
+    background: rgba(0, 0, 0, 0.5);
+    width: 0;
+    height: 3px;
+    border-radius: 10px;
+    transition: 0.25s;
+}
+.author-date-link p a:hover::after
+{
+    width: 100%;
+    background: #89C6FC;
+}
+.author-date-link p a:active
+{
+    padding: 0 5px;
+}
+.author-date-link p a:active::after
+{
+    height: 100%;
+}
+aside .card
+{
+    text-decoration: none;
+    max-width: 100%;
+    height: 120px;
+    background: rgba(0,0,0,0.1);
+    box-shadow:  0 0 5px rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    overflow:hidden;
+    transition: 0.2s;
+    user-select: none;
+    position: relative;
+}
+.card:active
+{
+    scale: 1.04;
+}
+.card:hover
+{
+    box-shadow:  0 0 10px rgba(0, 0, 0, 0.8);
+    height: 180px;
+}
+.card .card-body
+{
+    padding: 5px;
+    padding-right: 10px;
+}
+.card-date
+{
+    padding-right: 5px;
+    text-align: end;
+}
+aside h3
+{
+    width: 100%;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+}
+aside h3::after
+{
+    content: '';
+    height: 3px;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 10px;
+}
+aside h4
+{
+    width: 100%;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+}
+aside h4::after
+{
+    content: '';
+    height: 3px;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 10px;
+}

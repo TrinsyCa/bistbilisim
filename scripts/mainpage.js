@@ -1,5 +1,7 @@
 const preloader = document.getElementById('preloader');
 const loader = document.getElementById('loader');
+const menubtn = document.getElementById('MenuBtn');
+const menu = document.getElementById('menu');
 
 function delay(time) {
    return new Promise(resolve => setTimeout(resolve, time));
@@ -18,13 +20,25 @@ window.addEventListener('load', function()
    fieldsRow.style.scale = '0';
    fieldsRow.style.opacity = '0';
    preloader.style.transition = '1s';
-   delay(300).then(() => loader.style.scale = '12');
-   delay(300).then(() => preloader.style.opacity = '0');
-   delay(300).then(() => preloader.style.zIndex = '-1');
-   delay(300).then(() => document.querySelector('body').style.overflowY = 'scroll');
-   delay(600).then(() => document.querySelector('body').style.pointerEvents = 'all');
+   loader.style.scale = '12';
+   preloader.style.opacity = '0';
+   preloader.style.zIndex = '-1';
+   document.querySelector('html').style.overflowY = 'scroll';
+   document.querySelector('html').style.pointerEvents = 'all';
    document.querySelector('.us').style.userSelect = 'text';
+   menu.style.display = 'flex';
 })
+function showMenu()
+{
+   menu.style.left = '0';
+   document.querySelector('html').style.overflowY = 'hidden';
+}
+function hideMenu()
+{
+   menu.style.left = '100%';
+   document.querySelector('html').style.overflowY = 'scroll';
+}
+
 const nav = document.querySelector('nav');
 const translate = document.querySelector('.translate');
 const headertxt = document.querySelector('.header-txt');
@@ -44,7 +58,7 @@ window.addEventListener('scroll' , () =>
 {
    if(window.innerWidth >= 1180)
    {
-      if(window.pageYOffset > 600 /*&& window.pageYOffset < 1500*/)
+      if(window.pageYOffset > 1450 /*&& window.pageYOffset < 1500*/)
       {
          fieldsTitle.style.opacity = '1';
          fieldsRow.style.scale = '0.97';
@@ -56,16 +70,6 @@ window.addEventListener('scroll' , () =>
          fieldsRow.style.scale = '0';
          fieldsRow.style.opacity = '0';
       }
-      if(window.pageYOffset > 900)
-      {
-         translate.style.background = 'rgba(0, 0, 0, 0.3)';
-         translate.style.boxShadow = '0 0 5px 2px #000';
-      }
-      else if(window.pageYOffset < 900)
-      {
-         translate.style.background = 'transparent';
-         translate.style.boxShadow = 'none';
-      }
       if(window.pageYOffset > 750)
       {
          headertxt.style.paddingTop = '4%';
@@ -74,7 +78,7 @@ window.addEventListener('scroll' , () =>
       {
          headertxt.style.paddingTop = '0';
       }
-      if(window.pageYOffset > 1550 /*&& window.pageYOffset < 2600*/)
+      if(window.pageYOffset > 2500)
       {
          studentcol.style.opacity = '1';
          studentcol.style.scale = '1.0';
@@ -92,7 +96,7 @@ window.addEventListener('scroll' , () =>
          studentsBg.style.opacity = '0';
          studentsBg.style.top = '140%';
       }
-      if(window.pageYOffset > 1100)
+      if(window.pageYOffset > 2000)
       {
          stTitle.style.opacity = '1';
          stTitle.style.scale = '1';
@@ -102,19 +106,19 @@ window.addEventListener('scroll' , () =>
          stTitle.style.opacity = '0';
          stTitle.style.scale = '0';
       }
-      if(window.pageYOffset > 3000)
+      if(window.pageYOffset > 3850)
       {
          vision.style.height = '100%';
          vision.style.padding = '20px 0';
          visionimg.style.height = '285px';
       }
-      else if(window.pageYOffset < 3000)
+      else
       {
          vision.style.height = '0';
          vision.style.padding = '0';
          visionimg.style.height = '0';
       }
-      if(window.pageYOffset > 3600)
+      if(window.pageYOffset > 4300)
       {
          teachersTitle.style.opacity = '1';
          teachersTitle.style.scale = '1';
@@ -130,8 +134,6 @@ window.addEventListener('scroll' , () =>
          fieldsTitle.style.opacity = '1';
          fieldsRow.style.scale = '0.97';
          fieldsRow.style.opacity = '1';
-         translate.style.background = 'rgba(0, 0, 0, 0.3)';
-         translate.style.boxShadow = '0 0 5px 2px #000';
          headertxt.style.paddingTop = '4%';
          studentcol.style.opacity = '1';
          studentcol.style.scale = '1.0';

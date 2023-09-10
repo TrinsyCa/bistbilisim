@@ -13,6 +13,23 @@
    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
    <!--Google Fonts-->
 
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11208761348">
+    </script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-11208761348');
+    </script>
+
+    <!-- Event snippet for Sayfa görüntüleme conversion page -->
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-11208761348/aGvTCMKgt6gYEITA4OAp'});
+</script>
+
+
    <title>İletişim - Bist Bilişim | Borsa İstanbul MTALa</title>
    <link rel="shortcut icon" href="../img/logo/BIST_Icon.png">
 </head>
@@ -67,15 +84,49 @@
          </div>
 			<div class="right">
 				<h1>İletişim</h1>
-				<form method="post" action="sendmail.php">
-               <?php if(isset($_GET['success'])) : ?>
-                  <div class="alert alert-success field">Mesaj Başarıyla Gönderilmiştir</div>
-               <?php endif?>
-               <input type="text" name="name_surname" class="field" placeholder="Ad Soyad">
+            <?php
+                  include("../admin/connection.php");
+                  include("../admin/linkfunc.php");
+                  if(@$_POST)
+                  {
+                     @$name = htmlspecialchars(@$_POST["name"]);
+                     @$email = htmlspecialchars(@$_POST["email"]);
+                     @$tel = htmlspecialchars(@$_POST["tel"]);
+                     @$message = htmlspecialchars(@$_POST["message"]);
+   
+                     if(empty(@$name) || empty(@$email) || empty(@$tel) || empty(@$message))
+                     {
+                        echo '<p class="alert alert-warning">Lütfen Boş Bırakmayınız..</p>';
+                        header("Refresh:2; url=./");
+                     }
+                     else
+                     {
+                        $veriekle = $db->prepare("INSERT INTO contact SET name = ? , email = ? , tel = ? , message = ?");
+                        $veriekle -> execute([
+                           @$name,
+                           @$email,
+                           @$tel,
+                           @$message,
+                        ]);
+                        if($veriekle)
+                        {
+                           echo '<p class="alert alert-success">Mesajınız Gönderildi</p>';
+                           header("Refresh: 2; url=./");
+                        }
+                        else
+                        {
+                           echo '<p class="alert alert-danger">Mesajınız İle İlgili Bir Sorun Oluştu</p>';
+                           header("Refresh:3; url=./");
+                        }
+                     }
+                  }
+               ?>
+				<form action="" method="post">
+               <input type="text" name="name" class="field" placeholder="Ad Soyad">
 				   <input type="email" name="email" class="field" placeholder="E-Mail">
-				   <input type="text" name="phone" class="field" placeholder="Telefon">
-				   <textarea placeholder="Mesajınız" name="subject" class="field"></textarea>
-				   <button type="submit" class="btn btn-outline-success">Gönder</button>
+				   <input onkeydown="phoneNumberFormatter();" id="phone-number" name="tel" class="field" placeholder="Telefon">
+				   <textarea placeholder="Mesajınız" name="message" class="field"></textarea>
+				   <input type="submit" value="Gönder" class="btn btn-outline-primary">
             </form>
 			</div>
 		</div>
@@ -85,6 +136,29 @@
       <p class="trinsyca"><a href="https://oislamoglu.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
    </footer>
    <!-- JavaScript -->
+   <script>
+      function formatPhoneNumber(value)
+      {
+         if(!value) return value;
+         const phoneNumber = value.replace(/[^\d]/g, '');
+         const phoneNumberLength = phoneNumber.length;
+         if(phoneNumberLength < 4) return phoneNumber;
+         if(phoneNumberLength < 7)
+         {
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+         }
+         return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+            3,
+            6,
+         )}-${phoneNumber.slice(6, 9)}`;
+      }
+      function phoneNumberFormatter()
+      {
+         const inputField = document.getElementById('phone-number');
+         const formattedInputValue = formatPhoneNumber(inputField.value);
+         inputField.value = formattedInputValue;
+      }
+   </script>
    <script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
    <script src="../scripts/page.js"></script>
 </body>

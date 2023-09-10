@@ -1,0 +1,147 @@
+<?php
+   session_start();
+   if(!isset($_SESSION["giris"]))
+   {
+      header("Refresh: 0; url=login.php");
+      return;
+   }
+?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli | Bist Bilişim</title>
+
+    <link rel="shortcut icon" href="img/logo/BIST_Icon.png">
+
+    <style>
+        .author_href
+        {
+            font-size:22px;
+            color:#ADB5BD;
+            text-decoration:none;
+            transition:0.35s;
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+        }
+    </style>
+</head>
+<body>
+<?php 
+   ob_start();
+   @$sayfa = $_GET["sayfa"]; 	
+   Switch($sayfa)
+   {
+      case "logout";	
+      include("logout.php");	
+      break;
+   }
+?>
+<div class="wrapper">
+   <?php include_once 'sidebar.php'; ?>
+   <div class="content">
+      <div class="title">
+         <h1>Öğretmen Ekle</h1>
+         <div style="display:flex; align-items:center; gap: 10px;">
+            <a href="teachers.php"><i class="fa-solid fa-chalkboard-user"></i>&nbsp; Öğretmenler</a>
+            <i onmouseover="help_over();" onmouseout="help_out();" class="fa-solid fa-circle-question question"></i>
+            <div id="question-box">
+                <p>Resim Formatları</p>
+                <p><?php echo htmlspecialchars('PNG , JPEG , WEBP'); ?></p>
+                <hr>
+                <p>Alanları Eklerken Aralara ( , ) Koyunuz</p>
+                <p><?php echo htmlspecialchars('[Web Programlama , Robotik Kodlama]'); ?></p>
+                <hr>
+                <p>Maksimum İlk 3 Alan Gözükecektir</p>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+      <div class="col-lg-12">
+            <?php
+            include("connection.php");
+            include("linkfunc.php");
+               if(@$_POST)
+               {
+                  $klasor = "../img/teachers/";
+                  $tmp_name = $_FILES["yukle_resim"]["tmp_name"];
+                  $name = $_FILES["yukle_resim"]["name"];
+                  $size = $_FILES["yukle_resim"]["size"];
+                  $type = $_FILES["yukle_resim"]["type"];
+                  $link = substr($name , -4 , 4);
+                  $random1 = rand(1000000000000000000 , 5000000000000000000);
+                  $random2 = rand(1000000000000000000 , 5000000000000000000);
+                  $random3 = rand(1000000000000000000 , 5000000000000000000);
+                  $random4 = rand(1000000000000000000 , 5000000000000000000);
+                  $random5 = rand(1000000000000000000 , 5000000000000000000);
+                  $randoms = $random1.$random2.$random3.$random4.$random5;
+                  $resim = $randoms.$link;
+                  if(strlen($name) == 0)
+                  {
+                    $resim = "default-teacher.png";
+                  }
+                  else if($type != "image/jpeg" && $type != "image/png" && $type != "image/webp" && $link != ".jpg")
+                  {
+                     echo "Yalnızca JPEG , PNG , WEBP formatında olabilir !";
+                     header("Refresh:2; url=addteacher.php");
+                     exit();
+                  }
+                  move_uploaded_file($tmp_name, "$klasor/$resim");
+
+                  @$name_surname = htmlspecialchars(@$_POST["name_surname"]);
+                  @$fields = htmlspecialchars(@$_POST["fields"]);
+
+                  if(empty(trim(@$name_surname)))
+                  {
+                     echo '<p class="alert alert-warning">Lütfen Boş Bırakmayınız..</p>';
+                     header("Refresh:1; url=addteacher.php");
+                  }
+                  else
+                  {
+                     $veriekle = $db->prepare("INSERT INTO teachers SET name_surname = ? , fields = ? , img = ?");
+                     $veriekle -> execute([
+                        @$name_surname,
+                        @$fields,
+                        @$resim
+                     ]);
+                     if($veriekle)
+                     {
+                        echo '<p class="alert alert-success">Öğretmen Başarıyla Eklendi</p>';
+                        header("Refresh: 2; url=teachers.php");
+                     }
+                     else
+                     {
+                        echo '<p class="alert alert-danger">Öğretmen Ekleme İle İlgili Bir Sorun Oluştu</p>';
+                        header("Refresh:3; url=./");
+                     }
+                  }
+               }
+            ?>
+            <form action=""method="post" enctype="multipart/form-data" style="user-select:none; padding-bottom: 15px;">
+               <strong>Ad Soyad : </strong>
+               <input type="text" maxlength="18" name="name_surname" class="form-control">
+               <br>
+               <strong>Çalıştığı Alanlar ( , ) : </strong>
+               <input type="text" maxlength="150" name="fields" class="form-control">
+               <br>
+               <strong>Resim : </strong>
+               <input type="file" name="yukle_resim" class="form-control" accept="image/*">
+               <br>
+               <input type="submit" value="Paylaş" class="btn btn-outline-primary">
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   var teachers = document.getElementById("teachers");
+
+   teachers.classList.add("active-menu");
+</script>
+<script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
+</body>
+</html>
