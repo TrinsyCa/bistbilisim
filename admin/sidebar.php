@@ -1,3 +1,11 @@
+<?php
+   if(!isset($_SESSION["giris"]))
+   {
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
+      return;
+   }
+?>
 <head>
     <!--Google Fonts-->
    <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -149,6 +157,7 @@
         padding-left:270px;
         padding-right: 10px;
         padding-top: 70px;
+        padding-bottom: 20px;
         width:100%;
         height:100%;
         overflow-y:scroll;
@@ -235,6 +244,7 @@
          user-select:none;
          font-weight:bold;
          pointer-events:none;
+         z-index: 999999999;
       }
       .title #question-box hr
       {
@@ -242,14 +252,24 @@
       }
       .title #question-box p
       {
+         color:white;
          padding:0;
          margin:0;
+      }
+      .title #question-box p:nth-child(2)
+      {
+         color:rgba(255,255,255,0.7);
+         font-weight:normal;
       }
       table
       {
          user-select:none;
          border-radius:15px;
          overflow:hidden;
+      }
+      .table-primary .table-content:hover
+      {
+         --bs-table-bg:rgb(230, 240, 255);
       }
       table input[type="password"]
       {
@@ -259,6 +279,33 @@
          user-select:none;
          text-align:center;
          color:rgba(0,0,0,0.5);
+      }
+      .table img
+      {
+         width:140px;
+         height:85px;
+         border-radius: 15px;
+         object-fit:cover;
+         object-position:center;
+         transition:0.2s;
+         font-size:40px;
+      }
+      .table .pp
+      {
+         width:85px;
+         border-radius:50%;
+      }
+      .table .banner
+      {
+         width: 170px;
+      }
+      .table .pp:active,.table .banner:active
+      {
+         scale:1.07;
+      }
+      .table-primary .table-content:hover img
+      {
+         opacity:0.8;
       }
     </style>
 </head>
@@ -283,6 +330,8 @@
         <a href="slider.php" id="slider">Slider Yönetimi</a>
         <a href="gallery.php" id="gallery">Galeri</a>
         <a href="classes.php" id="classes">Sınıflar</a>
+        <a href="documents.php" id="documents">Dökümanlar</a>
+        <a href="history.php" id="history">Geçmiş</a>
         <a href="admins.php" id="admins">Yöneticiler</a>
       </div>
    </div>

@@ -2,7 +2,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -107,8 +108,25 @@
                   @$kategori = htmlspecialchars(@$_POST["kategori"]);
                   @$description = htmlspecialchars(@$_POST["description"]);
                   @$keywords = htmlspecialchars(@$_POST["keywords"]);
-                  @$link = permalink(@$_POST["baslik"]);
                   @$yazar = @$_SESSION["adsoyad"];
+
+                  $link = permalink($baslik);
+
+                  $veriLink = $db->prepare("SELECT COUNT(link) AS total FROM news WHERE link = ?");
+                  $veriLink->execute([$link]);
+                  $linkCounter = $veriLink->fetch(PDO::FETCH_ASSOC)['total'];
+
+                  if ($linkCounter > 0) {
+                     $counter = 1;
+                     while ($linkCounter > 0) {
+                        $linkCounter--;
+                        $link = permalink($baslik) . "-" . $counter;
+                        $veriLink->execute([$link]);
+                        $linkCounter = $veriLink->fetch(PDO::FETCH_ASSOC)['total'];
+                        $counter++;
+                     }
+                  }
+
 
                   if(empty(@$baslik) || empty(@$metin) || empty(@$resim) || empty(@$kategori))
                   {
@@ -202,6 +220,14 @@
    </div>
 </div>
 <script>
+
+document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                window.location.href = 'news.php';
+            }
+        });
+
    var haberler = document.getElementById("news");
 
     haberler.classList.add("active-menu");

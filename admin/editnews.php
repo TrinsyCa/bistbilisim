@@ -1,7 +1,9 @@
 <?php
 session_start();
+ob_start();
 if (!isset($_SESSION["giris"])) {
-    header("Refresh: 0; url=login.php");
+    header("HTTP/1.0 404 Not Found");
+    include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
     return;
 }
 
@@ -28,43 +30,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $random5 = rand(1000000000000000000 , 5000000000000000000);
     $randoms = $random1.$random2.$random3.$random4.$random5;
     $resim = $randoms.$link;
-    if(strlen($name) == 0)
+    if (strlen($name) == 0)
     {
-        if($veri["resim"])
+        if ($veri["resim"])
         {
             $resim = $veri["resim"];
         }
         else
         {
-            if(!file_exists($oldimg))
+            if (!file_exists($oldimg))
             {
                 die("Dosya Bulunmuyor");
             }
             $imgsil = unlink($oldimg);
         }
     }
-    else if($type != "image/jpeg" && $type != "image/png" && $link != ".jpg")
+    else if($type != "image/jpeg" && $type != "image/png" && $type != "image/webp" && $link != ".jpg")
     {
-       echo "Yalnızca JPEG veya PNG formatında olabilir !";
+       echo "Yalnızca JPEG , PNG , WEBP formatında olabilir !";
+       header("Refresh:2; url=addnews.php");
        exit();
     }
-    move_uploaded_file($tmp_name, "$klasor/$resim");
+    else
+    {
+        move_uploaded_file($tmp_name, "$klasor/$resim");
+    }
 
     $id = $_GET["id"];
-    $baslik = $_POST["baslik"];
-    $alt_baslik = $_POST["alt_baslik"];
-    $metin = $_POST["metin"];
-    $description = $_POST["description"];
-    $keywords = $_POST["keywords"];
-    $kategori = $_POST["kategori"];
-    $link = permalink(@$kategori."/".permalink(@$baslik));
-    $yazar = @$_SESSION["adsoyad"];
+$baslik = $_POST["baslik"];
+$alt_baslik = $_POST["alt_baslik"];
+$metin = $_POST["metin"];
+$description = $_POST["description"];
+$keywords = $_POST["keywords"];
+$kategori = $_POST["kategori"];
+$yazar = @$_SESSION["adsoyad"];
+$tiklanma = @$veri["tiklanma"];
 
-    $guncelle = $db->prepare("UPDATE news SET baslik = ?, alt_baslik = ?, metin = ?, resim = ?, description = ?, keywords = ?, kategori = ? , link = ? , yazar = ? WHERE id = ?");
-    $guncelle->execute([$baslik, $alt_baslik, $metin, $resim, $description, $keywords, $kategori , $link , $yazar , $id]);
+$link = permalink($baslik);
 
-    header("Location: news.php");
-    exit;
+// Veritabanında mevcut linki kontrol etmek için bir sorgu hazırlayalım
+$veriLinkKontrol = $db->prepare("SELECT link FROM news WHERE id = ?");
+$veriLinkKontrol->execute([$id]);
+$eskiLink = $veriLinkKontrol->fetch(PDO::FETCH_ASSOC)['link'];
+
+// Eğer mevcut link ve yeni link aynı ise, link güncellenmeden kalsın
+if ($eskiLink === $link) {
+    $guncelle = $db->prepare("UPDATE news SET baslik = ?, alt_baslik = ?, metin = ?, resim = ?, description = ?, keywords = ?, kategori = ?, yazar = ?, tiklanma = ? WHERE id = ?");
+    $guncelle->execute([$baslik, $alt_baslik, $metin, $resim, $description, $keywords, $kategori, $yazar, $tiklanma, $id]);
+} else {
+    // Eğer mevcut link ve yeni link farklı ise, linki "-1" şeklinde arttırarak güncelle
+    $veriLink = $db->prepare("SELECT COUNT(link) AS total FROM news WHERE link = ?");
+    $veriLink->execute([$link]);
+    $linkCounter = $veriLink->fetch(PDO::FETCH_ASSOC)['total'];
+
+    if ($linkCounter > 0) {
+        $counter = 1;
+        while ($linkCounter > 0) {
+            $linkCounter--;
+            $link = permalink($baslik) . "-" . $counter;
+            $veriLink->execute([$link]);
+            $linkCounter = $veriLink->fetch(PDO::FETCH_ASSOC)['total'];
+            $counter++;
+        }
+    }
+
+    $guncelle = $db->prepare("UPDATE news SET baslik = ?, alt_baslik = ?, metin = ?, resim = ?, description = ?, keywords = ?, kategori = ?, link = ?, yazar = ?, tiklanma = ? WHERE id = ?");
+    $guncelle->execute([$baslik, $alt_baslik, $metin, $resim, $description, $keywords, $kategori, $link, $yazar, $tiklanma, $id]);
+}
+
+header("Location: news.php");
+exit;
 }
 ?>
 
@@ -98,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include_once 'sidebar.php'; ?>
         <div class="content">
             <div class="title">
-                <h1>Haber Ekle</h1>
+                <h1>Haber Düzenle</h1>
                 <div style="display:flex; align-items:center; gap: 10px;">
                     <a href="news.php"><i class="fa-solid fa-newspaper"></i>&nbsp; Haberler</a>
                     <i onmouseover="help_over();" onmouseout="help_out();" class="fa-solid fa-circle-question question"></i>
@@ -132,7 +167,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $vericek->execute([$id]);
                         $veri = $vericek->fetch(PDO::FETCH_ASSOC);
 
-                        echo '
+                        if($veri)
+                        {
+                            echo '
                         <form method="post" enctype="multipart/form-data" style="user-select:none; padding-bottom: 15px;">
                             <strong>Başlık : </strong>
                             <input type="text" maxlength="110" name="baslik" class="form-control" value="' . $veri["baslik"] . '">
@@ -149,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <strong>Haber Özeti : </strong>
                             <input type="text" name="description" class="form-control" value="' . $veri["description"] . '">
                             <br>
-                            <strong>Anahtar Kelimeler ( , ) : </strong>
+                            <strong>Anahtar Kelimeler (,) : </strong>
                             <input type="text" name="keywords" class="form-control" value="' . $veri["keywords"] . '">
                             <br>
                             <br>
@@ -253,6 +290,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="submit" value="Güncelle" class="btn btn-outline-primary">
                         </form>
                         ';
+                        }
+                        else
+                        {
+                            echo 'ID : '.$id.' Numaralı Bir Haber Bulunamadı...';
+                            header("Refresh:3; url=news.php");
+                        }
                     }
                     ?>
                 </div>
@@ -260,6 +303,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <script>
+
+document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                window.location.href = 'news.php';
+            }
+        });
+
    var haberler = document.getElementById("news");
 
     haberler.classList.add("active-menu");

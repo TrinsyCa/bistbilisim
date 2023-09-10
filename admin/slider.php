@@ -4,7 +4,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -114,8 +115,11 @@
    <?php include_once 'sidebar.php'; ?>
    <div class="content">
       <div class="title">
-         <h1>Slider Yönetimi</h1>
+         <h1>Anasayfa Slider Yönetimi</h1>
+         <div style="display:flex; gap:10px;">
+         <a href="news_slider.php"><i class="fa-solid fa-newspaper"></i>&nbsp; Haberler Slider Yönetimi</a>
          <a href="addslide.php"><i class="fa-solid fa-plus"></i>&nbsp; Slide Ekle</a>
+         </div>
       </div>
       <div class="row">
          <div class="slider">
@@ -125,7 +129,7 @@
                $resimler = $resimdb->fetchAll(PDO::FETCH_ASSOC);
                foreach ($resimler as $row)
                {
-                  echo '<div class="mypic">
+                  echo '<div class="mypic" style="cursor:pointer;">
                   <button class="do-btn trash-btn" onclick="sil('.$row["id"].', \''.kisalt($row["title"], 30).'\' , \''.$row["img"].'\')"><i class="fa-solid fa-trash"></i></button>
                   <button class="do-btn edit-btn" onclick="duzenle('.$row["id"].')"><i class="fa-solid fa-pen-to-square"></i></button>
                   <a target="_blank" onclick="duzenle('.$row["id"].')"><img src="../img/slider/'.$row["img"].'"></a>

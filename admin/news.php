@@ -2,7 +2,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -41,6 +42,32 @@
          {
             cursor:pointer;
          }
+         .table td
+         {
+            position:relative;
+         }
+         .table th
+         {
+            position:relative;
+         }
+         .table th a
+         {
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+         }
+         .table td a
+         {
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+         }
+         .table td button
+         {
+            margin-top:30px;
+         }
     </style>
 </head>
 <body>
@@ -65,9 +92,11 @@
          <table class="table table-primary">
             <thead>
                <tr>
-                  <th scope="col">Başlık</th>
+                  <th scope="col" style="text-align:center;">Kapak Resmi</th>
+                  <th scope="col" style="text-align:center;">Başlık</th>
                   <th scope="col" style="text-align:center;">Alt Başlık</th>
                   <th scope="col" style="text-align:center;">Kategori</th>
+                  <th scope="col" style="text-align:center;">Tıklanma</th>
                   <th scope="col" style="text-align:center;">Yazar</th>
                   <th scope="col" style="text-align:end; padding-right: 70px;">Tarih</th>
                   <th scope="col" style="text-align:center;">Sil/Düzenle</th>
@@ -97,10 +126,12 @@
                         {
                            $row["tarih"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
                         }
-                        echo '<tr class="openTab" onclick="window.open(\'../news/p/'.$row["link"].'\', \'_blank\')">
-                                    <th><a>'.kisalt($row["baslik"], 55).'</a></th>
-                                    <td style="text-align:center;"><a>'.kisalt($row["alt_baslik"], 55).'</a></td>
-                                    <td style="text-align:center;"><a>'.kisalt($row["kategori"] , 30).'</a></td>
+                        echo '<tr class="table-content openTab" onclick="window.open(\'../news/p/'.$row["link"].'\', \'_blank\')">
+                                    <th style="width:140px;"><img src="../img/news/'.$row["resim"].'"></th>
+                                    <th style="text-align:center;"><a>'.kisalt($row["baslik"], 20).'</a></th>
+                                    <td style="text-align:center;"><a>'.kisalt($row["alt_baslik"], 20).'</a></td>
+                                    <td style="text-align:center;"><a>'.kisalt($row["kategori"] , 25).'</a></td>
+                                    <td style="text-align:center;"><a>'.kisalt($row["tiklanma"] , 10).'</a></td>
                                     <td style="text-align:center;"><a>'.kisalt($row["yazar"] , 30).'</a></td>
                                     <td style="text-align:end;"><a>'.$row["tarih"].'</a></td>
                                     <td style="text-align:center;">
@@ -119,10 +150,12 @@
 <script>
    function duzenle(id)
    {
+      event.stopPropagation();
       window.location.href = 'editnews.php?id=' + id;
    }
 
    function sil(sutunId,haber_baslik_short,sutunName) {
+      event.stopPropagation();
       if (confirm('"'+ haber_baslik_short+ '"' + " Adlı Bloğu silmek istediğinize emin misiniz?")) {
          $.post("cmd/silnews.php", { sutunId: sutunId , sutunName: sutunName })
             .done(function(response) {

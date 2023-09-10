@@ -107,6 +107,9 @@
                <li>
                   <a class="menu-link" href="contact/">İletişim</a>
                </li>
+               <?php
+                  if(@$_SESSION["giris"])
+               ?>
             </ul>
          </div>
       </div>
@@ -121,11 +124,20 @@
             foreach($slider as $row)
             {
                echo '<div class="swiper-slide">
-                        <div class="swiper-slide-txt">
-                        <h1>'.$row["title"].'</h1>
-                        <p>'.$row["text"].'</p>
-                        <a href="#" class="linkbutton">Detaylar</a>
-                        </div>
+                        <div class="swiper-slide-txt">';
+                        if($row["title"])
+                        {
+                           echo '<h1>'.$row["title"].'</h1>';
+                        }
+                        if($row["text"])
+                        {
+                           echo '<p>'.$row["text"].'</p>';
+                        }
+                        if($row["button"])
+                        {
+                           echo '<a target="_blank" href="'.$row["button"].'" class="linkbutton">Detaylar</a>';
+                        }
+                     echo '</div>
                         <img src="img/slider/'.$row["img"].'" />
                      </div>';
             }
@@ -161,23 +173,30 @@
                      $newsdb = $db->query("SELECT * FROM news ORDER BY id DESC LIMIT 4");
                      $newsdb->execute();
                      $news = $newsdb->fetchAll(PDO::FETCH_ASSOC);
-                     foreach($news as $row)
+                     if($news)
                      {
+                        foreach($news as $row)
+                        {
 
-                        echo '<div class="news-col">
-                                 <a href="news/p/'.$row["link"].'" target="_blank">
-                                    <img src="img/news/'.$row["resim"].'">
-                                    <div class="news-title">
-                                       <h1>'.kisalt($row["baslik"] , 65).'</h1>
-                                       <div class="news-detail-col">
-                                          <div class="news-detail">
-                                             <p>'.$row["yazar"].'</p>
-                                             <p>'.$row["tarih"].'</p>
+                           echo '<div class="news-col">
+                                    <a href="news/p/'.$row["link"].'" target="_blank">
+                                       <img src="img/news/'.$row["resim"].'">
+                                       <div class="news-title">
+                                          <h1>'.kisalt($row["baslik"] , 65).'</h1>
+                                          <div class="news-detail-col">
+                                             <div class="news-detail">
+                                                <p>'.$row["yazar"].'</p>
+                                                <p>'.$row["tarih"].'</p>
+                                             </div>
                                           </div>
                                        </div>
-                                    </div>
-                                 </a>
-                              </div>';
+                                    </a>
+                                 </div>';
+                        }
+                     }
+                     else
+                     {
+                        echo '<div style="text-align:center"><strong>Maalesef Şuanda Haber Bulunmuyor..</strong></div>';
                      }
                   ?>
                </div>
@@ -222,236 +241,69 @@
             <div class="swip-slider">
                <div class="students-col swiper mySwiper">
                   <div class="swiper-wrapper">
-                     <div class="student 11AB swiper-slide">
-                        <a href="https://bilal1453.turksupp.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Bilal Karadeniz</h3>
-                                    <p translate="no">bilal1453.turksupp.com</p>
-                                    <span translate="no">11/AB - 000</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11B swiper-slide">
-                        <a href="https://trinsyca.bistbilisim.com/" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/Omer_Islamoglu.jpg">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Ömer İslamoğlu</h3>
-                                    <p translate="no">trinsyca.bistbilisim.com</p>
-                                    <span translate="no">11/B - 734</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11AB swiper-slide">
-                        <a href="https://efecanacar.turksupp.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Efecan Acar</h3>
-                                    <p translate="no">efecanacar.turksupp.com</p>
-                                    <span translate="no">11/AB - 000</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11B swiper-slide">
-                        <a href="https://quarder.bistbilisim.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/Quarder.jpg">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Emre Çiçek</h3>
-                                    <p translate="no">quarder.bistbilisim.com</p>
-                                    <span translate="no">11/B - 734</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11AB swiper-slide">
-                        <a href="https://emirtuna.turksupp.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Emir Tuna Çelik</h3>
-                                    <p translate="no">emirtuna.turksupp.com</p>
-                                    <span translate="no">11/AB - 000</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11B swiper-slide">
-                        <a href="https://yebusa.bistbilisim.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Yusuf Buğra Bulur</h3>
-                                    <p translate="no">yebusa.bistbilisim.com</p>
-                                    <span translate="no">11/B - 734</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11AB swiper-slide">
-                        <a href="https://erenyilmaz.turksupp.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Muhammed Eren Yılmaz</h3>
-                                    <p translate="no">erenyilmaz.turksupp.com</p>
-                                    <span translate="no">11/AB - 000</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11B swiper-slide">
-                        <a href="https://saraserg.bistbilisim.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Semih Aras Ergurum</h3>
-                                    <p translate="no">saraserg.bistbilisim.com</p>
-                                    <span translate="no">11/B - 734</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11AB swiper-slide">
-                        <a href="https://ggramark.turksupp.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Ege Gültepe</h3>
-                                    <p translate="no">ggramark.turksupp.com</p>
-                                    <span translate="no">11/AB - 000</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
-                     <div class="student 11B swiper-slide">
-                        <a href="https://omertarik.bistbilisim.com" target="_blank">
-                           <div class="student-border">
-                              <div class="student-card">
-                                 <div class="student-nav">
-                                    <div class="student-banner">
-                                       <img src="img/tools/purple-space.jpg">
-                                       <div class="student-banner-bg"></div>
-                                    </div>
-                                    <div class="student-img">
-                                       <img src="img/Users/default-user.png">
-                                    </div>
-                                 </div>
-                                 <div class="student-inf">
-                                    <h3 translate="no">Ömer Tarık Dilaver</h3>
-                                    <p translate="no">omertarik.bistbilisim.com</p>
-                                    <span translate="no">11/B - 734</span>
-                                    <button>İnternet Sitesi</button>
-                                 </div>
-                              </div>
-                           </div>
-                        </a>
-                     </div>
+                  <?php
+                           $veri = $db->prepare("SELECT *, 
+                           SUBSTRING_INDEX(class, '/', 1) AS class_number, 
+                           SUBSTRING_INDEX(class, '/', -1) AS class_name 
+                           FROM students
+                           WHERE class != 'Mezun'
+                           ORDER BY id = 0 DESC, RAND() LIMIT 20");
+                           $veri->execute();
+                           $students = $veri->fetchAll(PDO::FETCH_ASSOC);
+            
+                           foreach($students as $row)
+                           {
+                              if(strpos($row["class"], "/") !== false)
+                              {
+                                 $class = explode("/",$row["class"]);
+                                 $class = $class[0].$class[1];
+                              }
+                              else
+                              {
+                                 $class = "Mezun";
+                              }
+                              echo '<div class="student swiper-slide '.$class.'">
+                                       <div class="student-border">
+                                       <a';
+                                          if($row["username"])
+                                          {
+                                            echo ' href="../student/'.$row["username"].'"';
+                                          }
+                                             echo'><div class="student-card">
+                                                <div class="student-nav">
+                                                   <div class="student-banner">';
+                                                      if($row["banner"])
+                                                      {
+                                                         echo '<img src="img/students/banners/'.$row["banner"].'">';
+                                                      }
+                                                      else
+                                                      {
+                                                         echo '<img src="img/tools/purple-space.jpg">';
+                                                      }
+                                                   echo'<div class="student-banner-bg"></div>
+                                                   </div>
+                                                   <div class="student-img">
+                                                      <img src="img/students/'.$row["img"].'">
+                                                   </div>
+                                                </div>
+                                                <div class="student-inf">
+                                                   <h3 id="name-surname">'.$row["name_surname"].'</h3>
+                                                </div>';
+                                                if($row["username"])
+                                                {
+                                                  echo '<p>@'.$row["username"].'</p>';
+                                                }
+                                                echo '<span>'.$row["class"].'</span>';
+                                                if($row["username"])
+                                                {
+                                                  echo '<button>Profile Git</button>';
+                                                }
+                                             echo'</div>
+                                          </a>
+                                       </div>
+                                    </div>';
+                           }
+                        ?>
                   </div>
                </div>
                <div class="swiper-button-next swiper-navBtn"></div>
@@ -474,15 +326,15 @@
                      <div class="gswiper GallerySwiper">
                         <div class="swiper-wrapper">
                            <?php
-                              $gallery = $db->prepare("SELECT * FROM gallery ORDER BY id DESC");
+                              $gallery = $db->prepare("SELECT * FROM gallery ORDER BY id DESC LIMIT 10");
                               $gallery->execute();
                               $resimler = $gallery->fetchAll(PDO::FETCH_ASSOC);
 
                               foreach($resimler as $row)
                               {
-                                 echo '<div class="swiper-slide">
-                                 <img src="img/pictures/'.$row["name"].'" />
-                               </div>';
+                                    echo '<div class="swiper-slide">
+                                             <img src="img/pictures/'.$row["name"].'" />
+                                          </div>';
                               }
                            ?>
                         </div>
@@ -502,11 +354,11 @@
          </div>
       </div>
    </section>
-   <section class="vision">
+   <section class="vision" name="vision">
       <div class="vision-col">
          <div class="vision-detail">
             <div class="school">
-               <img src="img/Pictures/borsaist.png" onclick="vismis()">
+               <img src="img/tools/borsaist.png" onclick="vismis()">
             </div>
             <div class="content-txt">
                <div id="content-txt-wrapper">
@@ -531,129 +383,72 @@
             $veri->execute();
             $teachers = $veri->fetchAll(PDO::FETCH_ASSOC);
 
-            if($teachers[0])
+            if(@$teachers)
             {
-               echo '<div class="teachers-col">
-                     <div class="teachers-detail">
-                        <div class="teachers-txt us">
-                           <h3 translate="no">'.$teachers[0]["name_surname"].'</h3>
-                           <p>| ';
-                           $teacherField = $teachers[0]["fields"];
-                           if($teacherField)
-                              {
-                                 $fields = explode(",", $teacherField);
-                                 $fields = array_reverse($fields);
-                                 $fields = array_slice($fields,0,3);
-   
-                                 foreach($fields as $field) {
-                                    echo trim($field).' | ';
-                                 }
-                              }
-                           echo '</p>
-                        </div>
-                        <img src="img/teachers/'.$teachers[0]["img"].'">
-                     </div>
-                  </div>';
-            }
-            if($teachers[1])
+               for($i = 0; $i < 5; $i++)
             {
-               echo '<div class="teachers-col">
-                        <div class="teachers-detail-r">
-                           <img src="img/teachers/'.$teachers[1]["img"].'">
+               if($teachers[$i])
+               {
+                  if($i == 1 || $i == 3)
+                  {
+                     echo '<div class="teachers-col">
+                        <div class="teachers-detail-r"'; 
+                     if($teachers[$i]["social"])
+                     {
+                        echo 'onclick="window.open(\'' . $teachers[$i]["social"] . '\')" style="cursor:pointer;"';
+                     }
+                  echo '>
+                  <img src="img/teachers/'.$teachers[$i]["img"].'">
                            <div class="teachers-txt us">
-                              <div>
-                                 <h3 translate="no">'.$teachers[1]["name_surname"].'</h3>
-                                 <p>| ';
-                           $teacherField = $teachers[1]["fields"];
-                           if($teacherField)
-                              {
-                                 $fields = explode(",", $teacherField);
-                                 $fields = array_reverse($fields);
-                                 $fields = array_slice($fields,0,3);
-   
-                                 foreach($fields as $field) {
-                                    echo trim($field).' | ';
+                              <h3 translate="no">'.$teachers[$i]["name_surname"].'</h3>
+                              <p>| ';
+                              $teacherField = $teachers[$i]["fields"];
+                              if($teacherField)
+                                 {
+                                    $fields = explode(",", $teacherField);
+                                    $fields = array_reverse($fields);
+                                    $fields = array_slice($fields,0,3);
+      
+                                    foreach($fields as $field) {
+                                       echo trim($field).' | ';
+                                    }
                                  }
-                              }
-                           echo '</p>
-                              </div>
+                              echo '</p>
                            </div>
                         </div>
                      </div>';
-            }
-            if($teachers[2])
-            {
-               echo '<div class="teachers-col">
-                     <div class="teachers-detail">
-                        <div class="teachers-txt us">
-                           <h3 translate="no">'.$teachers[2]["name_surname"].'</h3>
-                           <p>| ';
-                           $teacherField = $teachers[2]["fields"];
-                           if($teacherField)
-                              {
-                                 $fields = explode(",", $teacherField);
-                                 $fields = array_reverse($fields);
-                                 $fields = array_slice($fields,0,3);
-   
-                                 foreach($fields as $field) {
-                                    echo trim($field).' | ';
-                                 }
-                              }
-                           echo '</p>
-                        </div>
-                        <img src="img/teachers/'.$teachers[2]["img"].'">
-                     </div>
-                  </div>';
-            }
-            if($teachers[3])
-            {
-               echo '<div class="teachers-col">
-                        <div class="teachers-detail-r">
-                           <img src="img/teachers/'.$teachers[3]["img"].'">
+                  }
+                  else
+                  {
+                     echo '<div class="teachers-col">
+                        <div class="teachers-detail"'; 
+                     if($teachers[$i]["social"])
+                     {
+                        echo 'onclick="window.open(\'' . $teachers[$i]["social"] . '\')" style="cursor:pointer;"';
+                     }
+                  echo '>
                            <div class="teachers-txt us">
-                              <div>
-                                 <h3 translate="no">'.$teachers[3]["name_surname"].'</h3>
-                                 <p>| ';
-                           $teacherField = $teachers[3]["fields"];
-                           if($teacherField)
-                              {
-                                 $fields = explode(",", $teacherField);
-                                 $fields = array_reverse($fields);
-                                 $fields = array_slice($fields,0,3);
-   
-                                 foreach($fields as $field) {
-                                    echo trim($field).' | ';
+                              <h3 translate="no">'.$teachers[$i]["name_surname"].'</h3>
+                              <p>| ';
+                              $teacherField = $teachers[$i]["fields"];
+                              if($teacherField)
+                                 {
+                                    $fields = explode(",", $teacherField);
+                                    $fields = array_reverse($fields);
+                                    $fields = array_slice($fields,0,3);
+      
+                                    foreach($fields as $field) {
+                                       echo trim($field).' | ';
+                                    }
                                  }
-                              }
-                           echo '</p>
-                              </div>
+                              echo '</p>
                            </div>
+                           <img src="img/teachers/'.$teachers[$i]["img"].'">
                         </div>
                      </div>';
+                  }
+               }
             }
-            if($teachers[4])
-            {
-               echo '<div class="teachers-col">
-                     <div class="teachers-detail">
-                        <div class="teachers-txt us">
-                           <h3 translate="no">'.$teachers[4]["name_surname"].'</h3>
-                           <p>| ';
-                           $teacherField = $teachers[4]["fields"];
-                           if($teacherField)
-                              {
-                                 $fields = explode(",", $teacherField);
-                                 $fields = array_reverse($fields);
-                                 $fields = array_slice($fields,0,3);
-   
-                                 foreach($fields as $field) {
-                                    echo trim($field).' | ';
-                                 }
-                              }
-                           echo '</p>
-                        </div>
-                        <img src="img/teachers/'.$teachers[4]["img"].'">
-                     </div>
-                  </div>';
             }
          ?>
          <div class="btn">
@@ -687,7 +482,7 @@
               </span>
           </div>
           <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> Bilişim Teknolojileri Bölümü</p>
-          <p class="trinsyca"><a href="https://trinsyca.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
+          <p class="trinsyca" translate="no"><g>Created by </g><a href="student/TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
       </div>
   </footer>
    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>

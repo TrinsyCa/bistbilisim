@@ -59,24 +59,55 @@
            <span style="--i:20;"></span>
         </div>
      </div>
-    <nav>
-       <div class="nav-wrapper">
-          <a href="/">
-             <img src="../img/logo/BIST_Logo_Beyaz.png">
-          </a>
-          <!--Translate-->
-       <div class="translate">
-          <div id="google_translate_element"></div>
-       </div>
-       <script type="text/javascript">
-       function googleTranslateElementInit() {
-       new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-       }
-       </script>
-       <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-       <!--Translate-->
-       </div>
-    </nav>
+     <nav>
+      <div class="nav-wrapper">
+         <a href="../">
+            <img src="../img/logo/BIST_Logo_Beyaz.png">
+         </a>
+         <i class="fa fa-bars" id="MenuBtn" aria-hidden="true" onclick="showMenu()"></i>
+         <div class="menu" id="menu">
+            <ul>
+               <li class="hider">
+                  <i class="fa fa-times" onclick="hideMenu()" aria-hidden="true"></i>
+               </li>
+               <li>
+                  <!--Translate-->
+                  <div class="translate">
+                     <div id="google_translate_element"></div>
+                  </div>
+                  <script type="text/javascript">
+                  function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                  }
+                  </script>
+                  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                  <!--Translate-->
+               </li>
+               <li>
+                  <a class="menu-link" href="../">Anasayfa</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../news/">Haberler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../students/">Öğrenciler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../teachers">Öğretmenler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../gallery">Galeri</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="./">İletişim</a>
+               </li>
+               <?php
+                  if(@$_SESSION["giris"])
+               ?>
+            </ul>
+         </div>
+      </div>
+   </nav>
 	<div class="container">
 		<div class="contact-box">
 			<div class="left">
@@ -133,7 +164,7 @@
 	</div>
    <footer>
       <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> | Bilişim Teknolojileri Bölümü</p>
-      <p class="trinsyca"><a href="https://oislamoglu.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
+      <p class="trinsyca" translate="no"><g>Created by </g><a href="../student/TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
    </footer>
    <!-- JavaScript -->
    <script>

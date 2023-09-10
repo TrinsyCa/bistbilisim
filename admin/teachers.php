@@ -2,7 +2,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -18,78 +19,84 @@
 
     <style>
       .teachers-col
-{
-   width: 1430px;
-   display: flex;
-   align-items: center;
-   gap: 45px;
-   flex-wrap: wrap;
-   user-select:none;
-}
-.teachers-detail
-{
-   width: 290px;
-   height: 340px;
-   background-color: rgba(0, 0, 0, 0.10);
-   cursor: default;
-   transition: all 0.3s ease-in-out;
-   border: 4px solid rgba(0, 0, 0, 0.03);
-   border-radius: 18px;
-   display: flex;
-   align-items: end;
-   justify-content: center;
-   position: relative;
-   padding: 15px 0;
-   overflow:hidden;
-   cursor:pointer;
-}
-.teachers-detail img
-{
-   height: 120px;
-   width: 120px;
-   object-fit: cover;
-   border-radius: 60px;
-   position: absolute;
-   top: 3%;
-   transition: all 0.25s ease-in-out;
-   border: 3px solid transparent;
-   background: #ebebeb;
-}
-.teachers-txt
-{
-   text-align: center;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   flex-direction: column;
-}
-.teachers-txt h3
-{
-   position: absolute;
-   top: 45%;
-   transition: all 0.25s ease-in-out;
-   text-shadow: 0 0 2px black;
-   text-transform: capitalize;
-}
-.jobs p
-{
-   padding: 0;
-   margin: 0;
-   font-size: 16px;
-   padding: 8px;
-   width: 230px;
-   border-top: 1px solid rgba(0, 0, 0, 0.2);
-   text-transform: capitalize;
-   color: rgba(0, 0, 0, 0.7);
-}
-.jobs p:nth-last-child(1)
-{
-   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-   padding-bottom: 8px;
-   margin-bottom: 4px;
-}
+      {
+         width: 1430px;
+         display: flex;
+         align-items: center;
+         gap: 45px;
+         flex-wrap: wrap;
+         user-select:none;
+         padding-bottom: 25px;
+      }
+      .teachers-detail
+      {
+         width: 290px;
+         height: 340px;
+         background-color: rgba(0, 0, 0, 0.10);
+         cursor: default;
+         transition: all 0.3s ease-in-out;
+         border: 4px solid rgba(0, 0, 0, 0.03);
+         border-radius: 18px;
+         display: flex;
+         align-items: end;
+         justify-content: center;
+         position: relative;
+         padding: 15px 0;
+         overflow:hidden;
+         cursor:pointer;
+      }
+      .teachers-detail:hover
+      {
+         transform: translateY(-6px);
+         box-shadow:0 6px 15px -8px black;
+      }
+      .teachers-detail img
+      {
+         height: 120px;
+         width: 120px;
+         object-fit: cover;
+         border-radius: 60px;
+         position: absolute;
+         top: 3%;
+         transition: all 0.25s ease-in-out;
+         border: 3px solid transparent;
+         background: #ebebeb;
+      }
+      .teachers-txt
+      {
+         text-align: center;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         flex-direction: column;
+      }
+      .teachers-txt h3
+      {
+         position: absolute;
+         top: 45%;
+         transition: all 0.25s ease-in-out;
+         text-shadow: 0 0 2px black;
+         text-transform: capitalize;
+      }
+      .jobs p
+      {
+         padding: 0;
+         margin: 0;
+         font-size: 16px;
+         padding: 8px;
+         width: 230px;
+         border-top: 1px solid rgba(0, 0, 0, 0.2);
+         text-transform: capitalize;
+         color: rgba(0, 0, 0, 0.7);
+      }
+      .jobs p:nth-last-child(1)
+      {
+         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+         padding-bottom: 8px;
+         margin-bottom: 4px;
+      }
 
-.teachers-detail:hover button
+      .teachers-detail:hover button
       {
          transform:translate(-30%,30%);
          opacity:1;
@@ -170,7 +177,16 @@
 
                   foreach($teachers as $row)
                   {
-                     echo '<div class="teachers-detail" onclick="duzenle('.$row["id"].')">
+                     echo '<div class="teachers-detail" onclick="';
+                        if($row["social"])
+                        {
+                           echo 'window.open(\'' . $row["social"] . '\', \'_blank\')';
+                        }
+                        else
+                        {
+                           echo 'duzenle('.$row["id"].');';
+                        }
+                     echo'">
                            <div class="btns">
                               <button class="do-btn trash-btn" onclick="sil('.$row["id"].', \''.kisalt($row["name_surname"], 30).'\' , \''.$row["img"].'\')"><i class="fa-solid fa-trash"></i></button>
                               <button class="do-btn edit-btn" onclick="duzenle('.$row["id"].')"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -203,6 +219,7 @@
 </div>
 <script>
    function sil(sutunId,slide_title,sutunName) {
+      event.stopPropagation();
       if (confirm('"'+ slide_title+ '"' + " Adlı öğretmeni silmek istediğinize emin misiniz?")) {
          $.post("cmd/silteacher.php", { sutunId: sutunId , sutunName: sutunName })
             .done(function(response) {
@@ -222,6 +239,7 @@
 
    function duzenle(id)
    {
+      event.stopPropagation();
       window.location.href = "editteacher.php?id=" + id;
    }
 

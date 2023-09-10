@@ -1,7 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION["giris"])) {
-    header("Refresh: 0; url=login.php");
+    header("HTTP/1.0 404 Not Found");
+    include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
     return;
 }
 
@@ -50,19 +51,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     move_uploaded_file($tmp_name, "$klasor/$resim");
 
-    $id = $_GET["id"];
-    $title = $_POST["title"];
-    $text = $_POST["text"];
+    @$id = $_GET["id"];
+    @$title = $_POST["title"];
+    @$text = $_POST["text"];
+    @$button = $_POST["button"];
 
     if(empty(trim(@$resim)))
     {
-        header("Refresh:0; url=editslide.php?id="+$id);
+        echo '<p class="alert alert-warning">Lütfen Resim Ekleyiniz..</p>';
+        header("Refresh:2; url=editslide.php?id="+@$id);
     }
 
-    $guncelle = $db->prepare("UPDATE slider SET title = ?, text = ? , img = ? WHERE id = ?");
-    $guncelle->execute([$title, $text, $resim , $id]);
+    else
+    {
+        $guncelle = $db->prepare("UPDATE slider SET title = ?, text = ? , img = ? , button = ?  WHERE id = ?");
+    $guncelle->execute([$title, $text, $resim , $button , $id]);
 
     header("Location: slider.php");
+    }
     exit;
 }
 ?>
@@ -86,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="title">
                 <h1>Slide Düzenle</h1>
                 <div style="display:flex; align-items:center; gap: 10px;">
-                    <a href="news.php"><i class="fa-solid fa-newspaper"></i>&nbsp; Haberler</a>
+                    <a href="slider.php"><i class="fa-solid fa-house"></i>&nbsp; Anasayfa Slider Yönetimi</a>
                     <i onmouseover="help_over();" onmouseout="help_out();" class="fa-solid fa-circle-question question"></i>
                     <div id="question-box">
                         <p>Resim Formatları</p>
@@ -120,6 +126,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <strong>Yazı : </strong>
                             <input type="text" maxlength="125" name="text" class="form-control" value="' . $veri["text"] . '">
                             <br>
+                            <strong>Detay Buton Linki : </strong>
+                            <input type="text" maxlength="2048" name="button" class="form-control" value="' . $veri["button"] . '">
+                            <br>
                             <strong>Resim : </strong>
                             <input type="file" name="yukle_resim" class="form-control" accept="image/*">
                             <br>
@@ -135,6 +144,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <script>
+
+document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                window.location.href = 'slider.php';
+            }
+        });
+
    var slider = document.getElementById("slider");
 
    slider.classList.add("active-menu");

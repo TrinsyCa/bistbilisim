@@ -5,8 +5,16 @@
       }
 body
 {
-    background: var(--studentcolor1);
     color:white;
+    background: url("../img/tools/user-bg.jpeg");
+   background-size: cover;
+   background-position: top;
+   background-repeat: no-repeat;
+}
+.content
+{
+   backdrop-filter: blur(13px);
+   background: #2a0869af;
 }
 .title h1
 {
@@ -112,6 +120,13 @@ nav
    position: relative;
    scale: 0.95;
    user-select: none;
+   transition: all 0.3s ease-in-out;
+   border-radius: 20px;
+}
+.student:hover
+{
+   transform: translateY(-6px);
+   box-shadow:0 6px 15px -6px black;
 }
 .student a
 {
@@ -120,14 +135,9 @@ nav
 .student a:hover .student-img
 {
    top: 25%;
-   border-radius: 45px;
    width: 150px;
    height: 150px;
    box-shadow: 0 0 10px  var(--studentcolor2),0 0 10px  var(--studentcolor2),0 0 10px 3px black;
-}
-.student a:hover .student-img img
-{
-   border-radius: 45px;
 }
 .student-inf
 {
@@ -139,19 +149,28 @@ nav
    left: 50%;
    transform: translate(-50%,-50%);
    width: 100%;
+   height: 135px;
    font-weight: bold;
    transition: 0.4s;
    display: flex;
    flex-direction: column;
    gap: 0;
 }
-.student-inf p
+.student-card p
 {
-   text-decoration: underline;
    font-style: italic;
-   font-size: 13px;
-   color: rgb(170, 170, 170);
+   font-size: 14px;
+   color: rgba(255, 255, 255, 0.85);
    height: 20px;
+   position: absolute;
+   bottom: 7%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.4s;
+}
+.student a:hover .student-card p
+{
+   bottom: 20%;
 }
 .student a:hover .student-inf
 {
@@ -205,6 +224,7 @@ nav
 }
 .student-border
 {
+   width: 310px;
    height: 400px;
    position: relative;
    background: linear-gradient(to right,var(--studentcolor2) ,#511080,var(--studentcolor2));
@@ -231,10 +251,11 @@ nav
 }
 .student-inf h3
 {
-   font-size: 24px;
+   font-size: 20px;
+   height: 30px;
    text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
 }
-.student-inf span
+.student-card span
 {
    background-color: #63159b;
    box-shadow: 0 0 15px -5px black;
@@ -244,6 +265,17 @@ nav
    margin: auto;
    height: 33px;
    width: 70px;
+   color: white;
+   position: absolute;
+   text-align: center;
+   bottom: -5px;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.4s;
+}
+.student a:hover .student-card span
+{
+   bottom: 11%;
 }
 .student a:hover .student-nav
 {
@@ -268,6 +300,8 @@ nav
 {
    width: 100%;
    height: 100%;
+   object-fit: cover;
+   object-position: center;
 }
 .student-img
 {

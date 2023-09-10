@@ -4,21 +4,21 @@
    {
       if(isset($_SESSION["student"]))
       {
-         header("Refresh: 0; url=../students/admin/".$_SESSION["username"]);
+         header("Refresh: 0; url=../student/admin/".$_SESSION["username"]);
       }
-      header("Refresh: 0; url=login.php");
+      header("Refresh:0 url=login.php");
       return;
    }
 ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Paneli | Bist Bilişim</title>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin Paneli | Bist Bilişim</title>
 
-    <link rel="shortcut icon" href="../img/logo/BIST_Icon.png">
+   <link rel="shortcut icon" href="../img/logo/BIST_Icon.png">
 </head>
 <body>
 <?php 

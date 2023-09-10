@@ -3,7 +3,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
    $myclass = "";
@@ -86,18 +87,31 @@
             {
                echo '<h1>'.$myclass.' Öğrenciler | Kullanıcı Bilgileri</h1>
                      <div style="display:flex; gap: 5px;">
-                     <a href="classes.php">Sınıflar</a>';
+                     ';
             }
             else if($myclass)
             {
                echo '<h1>'.$myclass.' Öğrencileri | Kullanıcı Bilgileri</h1>
                      <div style="display:flex; gap: 5px;">
-                     <a href="classes.php">Sınıflar</a>';
+                     ';
             }
             else
             {
                echo '<h1>Sınıflar</h1>';
             }
+            if($myclass)
+            {
+               if(@$_SESSION["role"] === "Moderatör")
+            {
+               echo '</div>';
+            }
+            }
+            if(@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici")
+            {
+               if($myclass)
+               {
+                  echo '<a href="classes.php">Sınıflar</a>';
+               }
             if(isset($_POST["addClass"]))
             {
                $class_no = $_POST["title"];
@@ -142,14 +156,23 @@
                      $veristudents = $db->prepare("SELECT COUNT(*) AS total FROM students WHERE class = ?");
                      $veristudents->execute([$row["class"]]);
                      $studentsCount = $veristudents->fetch(PDO::FETCH_ASSOC)['total'];
-
-                     echo '<strong>'.$studentsCount.' Kullanıcı</strong>
+               }
+               if($studentsCount > 0)
+               {
+                  echo '<strong>'.$studentsCount.' Kullanıcı</strong>
                               </div>';
+               }
+               else
+               {
+                  echo '<strong>Kullanıcı Bulunmuyor..</strong>
+                              </div>';
+                  header("Refresh:3; url=classes.php");
                }
             }
             else
             {
-               echo '<form action="" method="post" style="position:relative; user-select:none; padding-bottom: 15px; display:flex; align-items:center;">
+               echo '
+               <form action="" method="post" style="position:relative; user-select:none; display:flex; align-items:center;">
                         <input type="text" maxlength="2" name="title" class="form-control" oninput="moveToNextInput(this, "text")">
                         <br>
                         <strong>/</strong>
@@ -158,10 +181,19 @@
                         <input type="submit" name="addClass" value="Sınıf Ekle" class="btn btn-outline-primary">
                      </form>';
             }
+         }
          ?>
 
       </div>
       <div class="row">
+         <?php
+         if(@$_SESSION["role"] === "Moderatör")
+         {
+            echo 'Buraya Giriş Yetkiniz Bulunmamakta..';
+         }
+         else if(@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici")
+         {
+         ?>
          <table class="table table-primary">
             <thead>
                <tr>
@@ -190,16 +222,30 @@
                   {
                      if($myclass)
                      {
+                        function gizliSifre($sifre) {
+                           $gizli = str_repeat('*', strlen($sifre));
+                           return $gizli;
+                        }
+
                         $veriuser = $db->prepare("SELECT * FROM students WHERE class = ?");
                         $veriuser->execute([$myclass]);
                         $users = $veriuser->fetchAll(PDO::FETCH_ASSOC);
-
+                        
                         foreach($users as $row)
                         {
-                           echo '<tr style="cursor:pointer" onclick="copyToClipboard(\''.@$row["name_surname"].'\', \''.@$row["username"].'\', \''.$row["pass"].'\');">
+                           echo '<tr class="table-content" style="cursor:pointer" onclick="';
+                           if($row["id"] != 0)
+                           {
+                              echo 'copyToClipboard(\''.@$row["name_surname"].'\', \''.@$row["username"].'\', \''.$row["pass"].'\');';
+                           }
+                           else
+                           {
+                              echo 'dontCopy();';
+                           }
+                           echo'">
                                  <th>'.@$row["name_surname"].'</th>
                                  <th style="text-align:center;">'.@$row["username"].'</th>
-                                 <td style="text-align:center;"><input type="password" value="'.$row["pass"].'"></td>
+                                 <td style="text-align:center;"><input type="password" value="'.gizliSifre(kisalt($row["pass"], 25)).'"></td>
                                  <td style="text-align:end; width:120px; display:flex; justify-content:center; gap: 5px;">';
                                     if(@$class != "Mezun")
                                     {
@@ -208,6 +254,14 @@
                                  echo '</td>
                               </tr>';
                         }
+                        echo "<script>
+                                 document.addEventListener('keydown', function(event) 
+                                 {
+                                       if (event.key === 'Escape') {
+                                          window.location.href = 'classes.php';
+                                       }
+                                 });
+                              </script>";
                      }
                      else
                      {
@@ -228,7 +282,7 @@
                               $veristudents->execute([$class]);
                               $studentsCount = $veristudents->fetch(PDO::FETCH_ASSOC)['total'];
                         
-                              echo '<tr style="cursor:pointer" onclick="liststudents(\''.@$class.'\');">
+                              echo '<tr class="table-content" style="cursor:pointer" onclick="liststudents(\''.@$class.'\');">
                                  <th>'.@$class.'</th>
                                  <td style="text-align:center;">'.@$studentsCount.'</td>
                                  <td style="text-align:end; width:200px; display:flex; justify-content:center; gap: 5px;">
@@ -245,6 +299,9 @@
                ?>
             </tbody>
          </table>
+         <?php
+         }
+         ?>
       </div>
    </div>
 </div>
@@ -257,27 +314,51 @@
    function silclass(sutunId, name, studentsCount) {
       event.stopPropagation();
    if (confirm('"' + name + '" Sınıfı Silmek İstediğinize Emin Misiniz?')) {
-      if (confirm('Bu İşlemi Yaparsanız"' + name + '" Sınıfında Bulunan '+ studentsCount +' Öğrenci Silinecek !')) {
+      if(studentsCount > 0)
+      {
+         if (confirm('Bu İşlemi Yaparsanız"' + name + '" Sınıfında Bulunan '+ studentsCount +' Öğrenci Silinecek !')) {
+            var confirmMessage = 'Sınıf Başarıyla Silindi.';
+
+            $.post("cmd/silclass.php", { sutunId: sutunId, name : name })
+               .done(function(response) {
+                  if (response === "Sütun başarıyla silindi") {
+                     $("tr[data-sutunId='" + sutunId + "']").remove();
+                     $("tr[data-sutunId='" + name + "']").remove();
+                  } else {
+                     confirmMessage = 'Sütun silinirken bir hata oluştu.';
+                  }
+                  console.log(response);
+                  alert(confirmMessage);
+                  location.reload();
+               })
+               .fail(function() {
+                  console.log("Sütün silinirken bir hata oluştu");
+                  alert(confirmMessage);
+               });
+            }
+      }
+      else
+      {
          var confirmMessage = 'Sınıf Başarıyla Silindi.';
 
-         $.post("cmd/silclass.php", { sutunId: sutunId, name : name })
-            .done(function(response) {
-               if (response === "Sütun başarıyla silindi") {
-                  $("tr[data-sutunId='" + sutunId + "']").remove();
-                  $("tr[data-sutunId='" + name + "']").remove();
-               } else {
-                  confirmMessage = 'Sütun silinirken bir hata oluştu.';
-               }
-               console.log(response);
-               alert(confirmMessage);
-               location.reload();
-            })
-            .fail(function() {
-               console.log("Sütün silinirken bir hata oluştu");
-               alert(confirmMessage);
-            });
-         }
+            $.post("cmd/silclass.php", { sutunId: sutunId, name : name })
+               .done(function(response) {
+                  if (response === "Sütun başarıyla silindi") {
+                     $("tr[data-sutunId='" + sutunId + "']").remove();
+                     $("tr[data-sutunId='" + name + "']").remove();
+                  } else {
+                     confirmMessage = 'Sütun silinirken bir hata oluştu.';
+                  }
+                  console.log(response);
+                  alert(confirmMessage);
+                  location.reload();
+               })
+               .fail(function() {
+                  console.log("Sütün silinirken bir hata oluştu");
+                  alert(confirmMessage);
+               });
       }
+   }
    }
 
    function sil(sutunId, name, sutunName) {
@@ -304,11 +385,16 @@
       }
    }
 
+   function dontCopy()
+   {
+      alert("Bu Kullanıcının Bilgilerini Kopyalayamazsınız..");
+   }
+
    function copyToClipboard(name, username, password)
    {
       event.stopPropagation();
 
-      var text = name + '\nKullanıcı Adı: ' + username + '\nŞifre: ' + password;
+      var text = name + '\n\nKullanıcı Adı: ' + username + '\nŞifre: ' + password;
    
       navigator.clipboard.writeText(text)
          .then(function() {

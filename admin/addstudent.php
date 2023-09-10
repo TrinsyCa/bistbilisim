@@ -5,9 +5,16 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
+   if(@$_SESSION["role"] === "Moderatör")
+                     {
+                        echo 'Buraya Giriş Yetkiniz Bulunmamakta..';
+                     }
+                     else if(@$_SESSION["role"] === "Yönetici" || @$_SESSION["role"] === "rooter")
+                     {
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -100,7 +107,7 @@
                   $veriuser->execute([$username]);
                   $user = $veriuser->fetchAll(PDO::FETCH_ASSOC);
                   
-                  if($user)
+                  if($user && $user["username"] != "")
                   {
                      echo '<p class="alert alert-danger">Bu Kullanıcı Zaten Bulunuyor ! Lütfen <a href="editstudent.php?id='.$user[0]["id"].'">'.$user[0]["username"].'</a>\'in kullanıcı adını değiştirin.</p>';
                   }
@@ -150,7 +157,7 @@
             ?>
             <form action=""method="post" enctype="multipart/form-data" style="user-select:none; padding-bottom: 15px;">
                <strong>Ad Soyad : </strong>
-               <input type="text" maxlength="18" name="name_surname" class="form-control">
+               <input type="text" maxlength="30" name="name_surname" class="form-control">
                <br>
                <strong>Domain : </strong>
                <input type="text" maxlength="150" name="domain" class="form-control">
@@ -242,8 +249,7 @@
 
    function copy(name, username, password)
    {
-
-      var text = name + '\nKullanıcı Adı: ' + username + '\nŞifre: ' + password;
+      var text = 'https://bistbilisim.com/admin/\n\n'+ name + '\nKullanıcı Adı: ' + username + '\nŞifre: ' + password;
    
       navigator.clipboard.writeText(text)
          .then(function() {
@@ -254,6 +260,12 @@
          });
    }
 
+   document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                window.location.href = 'students.php';
+            }
+        });
 
    var students = document.getElementById("students");
 
@@ -262,3 +274,4 @@
 <script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php } ?>

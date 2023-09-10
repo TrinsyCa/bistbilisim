@@ -67,19 +67,19 @@
                   <a class="menu-link" href="../">Anasayfa</a>
                </li>
                <li>
-                  <a class="menu-link" href="news/">Haberler</a>
+                  <a class="menu-link" href="../news/">Haberler</a>
                </li>
                <li>
-                  <a class="menu-link" href="students/">Öğrenciler</a>
+                  <a class="menu-link" href="../students/">Öğrenciler</a>
                </li>
                <li>
-                  <a class="menu-link" href="teachers/">Öğretmenler</a>
+                  <a class="menu-link" href="../teachers/">Öğretmenler</a>
                </li>
                <li>
                   <a class="menu-link" href="./">Galeri</a>
                </li>
                <li>
-                  <a class="menu-link" href="contact/">İletişim</a>
+                  <a class="menu-link" href="../contact/">İletişim</a>
                </li>
             </ul>
          </div>
@@ -118,8 +118,7 @@
          <div class="txt">
             <p>© Borsa İstanbul Başakşehir MTAL Bilişim Teknolojileri Bölümü</p>
          </div>
-         <p class="trinsyca"><a href="https://trinsyca.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
-      </footer>
+         <p class="trinsyca" translate="no"><g>Created by </g><a href="../student/TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
    </div>
 
   <script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>

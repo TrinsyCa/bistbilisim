@@ -1,5 +1,6 @@
 <?php
    include("../admin/connection.php");
+   session_start();
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -63,8 +64,7 @@
       <span style="--i:20;"></span>
       </div>
    </div>
-   <div class="wrapper">
-      <nav>
+   <nav>
          <div class="nav-wrapper">
             <a href="/">
                <img src="../img/logo/BIST_Logo_Beyaz.png">
@@ -76,27 +76,42 @@
                      <i class="fa fa-times" onclick="hideMenu()" aria-hidden="true"></i>
                   </li>
                   <li>
-                     <a class="menu-link" href="./">Anasayfa</a>
+                     <a class="menu-link" href="../">Anasayfa</a>
                   </li>
                   <li>
-                     <a class="menu-link" href="news/">Haberler</a>
+                     <a class="menu-link" href="../news/">Haberler</a>
                   </li>
                   <li>
-                     <a class="menu-link" href="students/">Öğrenciler</a>
+                     <a class="menu-link" href="../students/">Öğrenciler</a>
                   </li>
                   <li>
-                     <a class="menu-link" href="teachers/">Öğretmenler</a>
+                     <a class="menu-link" href="../teachers/">Öğretmenler</a>
                   </li>
                   <li>
-                     <a class="menu-link" href="gallery/">Galeri</a>
+                     <a class="menu-link" href="../gallery/">Galeri</a>
                   </li>
                   <li>
-                     <a class="menu-link" href="contact/">İletişim</a>
+                     <a class="menu-link" href="../contact/">İletişim</a>
                   </li>
+                  <?php
+                     if(@$_SESSION["student"])
+                     {
+                        echo '<li>
+                                 <a class="menu-link" href="../student/'.$_SESSION["username"].'"><i class="fa-solid fa-user"></i></a>
+                              </li>';
+                     }
+                     else if(@$_SESSION["giris"])
+                     {
+                        echo '<li>
+                                 <a class="menu-link" href="../admin/students.php">Yönet</a>
+                              </li>';
+                     }
+                  ?>
                </ul>
             </div>
          </div>
       </nav>
+   <div class="wrapper">
       <div class="content-border">
          <div class="content">
             <div class="classes">
@@ -104,13 +119,14 @@
                   <h3><span>Tümü</span></h3>
                </div>
                <?php
-                  $vericlasses = $db->prepare("SELECT *, 
-                  SUBSTRING_INDEX(class, '/', 1) AS sort_number, 
-                  SUBSTRING_INDEX(class, '/', -1) AS sort_letter 
-                  FROM classes 
-                  ORDER BY (class = 'Mezun') ASC, 
-                           sort_number DESC, 
+                  $vericlasses = $db->prepare("SELECT *,
+                  SUBSTRING_INDEX(class, '/', 1) AS sort_number,
+                  SUBSTRING_INDEX(class, '/', -1) AS sort_letter
+                  FROM classes
+                  ORDER BY (class = 'Mezun') ASC,
+                           sort_number DESC,
                            sort_letter ASC");
+
                   $vericlasses->execute();
                   $classes = $vericlasses->fetchAll(PDO::FETCH_ASSOC);
 
@@ -147,9 +163,8 @@
                            SUBSTRING_INDEX(class, '/', 1) AS class_number, 
                            SUBSTRING_INDEX(class, '/', -1) AS class_name 
                            FROM students
-                           ORDER BY (class = 'Mezun') ASC, 
-                                    class_number DESC, 
-                                    class_name ASC");
+                           ORDER BY (id != 0) ASC, 
+                                    RAND()");
                            $veri->execute();
                            $students = $veri->fetchAll(PDO::FETCH_ASSOC);
             
@@ -166,1006 +181,46 @@
                               }
                               echo '<div class="student '.$class.'">
                                        <div class="student-border">
-                                          <a '; 
-                                          if(strpos($row["domain"],".") !== false)
+                                       <a';
+                                          if($row["username"])
                                           {
-                                             echo 'href="https://'.$row["domain"].'"';
+                                            echo ' href="../student/'.$row["username"].'"';
                                           }
-                                          echo 'target="_blank">
-                                             <div class="student-card">
+                                             echo'><div class="student-card">
                                                 <div class="student-nav">
-                                                   <div class="student-banner">
-                                                      <img src="../img/tools/purple-space.jpg">
-                                                      <div class="student-banner-bg"></div>
+                                                   <div class="student-banner">';
+                                                      if($row["banner"])
+                                                      {
+                                                         echo '<img src="../img/students/banners/'.$row["banner"].'">';
+                                                      }
+                                                      else
+                                                      {
+                                                         echo '<img src="../img/tools/purple-space.jpg">';
+                                                      }
+                                                   echo'<div class="student-banner-bg"></div>
                                                    </div>
                                                    <div class="student-img">
                                                       <img src="../img/students/'.$row["img"].'">
                                                    </div>
                                                 </div>
                                                 <div class="student-inf">
-                                                   <h3>'.$row["name_surname"].'</h3>
-                                                   <p>'.$row["domain"].'</p>
-                                                   <span>'.$row["class"].'</span>
-                                                   <button>WEBSITE</button>
-                                                </div>
-                                             </div>
+                                                   <h3 id="name-surname">'.$row["name_surname"].'</h3>
+                                                </div>';
+                                                if($row["username"])
+                                                {
+                                                  echo '<p>@'.$row["username"].'</p>';
+                                                }
+                                                echo '<span>'.$row["class"].'</span>';
+                                                if($row["username"])
+                                                {
+                                                  echo '<button>Profile Git</button>';
+                                                }
+                                             echo'</div>
                                           </a>
                                        </div>
                                     </div>';
                            }
                         ?>
-                        <!-- #region 11B Öğrencileri-->
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://trinsyca.bistbilisim.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/Omer_Islamoglu.jpg">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Ömer İslamoğlu</h3>
-                                       <p>trinsyca.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://quarder.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/Quarder.jpg">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Emre Çiçek</h3>
-                                       <p>quarder.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://yebusa.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Yusuf Buğra Bulur</h3>
-                                       <p>yebusa.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://saraserg.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Semih Aras Ergurum</h3>
-                                       <p>saraserg.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://omertarik.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Ömer Tarık Dilaver</h3>
-                                       <p>omertarik.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://erayk.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Eray</h3>
-                                       <p>erayk.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://eanil.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Erdal Anıl Alkan</h3>
-                                       <p>enail.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://ahmetn.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Ahmet Nejder Özer</h3>
-                                       <p>ahmetn.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://aenes.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Ali Enes</h3>
-                                       <p>aenes.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://mda.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Mehmet Deniz Ay</h3>
-                                       <p>mda.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://saydeniz.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Sefa Aydeniz</h3>
-                                       <p>saydeniz.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://mohamad.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Mohamad Sawan</h3>
-                                       <p>mohamad.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://menestkn.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Muhammed Enes Aytekin</h3>
-                                       <p>menestkn.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://hkt.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Muhammet Hüseyin Kurt</h3>
-                                       <p>hkt.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://ozyilmaz.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Barış Özyılmaz</h3>
-                                       <p>ozyilmaz.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://mtalha.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Muhammed Talha Topuz</h3>
-                                       <p>mtalha.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://insane.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Nidanur Karahalil</h3>
-                                       <p>insane.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://ihsangokturk.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>İhsan Muhammet Göktürk</h3>
-                                       <p>ihsangokturk.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://ebubekir.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Ebubekir Sur</h3>
-                                       <p>ebubekir.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://damlamubin.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Damla Mübin</h3>
-                                       <p>damlamubin.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://esmanurkusku.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Esmanur Kuşku</h3>
-                                       <p>esmanurkusku.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://saidaydan.bistbilisim.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Said Aydan</h3>
-                                       <p>saidaydan.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <!-- Almamış Olanlar 
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://oislamoglu.bistbilisim.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Yusuf Kırdar</h3>
-                                       <p>oislamoglu.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://oislamoglu.bistbilisim.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Esma Gedikoğlu</h3>
-                                       <p>oislamoglu.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11B">
-                           <div class="student-border">
-                              <a href="https://oislamoglu.bistbilisim.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>İbrahim Çakır</h3>
-                                       <p>oislamoglu.bistbilisim.com</p>
-                                       <span>11/B</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        -->
-                        <!-- #endregion 11B Öğrencileri-->
-                        <!-- #region 11AB Öğrencileri-->
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://bilal1453.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Bilal Karadeniz</h3>
-                                       <p>bilal1453.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://efecanacar.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Efecan Acar</h3>
-                                       <p>efecanacar.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://emirtuna.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Emir Tuna Çelik</h3>
-                                       <p>emirtuna.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://erenyilmaz.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Muhammed Eren Yılmaz</h3>
-                                       <p>erenyilmaz.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://ggramark.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Ege Gültepe</h3>
-                                       <p>ggramark.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://itsmusa.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Muhammed Musa Aydeniz</h3>
-                                       <p>itsmusa.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://mcsknyy.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Muhammed Ali Coşkun</h3>
-                                       <p>mcsknyy.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://ozanbarin.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Mustafa Ozan Barın</h3>
-                                       <p>ozanbarin.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://saruhanhalit.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Fahri Halit Saruhan</h3>
-                                       <p>saruhanhalit.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://semihk.turksupp.com" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Semih Burhanettin Karga</h3>
-                                       <p>semihk.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://yasirt.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Yasir Tapar</h3>
-                                       <p>yasirt.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://yusuf.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Yusuf Evni</h3>
-                                       <p>yusuf.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://yusufefe.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Yusuf Efe Çetintaş</h3>
-                                       <p>yusufefe.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://yusufkapkiner.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Yusuf Kapkiner</h3>
-                                       <p>yusufkapkiner.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://alparslan.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Mehmet Alp Arslan</h3>
-                                       <p>alparslan.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://bugra.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Özgür Buğra Arslan</h3>
-                                       <p>bugra.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <div class="student 11AB">
-                           <div class="student-border">
-                              <a href="https://bartu.turksupp.com/" target="_blank">
-                                 <div class="student-card">
-                                    <div class="student-nav">
-                                       <div class="student-banner">
-                                          <img src="../img/tools/purple-space.jpg">
-                                          <div class="student-banner-bg"></div>
-                                       </div>
-                                       <div class="student-img">
-                                          <img src="../img/Users/default-user.png">
-                                       </div>
-                                    </div>
-                                    <div class="student-inf">
-                                       <h3>Bartu Şentürk</h3>
-                                       <p>bartu.turksupp.com</p>
-                                       <span>11/AB</span>
-                                       <button>İnternet Sitesi</button>
-                                    </div>
-                                 </div>
-                              </a>
-                           </div>
-                        </div>
-                        <!-- #endregion 11AB Öğrencileri-->
                      </div>
                   </div>
                </div>
@@ -1174,7 +229,7 @@
       </div>
       <footer>
          <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> | Bilişim Teknolojileri Bölümü</p>
-         <p class="trinsyca"><a href="https://trinsyca.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->   
+         <p class="trinsyca"><g>Created by </g><a href="TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
       </footer>
    </div>
    <script
@@ -1195,7 +250,7 @@
          {
             $(this).addClass('active').siblings().removeClass('active');
          })
-      })
+      });
    </script>
 </body>
 </html>

@@ -12,9 +12,9 @@ window.addEventListener('load', function()
    loader.style.scale = '12';
    preloader.style.opacity = '0';
    preloader.style.zIndex = '-1';
-   document.querySelector('body').style.overflowY = 'scroll';
+   document.querySelector('body').style.overflowY = 'auto';
    document.querySelector('body').style.pointerEvents = 'all';
-   document.querySelector('html').style.overflowY = 'scroll';
+   document.querySelector('html').style.overflowY = 'auto';
    document.querySelector('html').style.pointerEvents = 'all';
 })
 function showMenu()
@@ -25,5 +25,5 @@ function showMenu()
 function hideMenu()
 {
    menu.style.left = '100%';
-   document.querySelector('html').style.overflowY = 'scroll';
+   document.querySelector('html').style.overflowY = 'auto';
 }

@@ -1,6 +1,15 @@
 <?php
    include("../connection.php");
 
+   session_start();
+if(!isset($_SESSION["giris"]))
+{
+   header("HTTP/1.0 404 Not Found");
+   include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
+   return;
+}
+else
+{
    if (isset($_POST["sutunId"]) && isset($_POST["sutunName"]))
    {
       $sutunId = $_POST["sutunId"];
@@ -34,6 +43,9 @@
    }
    else
    {
-      header("Refresh:0; url=../");
+      header("HTTP/1.0 404 Not Found");
+   include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
+   return;
    }
+}
 ?>

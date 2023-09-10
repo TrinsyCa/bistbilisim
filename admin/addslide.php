@@ -2,7 +2,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -47,7 +48,7 @@
       <div class="title">
          <h1>Slide Ekle</h1>
          <div style="display:flex; align-items:center; gap: 10px;">
-            <a href="slider.php"><i class="fa-solid fa-images"></i>&nbsp; Slide Yönetimi</a>
+            <a href="slider.php"><i class="fa-solid fa-images"></i>&nbsp; Slider Yönetimi</a>
             <i onmouseover="help_over();" onmouseout="help_out();" class="fa-solid fa-circle-question question"></i>
             <div id="question-box">
                 <p>Resim Formatları</p>
@@ -97,18 +98,20 @@
 
                   @$title = htmlspecialchars(@$_POST["title"]);
                   @$text = htmlspecialchars(@$_POST["text"]);
+                  @$button = htmlspecialchars(@$_POST["button"]);
 
-                  if(empty(@$title) || empty(@$text) || empty(@$resim))
+                  if(empty(@$resim))
                   {
-                     echo '<p class="alert alert-warning">Lütfen Boş Bırakmayınız..</p>';
+                     echo '<p class="alert alert-warning">Lütfen Resim Ekleyiniz..</p>';
                      header("Refresh:1; url=addslide.php");
                   }
                   else
                   {
-                     $veriekle = $db->prepare("INSERT INTO slider SET title = ? , text = ? , img = ?");
+                     $veriekle = $db->prepare("INSERT INTO slider SET title = ? , text = ? , button = ? , img = ?");
                      $veriekle -> execute([
                         @$title,
                         @$text,
+                        @$button,
                         @$resim
                      ]);
                      if($veriekle)
@@ -131,16 +134,29 @@
                <strong>Yazı : </strong>
                <input type="text" maxlength="125" name="text" class="form-control">
                <br>
+               <strong>Detay Buton Linki : </strong>
+               <input type="text" maxlength="2048" name="button" class="form-control">
+               <br>
                <strong>Resim : </strong>
                <input type="file" name="yukle_resim" class="form-control" accept="image/*">
                <br>
+               <div style="display:flex; align-items:center; justify-content:space-between">
+               <span></span>
                <input type="submit" value="Paylaş" class="btn btn-outline-primary">
+               </div>
             </form>
          </div>
       </div>
    </div>
 </div>
 <script>
+document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                window.location.href = 'news.php';
+            }
+        });
+
    var slider = document.getElementById("slider");
 
    slider.classList.add("active-menu");

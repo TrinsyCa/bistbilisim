@@ -1,7 +1,9 @@
 <?php
 session_start();
+ob_start();
 if (!isset($_SESSION["giris"])) {
-    header("Refresh: 0; url=login.php");
+    hheader("HTTP/1.0 404 Not Found");
+    include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
     return;
 }
 
@@ -55,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $id = $_GET["id"];
     $name_surname = $_POST["name_surname"];
     $fields = $_POST["fields"];
+    $social = $_POST["social"];
 
     if(empty(trim(@$name_surname)))
     {
@@ -63,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     else
     {
-        $guncelle = $db->prepare("UPDATE teachers SET name_surname = ?, fields = ? , img = ? WHERE id = ?");
-    $guncelle->execute([$name_surname, $fields, $resim , $id]);
+        $guncelle = $db->prepare("UPDATE teachers SET name_surname = ?, fields = ? , social = ? , img = ? WHERE id = ?");
+    $guncelle->execute([$name_surname, $fields , $social , $resim , $id]);
 
     header("Location: teachers.php");
     }
@@ -129,13 +132,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                         $vericek->execute([$id]);
                         $veri = $vericek->fetch(PDO::FETCH_ASSOC);
 
-                        echo '
+                        if($veri)
+                        {
+                            echo '
                         <form action=""method="post" enctype="multipart/form-data" style="user-select:none; padding-bottom: 15px;">
                             <strong>Ad Soyad : </strong>
                             <input type="text" value="'.$veri["name_surname"].'" maxlength="18" name="name_surname" class="form-control">
                             <br>
                             <strong>Çalıştığı Alanlar ( , ) : </strong>
                             <input type="text" value="'.$veri["fields"].'" maxlength="150" name="fields" class="form-control">
+                            <br>
+                            <strong>Sosyal Medya Hesabi (LinkedIn Önerilir) : </strong>
+                            <input type="text" value="'.$veri["social"].'" maxlength="150" name="social" class="form-control">
                             <br>
                             <strong>Resim : </strong>
                             <input type="file" name="yukle_resim" class="form-control" accept="image/*">
@@ -144,11 +152,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 <div></div>
                                 <div style="display:flex; gap: 8px;">
                                     <a href="teachers.php" class="btn btn-outline-primary">İptal</a>
-                                    <input type="submit" name="duzenle" value="Paylaş" class="btn btn-outline-primary">
+                                    <input type="submit" name="duzenle" value="Güncelle" class="btn btn-outline-primary">
                                 </div>
                             </div>
                         </form>
                         ';
+                        }
+                        else
+                        {
+                            echo 'ID : '.$id.' Numaralı Bir Öğretmen Bulunamadı...';
+                            header("Refresh:3; url=teachers.php");
+                        }
                     }
                     ?>
                 </div>

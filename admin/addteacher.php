@@ -1,8 +1,10 @@
 <?php
    session_start();
+   ob_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -94,6 +96,7 @@
 
                   @$name_surname = htmlspecialchars(@$_POST["name_surname"]);
                   @$fields = htmlspecialchars(@$_POST["fields"]);
+                  @$social = htmlspecialchars(@$_POST["social"]);
 
                   if(empty(trim(@$name_surname)))
                   {
@@ -102,21 +105,24 @@
                   }
                   else
                   {
-                     $veriekle = $db->prepare("INSERT INTO teachers SET name_surname = ? , fields = ? , img = ?");
+                     $veriekle = $db->prepare("INSERT INTO teachers SET name_surname = ? , fields = ? , social = ? , img = ?");
                      $veriekle -> execute([
-                        @$name_surname,
-                        @$fields,
-                        @$resim
+                        $name_surname,
+                        $fields,
+                        $social,
+                        $resim
                      ]);
                      if($veriekle)
                      {
                         echo '<p class="alert alert-success">Öğretmen Başarıyla Eklendi</p>';
                         header("Refresh: 2; url=teachers.php");
+                        exit();
                      }
                      else
                      {
                         echo '<p class="alert alert-danger">Öğretmen Ekleme İle İlgili Bir Sorun Oluştu</p>';
                         header("Refresh:3; url=./");
+                        exit();
                      }
                   }
                }
@@ -128,6 +134,9 @@
                <strong>Çalıştığı Alanlar ( , ) : </strong>
                <input type="text" maxlength="150" name="fields" class="form-control">
                <br>
+               <strong>Sosyal Medya Hesabı (LinkedIn Önerilir) : </strong>
+               <input type="text" maxlength="150" name="social" class="form-control">
+               <br>
                <strong>Resim : </strong>
                <input type="file" name="yukle_resim" class="form-control" accept="image/*">
                <br>
@@ -138,6 +147,13 @@
    </div>
 </div>
 <script>
+   document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                window.location.href = 'teachers.php';
+            }
+        });
+        
    var teachers = document.getElementById("teachers");
 
    teachers.classList.add("active-menu");

@@ -6,19 +6,35 @@
     $veri = $db->prepare("SELECT * FROM news WHERE link = ?");
     $veri->execute([$link]);
     $islem = $veri->fetchAll(PDO::FETCH_ASSOC);
-    foreach($islem as $row)
+    if($islem)
     {
-        $id = $row["id"];
-        $baslik = $row["baslik"];
-        $alt_baslik = $row["alt_baslik"];
-        $metin = $row["metin"];
-        $resim = $row["resim"];
-        $kategori = $row["kategori"];
-        $yazar = $row["yazar"];
-        $tarih = $row["tarih"];
-        $description = $row["description"];
-        $keywords = $row["keywords"];
-        $tiklanma = $row["tiklanma"];
+        foreach($islem as $row)
+        {
+            $id = $row["id"];
+            $baslik = $row["baslik"];
+            $alt_baslik = $row["alt_baslik"];
+            $metin = $row["metin"];
+            $resim = $row["resim"];
+            $kategori = $row["kategori"];
+            $yazar = $row["yazar"];
+            $tarih = $row["tarih"];
+            $description = $row["description"];
+            $keywords = $row["keywords"];
+            $tiklanma = $row["tiklanma"];
+        }
+    }
+    else
+    {
+        header("HTTP/1.0 404 Not Found");
+        include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
+        return;
+    }
+    session_start();
+    if(!isset($_SESSION["giris"]))
+    {
+        $new_tiklanma = intval($tiklanma) + 1;
+        $tiklanmaUpdate = $db->prepare("UPDATE news SET tiklanma = ? WHERE id = ?");
+        $tiklanmaUpdate->execute([$new_tiklanma, $id]);
     }
 ?>
 <!DOCTYPE html>
@@ -40,7 +56,6 @@
    <meta property="og:url" content=".<?php echo 'bistbilisim.com/p/'.$link; ?>">
    <meta property="og:type" content="article">
    <meta property="article:section" content="Haberler | Bist Bilişim | Borsa İstanbul MTAL">
-   <meta http-equiv="refresh" content="300">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
@@ -111,40 +126,60 @@
            <span style="--i:20;"></span>
         </div>
      </div>
-    <nav>
-        <div class="nav-wrapper">
-           <a href="../../" class="logo_img">
-              <img src="../../img/logo/BIST_Logo_Beyaz.png">
-           </a>
-           <div class="menu">
-              <!--Translate-->
-              <div class="translate">
-                 <div id="google_translate_element"></div>
-              </div>
-              <hr class="vh_line">
-              <script type="text/javascript">
-              function googleTranslateElementInit() {
-              new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-              }
-              </script>
-              <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-              <!--Translate-->
-              <a class="menu-link" href="../../">Anasayfa</a>
-              <a class="menu-link" href="../">Haberler</a>
-              <a class="menu-link" href="../../students/">Öğrenciler</a>
-              <a class="menu-link" href="../../teachers/">Öğretmenler</a>
-              <a class="menu-link" href="../../gallery/">Galeri</a>
-              <a class="menu-link" href="../../contact/">İletişim</a>
-           </div>
-        </div>
-     </nav>
      
+     <nav>
+         <div class="nav-wrapper">
+            <a href="/">
+               <img src="../../img/logo/BIST_Logo_Beyaz.png">
+            </a>
+            <i class="fa fa-bars" id="MenuBtn" aria-hidden="true" onclick="showMenu()"></i>
+            <div class="menu" id="menu">
+               <ul>
+                  <li class="hider">
+                     <i class="fa fa-times" onclick="hideMenu()" aria-hidden="true"></i>
+                  </li>
+                  <li>
+                     <a class="menu-link" href="../../">Anasayfa</a>
+                  </li>
+                  <li>
+                     <a class="menu-link" href="../../news/">Haberler</a>
+                  </li>
+                  <li>
+                     <a class="menu-link" href="../../students/">Öğrenciler</a>
+                  </li>
+                  <li>
+                     <a class="menu-link" href="../../teachers/">Öğretmenler</a>
+                  </li>
+                  <li>
+                     <a class="menu-link" href="../../gallery/">Galeri</a>
+                  </li>
+                  <li>
+                     <a class="menu-link" href="../../contact/">İletişim</a>
+                  </li>
+                  <?php
+                     if(@$_SESSION["student"])
+                     {
+                        echo '<li>
+                                 <a class="menu-link" href="../student/'.$_SESSION["username"].'"><i class="fa-solid fa-user"></i></a>
+                              </li>';
+                     }
+                     else if(@$_SESSION["giris"])
+                     {
+                        echo '<li>
+                                 <a class="menu-link" href="../admin/students.php">Yönet</a>
+                              </li>';
+                     }
+                  ?>
+               </ul>
+            </div>
+         </div>
+      </nav>
     <div class="wrap">
     <div class="wrapper">
         <div class="container">
             <div class="row us">
                 <section class="t_box">
-                    <div style="display:flex; justify-content: space-between; align-items:center; margin-top: 3px;">
+                    <div class="about">
                         <div style="display:flex; gap: 10px;">
                             <?php echo '<p>Kategori : '.$kategori.'</p>'; ?>
                             <p>|</p>
@@ -154,42 +189,44 @@
                     </div>
                     <?php echo '<h1>'.$baslik.'</h1>'; ?>
                     <?php echo '<h2>'.$alt_baslik.'</h2>'; ?>
-                    <?php echo '<div class="kapak-border"><img src="../../img/news/'.$resim.'" class="kapak"></div>'; ?>
+                    <?php echo '<div class="kapak-border"><div class="kapak"><img src="../../img/news/'.$resim.'" ></div></div>'; ?>
                 </section>
                 <section>
-                    <div style="display:flex; justify-content:space-between; padding-top:10px;">
-                        <article style="width: 70%;">
+                    <div class="sider">
+                        <article>
                         <?php
-                            $m_keywords = explode(" , ",$keywords);
-                            foreach($m_keywords as $keyword)
-                            {
-                                if(stripos($metin,$keyword) !== false)
-                                {
-                                    $metin = str_ireplace($keyword,"<b> ".$keyword." </b>",$metin);
+                            $m_keywords = explode(",", $keywords);
+                            foreach ($m_keywords as $keyword) {
+                                if (stripos($metin, $keyword) !== false) {
+                                    $metin = str_ireplace($keyword, "<b> " . $keyword . " </b>", $metin);
                                 }
                             }
-                            echo '<p class="metin">'.$metin.'</p>';
+
+                            // Linkli yazıları ekleyelim
+                            $metin = preg_replace('/(https?:\/\/\S+|www\.\S+)/i', '<a href="$0" target="_blank">$0</a>', $metin);
+
+                            echo '<p class="metin">' . nl2br($metin) . '</p>';
                         ?>
                         <div class="links">
                         <div class="author-date-link">
                             <div>
                                 <?php
                                     if($row["kategori"] == "Web Programlama")
-                                    { echo '<p>Kategori : <a href="../web" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/web" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Nesne Tabanlı Programlama")
-                                    { echo '<p>Kategori : <a href="../ntp" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/ntp" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Bilişim Teknolojileri Temelleri")
-                                    { echo '<p>Kategori : <a href="../btt" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/btt" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Robotik Kodlama")
-                                    { echo '<p>Kategori : <a href="../robotik" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/robotik" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Genel")
-                                    { echo '<p>Kategori : <a href="../genel" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/genel" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Grafik ve Canlandırma")
-                                    { echo '<p>Kategori : <a href="../grafik" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/grafik" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Siber Güvenlik")
-                                    { echo '<p>Kategori : <a href="../siber" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/siber" ><b>'.$kategori.'</b></a></p>'; }
                                     if($row["kategori"] == "Duyuru")
-                                    { echo '<p>Kategori : <a href="../duyuru" target="_blank"><b>'.$kategori.'</b></a></p>'; }
+                                    { echo '<p>Kategori : <a href="../c/duyuru" ><b>'.$kategori.'</b></a></p>'; }
                                 ?>
                                 <?php echo '<p>Yazar : '.$yazar.'</p>'; ?>
                                 <?php echo '<p>Tarih : '.$tarih.'</p>'; ?>
@@ -198,8 +235,8 @@
                         </div>
                     </div>
                         </article>
-                        <aside style="display:flex; flex-direction:column; gap: 10px; width:370px; align-items:center;">
-                            <div>
+                        <aside>
+                            <div style="min-width:100%;">
                                 <?php
                                     $veri = $db->prepare("SELECT * FROM news ORDER BY id DESC");
                                     $veri->execute();
@@ -228,7 +265,7 @@
                                                         <div class="col-md-8">
                                                         <div class="card-body">
                                                             <h5 class="card-title" style="font-size: 18px; color:black; height:35px;">'.kisalt($row["baslik"] , 36).'</h5>
-                                                            <p class="card-text" style="color:black; height:30px; font-size:14px; padding-top: 5px;">'.kisalt($row["metin"] , 60).'</p>
+                                                            <p class="card-text" style="color:black; height:30px; font-size:14px; padding-top: 5px;">'.kisalt($row["metin"] , 56).'</p>
                                                             <p class="card-text card-date"><small class="text-body-secondary">・'.$row["yazar"].'</small></p>
                                                         </div>
                                                         </div>
@@ -242,7 +279,7 @@
                                     $veri = $db->prepare("SELECT * FROM news WHERE kategori = ? ORDER BY id DESC");
                                     $veri->execute([$kategori]);
                                     $islem = $veri->fetchAll(PDO::FETCH_ASSOC);
-                                    echo empty($islem[1]["id"]) ? "" : "<h4>".$kategori."</h4>";
+                                    echo empty($islem[1]["id"]) ? "" : "<h4>Benzer Haberler</h4>";
                                     $counter = 0;
                                     $counterf = 3;
                                     foreach($islem as $row)
@@ -265,8 +302,8 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                         <div class="card-body">
-                                                            <h5 class="card-title" style="font-size: 18px; color:black; height:35px;">'.kisalt($row["baslik"] , 48).'</h5>
-                                                            <p class="card-text" style="color:black; height:30px; font-size:14px; padding-top: 5px;">'.kisalt($row["metin"] , 65).'</p>
+                                                            <h5 class="card-title" style="font-size: 18px; color:black; height:35px;">'.kisalt($row["baslik"] , 36).'</h5>
+                                                            <p class="card-text" style="color:black; height:30px; font-size:14px; padding-top: 5px;">'.kisalt($row["metin"] , 56).'</p>
                                                             <p class="card-text card-date"><small class="text-body-secondary">・'.$row["yazar"].'</small></p>
                                                         </div>
                                                         </div>
@@ -286,10 +323,17 @@
                                 <div class="keys_title"><p class="keys">Anahtar Kelimeler</p></div>
                                 <?php
                                     echo '<h1>'.$kategori.'</h1>';
-                                    $keys = explode(" , ",$keywords);
-                                    foreach($keys  as $keyword)
+                                    if(strpos($keywords , ",") !== false)
                                     {
-                                        echo '<h1>'.$keyword.'</h1>';
+                                        $keys = explode(",",$keywords);
+                                        foreach($keys  as $keyword)
+                                        {
+                                            echo '<h1>'.$keyword.'</h1>';
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo '<h1>'.$keywords.'</h1>';
                                     }
                                 ?>
                             </div>
@@ -327,8 +371,8 @@
               <a href="../../gallery/">Galeri</a>
               </span>
           </div>
-          <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> | Bilişim Teknolojileri Bölümü</p>
-          <p class="trinsyca"><a href="https://trinsyca.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
+          <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> Bilişim Teknolojileri Bölümü</p>
+          <p class="trinsyca"><a href="../../student/TrinsyCa" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
       </div>
   </footer>
     <?php echo '<img class="bg-img" src="../../img/news/'.$resim.'">'; ?>
@@ -356,16 +400,19 @@
        }
 
 
-        const nav = document.querySelector('nav');
+        
         const sticky_ads = document.getElementById('sticky_ads');
         const kutu = document.getElementById('info');
         const details = document.getElementById('details');
         
 
-        window.addEventListener('scroll' , () =>
-        {
-            nav.classList.toggle('nav-anim',window.scrollY > 20);
-        });
+        const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('navbar-scroll', window.pageYOffset > 1);
+});
+
+
 
         if (kutu.scrollHeight > 320) {
             details.classList.add('show-after');

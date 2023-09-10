@@ -9,7 +9,7 @@
    }
    if(isset($_SESSION["student"]))
    {
-      header("Refresh: 0; url=../students/admin/".$_SESSION["username"]);
+      header("Refresh: 0; url=../student/admin/".$_SESSION["username"]);
       return;
    }
 ?>
@@ -267,13 +267,13 @@
          </div>
          <div class="inputBx">
             <div class="submitselection"></div>
-            <input type="submit" value="GÖNDER">
+            <input type="submit" value="Giriş Yap">
          </div>
          <?php
                if(@$_POST)
                {
                   @$kadi=trim(htmlspecialchars(@$_POST["kullanici"]));
-                  @$sifre=(htmlspecialchars(@$_POST["sifre"]));
+                  @$sifre=htmlspecialchars(@$_POST["sifre"]);
                   if(!@$kadi || !@$sifre)
                   {
                      echo "<p class='alert alert-danger' style='text-align:center; padding:7px; width:335px; margin:auto;'>Kullanıcı Adı veya Şifre Boş Bırakılamaz</p>";
@@ -282,7 +282,7 @@
                   else
                   {
                      @$uye = $db->prepare("select * from admin where isim=? and sifre=?");
-                     @$uye->execute(array(mb_strtolower($kadi),mb_strtolower($sifre)));
+                     @$uye->execute(array(mb_strtolower(@$kadi),@$sifre));
                      @$a=$uye->fetch(PDO::FETCH_ASSOC);
                      @$y=$uye->rowCount();
 
@@ -293,13 +293,15 @@
                         @$_SESSION["isim"] = @$a["isim"];
                         @$_SESSION["adsoyad"] = @$a["adsoyad"];
                         @$_SESSION["sifre"] = @$a["sifre"];
-                        @$_SESSION["god_mode"] = @$a["god_mode"];
-                        echo "<p class='alert alert-info' style='text-align:center; padding:7px; width:335px; margin:auto;'>Giriş Başarılı</p>";
+                        @$_SESSION["role"] = @$a["role"];
+                        echo "<p class='alert alert-info' style='text-align:center; padding:7px; width:335px; margin:auto;'>Admin Girişi</p>";
                         header("Refresh: 1; url=./");
                         exit;
                      }
+                     else
+                     {
                         @$uye = $db->prepare("select * from students where username=? and pass=?");
-                        @$uye->execute(array(mb_strtolower($kadi),mb_strtolower($sifre)));
+                        @$uye->execute(array(mb_strtolower(@$kadi),@$sifre));
                         @$a=$uye->fetch(PDO::FETCH_ASSOC);
                         @$y=$uye->rowCount();
 
@@ -307,14 +309,16 @@
                         {
                            @$_SESSION["student"] = "true";
                            @$_SESSION["username"] = @$a["username"];
-                           echo "<p class='alert alert-info' style='text-align:center; padding:7px; width:335px; margin:auto;'>Giriş Başarılı</p>";
-                           header("Refresh: 1; url=../students/admin/".@$_SESSION["username"]);
+                           @$_SESSION["pass"] = @$a["pass"];
+                           echo "<p class='alert alert-info' style='text-align:center; padding:7px; width:335px; margin:auto;'>Öğrenci Girişi</p>";
+                           header("Refresh: 1; url=../student/".@$_SESSION["username"]);
                            exit;
                         }
-                     else
-                     {
-                        echo "<p class='alert alert-warning' style='text-align:center; padding:7px; width:335px; margin:auto;'>Kullanıcı Adı veya Şifre Hatalı</p>";
-                        header("Refresh: 1; url=login.php");
+                        else
+                        {
+                           echo "<p class='alert alert-warning' style='text-align:center; padding:7px; width:335px; margin:auto;'>Kullanıcı Adı veya Şifre Hatalı</p>";
+                           header("Refresh: 1; url=login.php");
+                        }
                      }
                   }
                }

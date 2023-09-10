@@ -221,14 +221,15 @@ nav
    padding-left: 10%;
    width: 100%;
    transition: 0.3s;
-   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
 }
 .nav-anim
 {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.2);
     position: fixed;
     padding: 4px 1%;
     padding-left: 5%;
+    backdrop-filter: blur(10px);
 }
 nav .logo_img
 {
@@ -302,7 +303,6 @@ nav .menu .menu-link::after
    width: 0;
    height: 3px;
    background: white;
-   box-shadow: 0 0 5px black;
    border-radius: 10px;
    margin: auto;
    transition: 0.3s;
@@ -378,6 +378,7 @@ header .wrapper .wrapper-col .header-txt h1
    width: 90%;
    margin: auto;
    min-height:750px;
+   padding: 0 30px;
 }
 .news .news-col
 {
@@ -409,6 +410,8 @@ header .wrapper .wrapper-col .header-txt h1
    border-radius: 15px;
    transition: 0.3s;
    user-select: none;
+   box-shadow: 0 0 10px black;
+   border: 3px solid rgba(255,255,255,0.1);
 }
 .news-title
 {
@@ -417,18 +420,22 @@ header .wrapper .wrapper-col .header-txt h1
    bottom: -20%;
    left: 50%;
    transform: translate(-50%,-50%);
-   min-width: 550px;
+   width: 550px;
    max-width: 550px;
+   height: 115px;
+   max-height: 115px;
    padding: 12px;
    border-radius: 12px;
    color: white;
    transition: 0.3s;
    box-shadow: 0 7px 5px 5px rgba(0, 0, 0, 0.2);
+   border: 1px solid rgba(255,255,255,0.2);
 }
 .news-title h1
 {
    text-align: start;
    font-size: 24px;
+   height: 58px;
 }
 .news-detail-col
 {
@@ -659,6 +666,8 @@ header .wrapper .wrapper-col .header-txt h1
    top: 50%;
    margin-left: -150px;
    margin-top: -500px;
+   border-radius: 25px;
+   overflow: hidden;
  }
 .gallery-pics
 {
@@ -666,6 +675,7 @@ header .wrapper .wrapper-col .header-txt h1
    height: 1000px;
    width: 300px;
    user-select: none;
+   border-radius: 25px;
 }
  .gswiper.swiper-slide {
    background-position: center;
@@ -675,7 +685,6 @@ header .wrapper .wrapper-col .header-txt h1
  .gswiper .swiper-slide img {
    display: block;
    width: 100%;
-   border-radius: 25px;
    overflow: hidden;
  }
  /*Slider Swiper*/
@@ -750,9 +759,12 @@ header .wrapper .wrapper-col .header-txt h1
 }
 .sswiper .swiper-slide-txt p
 {
-   color: rgb(220, 220, 220);
+   color: rgb(255, 255, 255);
    font-size: 20px;
-   text-shadow: 0 0 5px black,0 0 5px black;
+   text-shadow: 3px 0px 7px rgba(81,67,21,0.8),
+     	3px 0px 7px rgba(81,67,21,0.8),
+	  -3px 0px 7px rgba(81,67,21,0.8), 
+	  0px 4px 7px rgba(81,67,21,0.8);
    font-weight: 600;
 }
 .sswiper .swiper-button-next
@@ -880,15 +892,10 @@ header .wrapper .wrapper-col .header-txt h1
 }
 .student a:hover .student-img
 {
-   top: 25%;
-   border-radius: 45px;
+   top: 22%;
    width: 150px;
    height: 150px;
    box-shadow: 0 0 10px  var(--studentcolor2),0 0 10px  var(--studentcolor2),0 0 10px 3px black;
-}
-.student a:hover .student-img img
-{
-   border-radius: 45px;
 }
 .student-inf
 {
@@ -900,49 +907,58 @@ header .wrapper .wrapper-col .header-txt h1
    left: 50%;
    transform: translate(-50%,-50%);
    width: 100%;
+   height: 170px;
    font-weight: bold;
    transition: 0.4s;
    display: flex;
    flex-direction: column;
    gap: 0;
 }
-.student-inf p
+.student-card p
 {
-   text-decoration: underline;
    font-style: italic;
-   font-size: 13px;
-   color: rgb(170, 170, 170);
+   font-size: 14px;
+   color: rgba(255, 255, 255, 0.85);
    height: 20px;
+   position: absolute;
+   bottom: 8%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.4s;
+}
+.student a:hover .student-card p
+{
+   bottom: 21%;
 }
 .student a:hover .student-inf
 {
    top: 68.5%;
    gap: 4px;
 }
-.student-inf button
+.student-card button
 {
    width: 97%;
    border-radius: 50px;
    padding: 5px 0;
    background: var(--studentcolor2);
    color: white;
-   font-size: 20px;
+   font-size: 18px;
    font-weight: bold;
    text-shadow: 0 0 2px black,0 0 2px black;
    opacity: 0;
    transition: 0.4s;
    border: none;
    position: absolute;
-   bottom: -51%;
+   bottom: -10%;
    left: 50%;
    transform: translateX(-50%);
 }
-.student a:hover .student-inf button
+.student a:hover .student-card button
 {
-   bottom: -36%;
+   bottom: 5px;
    opacity: 1;
 }
-.student-inf button:hover
+.student-card button:hover
 {
    background: #a03de7;
 }
@@ -969,7 +985,7 @@ header .wrapper .wrapper-col .header-txt h1
    height: 400px;
    position: relative;
    background: linear-gradient(to right,var(--studentcolor2) ,#511080,var(--studentcolor2));
-   border-radius: 28px;
+   border-radius: 24px;
    padding: 5px;
    transition: 0.5s;
 }
@@ -978,7 +994,7 @@ header .wrapper .wrapper-col .header-txt h1
    width: 100%;
    height: 100%;
    background: linear-gradient(to bottom, var(--studentcolor1) 50%,#511080);
-   border-radius: 24px;
+   border-radius: 20px;
    overflow: hidden;
    position: relative;
    outline: 6px solid transparent;
@@ -995,24 +1011,37 @@ header .wrapper .wrapper-col .header-txt h1
    font-size: 24px;
    text-shadow: 0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white,0 0 1px white;
 }
-.student-inf span
+.student-card span
 {
    background-color: #63159b;
    box-shadow: 0 0 15px -5px black;
-   border-radius: 13px;
-   padding: 5px 10px;
+   border-radius: 12px;
+   padding: 5px 12px;
    width: fit-content;
    margin: auto;
+   height: 33px;
+   width: 70px;
+   color: white;
+   position: absolute;
+   text-align: center;
+   bottom: -5px;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   transition: 0.4s;
+}
+.student a:hover .student-card span
+{
+   bottom: 11%;
 }
 .student a:hover .student-nav
 {
-   height: 195px;
+   height: 175px;
    padding: 0;
 }
 .student-nav
 {
    width: 100%;
-   height: 200px;
+   height: 180px;
    background: linear-gradient(to right,var(--studentcolor2) ,var(--studentcolor1),var(--studentcolor2));
    padding-bottom: 5px;
    transition: 0.5s;
@@ -1032,7 +1061,7 @@ header .wrapper .wrapper-col .header-txt h1
 {
    background: linear-gradient(to right,var(--studentcolor2) ,var(--studentcolor1),var(--studentcolor2));
    position: absolute;
-   top: 50%;
+   top: 45%;
    left: 50%;
    transform: translate(-50%,-50%);
    width: 110px;
@@ -1040,7 +1069,7 @@ header .wrapper .wrapper-col .header-txt h1
    border-radius: 100%;
    overflow: hidden;
    padding: 4px;
-   transition: 0.4s;
+   transition: 0.45s;
    box-shadow: 0 0 10px 3px black;
 }
 .student-img img
@@ -1149,7 +1178,6 @@ header .wrapper .wrapper-col .header-txt h1
 {
    width: 100%;
    height: 100%;
-   border-radius: 25px;
    background: rgb(80, 80, 80);
    box-shadow: 0 0 5px black;
    padding: 5px;
@@ -1420,7 +1448,6 @@ header .wrapper .wrapper-col .header-txt h1
     max-height: 110px;
     min-width: 110px;
     min-height: 110px;
-    margin-right: 10px;
     border-radius: 50%;
     transition: 0.5s;
     user-select: none;
@@ -1837,7 +1864,7 @@ footer .wave#wave4
    }
    .vision
    {
-      height: 75%;
+      height: 75vh;
    }
    .vision-detail .school
    {
@@ -1970,7 +1997,7 @@ footer .wave#wave4
    }
    .vision
    {
-      height: 71%;
+      height: 71vh;
    }
    .vision-detail .school
    {
@@ -2016,7 +2043,7 @@ footer .wave#wave4
    {
       align-items: baseline;
       width: 90%;
-      height: 200px;
+      height: 250px;
    }
    .vision-detail .school img
    {
@@ -2095,6 +2122,14 @@ footer .wave#wave4
 }
 @media (max-width:500px)
 {
+   .vision
+   {
+      height: 74vh;
+   }
+   .vision-detail .school
+   {
+      height: 200px;
+   }
    .fields .fields-col
    {
       width: 80%;

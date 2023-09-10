@@ -3,7 +3,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -84,11 +85,18 @@
    <div class="content">
       <div class="title">
             <?php
+            if(@$_SESSION["role"] === "Moderatör")
+            {
+               echo '<h1>Öğrenciler</h1>';
+            }
+            else if(@$_SESSION["role"] === "Yönetici" || @$_SESSION["role"] === "rooter")
+            {
                   $veristudents = $db->prepare("SELECT COUNT(*) AS total FROM students");
                   $veristudents->execute();
                   $studentsCount = $veristudents->fetch(PDO::FETCH_ASSOC)['total'];
 
                   echo '<h1>Öğrenciler | Toplam : <strong>'.$studentsCount.' Kişi</strong></h1>';
+
             ?>
             <div style="display:flex; align-items:center; gap: 10px;">
                <div id="class-settings">
@@ -182,10 +190,17 @@
                <a href="addstudent.php" style="margin-left: 10px;"><i class="fa-solid fa-plus"></i>&nbsp; Öğrenci Ekle</a>
             </div>
          </div>
+         <?php } ?>
       </div>
       <div class="row">
          <div class="students">
             <?php
+            if(@$_SESSION["role"] === "Moderatör")
+            {
+               echo 'Buraya Giriş Yetkiniz Bulunmamakta..';
+            }
+            else if(@$_SESSION["role"] === "Yönetici" || @$_SESSION["role"] === "rooter")
+            {
                include("connection.php");
                include("linkfunc.php");
 
@@ -209,37 +224,57 @@
                      echo '<div class="student '.$class.'">
                               <div class="student-border">
                                  <div class="btns">
-                                    <button class="do-btn trash-btn" onclick="sil('.$row["id"].', \''.kisalt($row["name_surname"], 30).'\' , \''.$row["img"].'\')"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="do-btn trash-btn" onclick="sil(';
+                                    if(!$row["id"] == 0)
+                                    {
+                                       echo $row["id"].', \''.kisalt($row["name_surname"], 30).'\' , \''.$row["img"];
+                                    }
+                                    echo '\')"><i class="fa-solid fa-trash"></i></button>
                                     <button class="do-btn edit-btn" onclick="duzenle('.$row["id"].')"><i class="fa-solid fa-pen-to-square"></i></button>
                                  </div>
-                                 <a '; 
-                                 if(strpos($row["domain"],".") !== false)
-                                 {
-                                    echo 'href="https://'.$row["domain"].'"';
-                                 }
-                                 echo 'target="_blank">
+                                 <a ';
+                    				if($row["username"])
+                                    {
+                                      echo 'href="../student/'.$row["username"].'" target="_blank"';
+                                    }
+                    				echo '>
                                     <div class="student-card">
                                        <div class="student-nav">
-                                          <div class="student-banner">
-                                             <img src="../img/tools/purple-space.jpg">
-                                             <div class="student-banner-bg"></div>
-                                          </div>
+                                          <div class="student-banner">';
+                                             if($row["banner"])
+                                             {
+                                               echo '<img src="../img/students/banners/'.$row["banner"].'">
+                                             <div class="student-banner-bg"></div>';
+                                             }
+                    						else
+                                            {
+                                              echo '<img src="../img/tools/purple-space.jpg">
+                                             <div class="student-banner-bg"></div>';
+                                            }
+                                     echo'</div>
                                           <div class="student-img">
                                              <img src="../img/students/'.$row["img"].'">
                                           </div>
                                        </div>
                                        <div class="student-inf">
-                                          <h3>'.$row["name_surname"].'</h3>
-                                          <p>'.$row["domain"].'</p>
-                                          <span>'.$row["class"].'</span>
-                                          <button>WEBSITE</button>
-                                       </div>
+                                          <h3>'.$row["name_surname"].'</h3>';
+                                          if($row["username"])
+                                          {
+                                            echo '<button>Profili Gör</button>';
+                                          }
+                                       echo'</div>';
+                                       if($row["username"])
+                                       {
+                                         echo '<p>@'.$row["username"].'</p>';
+                                       }
+                                       echo '<span>'.$row["class"].'</span>
                                     </div>
                                  </a>
                               </div>
                            </div>';
                   }
                }
+            }
             ?>
          </div>
       </div>
@@ -250,36 +285,23 @@
    document.querySelector(".menus").classList.remove("bg-primary");
 
    function upclass() {
-   var upclass = document.getElementById("myclass").value;
-   if (confirm('"'+ upclass+ '"' + " Sınıfındaki öğrencileri yükseltmek istediğinize emin misiniz?")) {
-      $.post("cmd/upclass.php", { class: upclass })
-         .done(function(response) {
-            if (response === "Sınıftakiler Yükseltildi") {
-               window.location.reload();
-            }
-            console.log(response);
-         })
-         .fail(function() {
-            console.log("Sınıf Yükseltilirken Bir Hata Oluştu");
-         });
-   }
+    var upclass = document.getElementById("myclass").value;
+    if (confirm('"' + upclass + '"' + " Sınıfındaki öğrencileri yükseltmek istediğinize emin misiniz?")) {
+        $.post("cmd/upclass.php", { class: upclass })
+            .done(function(response) {
+                if (response === "Sınıftakiler Yükseltildi") {
+                    window.location.reload();
+                } else {
+                    // Hata mesajını alert() ile göster
+                    alert(response);
+                }
+            })
+            .fail(function() {
+                console.log("Sınıf Yükseltilirken Bir Hata Oluştu");
+            });
+    }
 }
 
-function downclass() {
-   var downclass = document.getElementById("myclass").value;
-   if (confirm('"'+ downclass+ '"' + " Sınıfındaki öğrencileri düşürmek istediğinize emin misiniz?")) {
-      $.post("cmd/downclass.php", { class: downclass })
-         .done(function(response) {
-            if (response === "Sınıftakiler Düşürüldü") {
-               window.location.reload();
-            }
-            console.log(response);
-         })
-         .fail(function() {
-            console.log("Sınıf Düşürülürken Bir Hata Oluştu");
-         });
-   }
-}
 
 
    function sil(sutunId,slide_title,sutunName) {

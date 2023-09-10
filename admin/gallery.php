@@ -3,7 +3,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -104,7 +105,7 @@
          <?php
             if(isset($_POST["resimyukle"]))
             {
-               $klasor = "../img/Pictures/";
+               $klasor = "../img/pictures/";
                $tmp_name = $_FILES["yukle_resim"]["tmp_name"];
                $name = $_FILES["yukle_resim"]["name"];
                $size = $_FILES["yukle_resim"]["size"];
@@ -150,6 +151,8 @@
       </div>
    </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
 <script>
    function sil(sutunId , sutunName) {
       if (confirm("Bu resmi silmek istediğinize emin misiniz?")) {
@@ -179,7 +182,5 @@
 
    galeri.classList.add("active-menu");
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -2,7 +2,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+    include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -95,9 +96,10 @@
                         {
                            $row["tel"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
                         }
-                        echo '<tr class="showTr" onclick="show('.$row["id"].')">
-                                    <th><a onclick="show('.$row["id"].')">'.kisalt($row["name"], 55).'</a></th>
-                                    <td style="text-align:center;"><a onclick="show('.$row["id"].')">'.kisalt($row["email"], 55).'</a></td>
+                        echo '<script> var id ="'.$row["id"].'"</script>';
+                        echo '<tr class="table-content showTr" onclick="show('.$row["id"].')">
+                                    <th><a onclick="show('.$row["id"].')">'.kisalt($row["name"], 30).'</a></th>
+                                    <td style="text-align:center;"><a onclick="show('.$row["id"].')">'.kisalt($row["email"], 50).'</a></td>
                                     <td style="text-align:center;"><a onclick="show('.$row["id"].')">'.$row["tel"].'</a></td>
                                     <td style="text-align:center;"><a onclick="show('.$row["id"].')">'.$row["tarih"].'</a></td>
                                     <td style="text-align:center;">
@@ -191,7 +193,16 @@ function cmessage(id) {
     messageshow.style.pointerEvents = "none";
   }
 }
+
+document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                cmessage(id);
+            }
+        });
+
    function sil(sutunId,name,name_short) {
+      event.stopPropagation();
          // Silmek istediğine emin misin sorusunu göster
          if (confirm('"'+ name_short+ '"' + " Adlı kişinin mesajını silmek istediğinize emin misiniz?")) {
             // AJAX isteği gönder

@@ -19,8 +19,6 @@
    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
    <!--Google Fonts-->
 
-   <link rel="shortcut icon" href="../img/logo/BIST_Icon.png">
-
    <!-- Google tag (gtag.js) -->
    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11208761348">
    </script>
@@ -37,6 +35,8 @@
    gtag('event', 'conversion', {'send_to': 'AW-11208761348/aGvTCMKgt6gYEITA4OAp'});
  </script>
  
+ <link rel="shortcut icon" href="../img/logo/BIST_Icon.png">
+
 </head>
 <body>
    <div id="preloader">
@@ -64,34 +64,56 @@
          <span style="--i:20;"></span>
       </div>
    </div>
-   <div class="wrapper">
-      <nav>
-         <div class="nav-wrapper">
-            <a href="/">
-               <img src="../img/logo/BIST_Logo_Beyaz.png">
-            </a>
-            <div class="menu">
-               <!--Translate-->
-               <div class="translate">
-                  <div id="google_translate_element"></div>
-               </div>
-               <hr class="vh_line">
-               <script type="text/javascript">
-               function googleTranslateElementInit() {
-               new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-               }
-               </script>
-               <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-               <!--Translate-->
-               <a class="menu-link" href="../">Anasayfa</a>
-               <a class="menu-link" href="../news/">Haberler</a>
-               <a class="menu-link" href="../students/">Öğrenciler</a>
-               <a class="menu-link" href="./">Öğretmenler</a>
-               <a class="menu-link" href="../gallery/">Galeri</a>
-               <a class="menu-link" href="../contact/">İletişim</a>
-            </div>
+   <nav>
+      <div class="nav-wrapper">
+         <a href="../">
+            <img src="../img/logo/BIST_Logo_Beyaz.png">
+         </a>
+         <i class="fa fa-bars" id="MenuBtn" aria-hidden="true" onclick="showMenu()"></i>
+         <div class="menu" id="menu">
+            <ul>
+               <li class="hider">
+                  <i class="fa fa-times" onclick="hideMenu()" aria-hidden="true"></i>
+               </li>
+               <li>
+                  <!--Translate-->
+                  <div class="translate">
+                     <div id="google_translate_element"></div>
+                  </div>
+                  <script type="text/javascript">
+                  function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                  }
+                  </script>
+                  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                  <!--Translate-->
+               </li>
+               <li>
+                  <a class="menu-link" href="../">Anasayfa</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../news/">Haberler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../students/">Öğrenciler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="./">Öğretmenler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../gallery/">Galeri</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../contact/">İletişim</a>
+               </li>
+               <?php
+                  if(@$_SESSION["giris"])
+               ?>
+            </ul>
          </div>
-      </nav>
+      </div>
+   </nav>
+   <div class="wrapper">
       <div class="teachers">
          <h1>Öğretmenler</h1>
          <div class="teachers-col">
@@ -100,28 +122,33 @@
                $veri->execute();
                $teachers = $veri->fetchAll(PDO::FETCH_ASSOC);
 
-               foreach($teachers as $row)
-               {
-                  echo '<div class="teachers-detail">
-                           <div class="teachers-txt">
-                              <img src="../img/teachers/'.$row["img"].'">
-                              <h3 translate="no">'.$row["name_surname"].'</h3>
-                              <div class="jobs us">';
-
-                              if($row["fields"])
-                              {
-                                 $fields = explode(",", $row["fields"]);
-                                 $fields = array_reverse($fields);
-                                 $fields = array_slice($fields,0,3);
-   
-                                 foreach($fields as $field) {
-                                    echo '<p>'.trim($field).'</p>';
-                                 }
-                              }
-                           echo '</div>
-                           </div>
+               foreach ($teachers as $row) {
+                  echo '<div class="teachers-detail" ';
+                  if($row["social"])
+                  {
+                     echo 'onclick="window.open(\'' . $row["social"] . '\')" style="cursor:pointer;"';
+                  }
+                  echo'>
+                            <div class="teachers-txt">
+                                <img src="../img/teachers/' . $row["img"] . '">
+                                <h3 translate="no">' . $row["name_surname"] . '</h3>
+                                <div class="jobs us">';
+              
+                  if ($row["fields"]) {
+                      $fields = explode(",", $row["fields"]);
+                      $fields = array_reverse($fields);
+                      $fields = array_slice($fields, 0, 3);
+              
+                      foreach ($fields as $field) {
+                          echo '<p>' . trim($field) . '</p>';
+                      }
+                  }
+              
+                  echo '</div>
+                        </div>
                         </div>';
-               }
+              }
+              
             ?>
          </div>
       </div>
@@ -140,17 +167,17 @@
              </div>
              <div class="menu">
                  <span>
-                 <a href="/">Anasayfa</a>
-                 <a href="students/">Öğrenciler</a>
+                 <a href="../">Anasayfa</a>
+                 <a href="../students/">Öğrenciler</a>
                  </span>
                  <span>
-                 <a href="contact/">İletişim</a>
-                 <a href="gallery/">Galeri</a>
+                 <a href="../contact/">İletişim</a>
+                 <a href="../gallery/">Galeri</a>
                  </span>
-                 <span><a href="teachers/">Öğretmenler</a></span>
+                 <span><a href="./">Öğretmenler</a></span>
              </div>
              <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> | Bilişim Teknolojileri Bölümü</p>
-             <p class="trinsyca"><a href="https://trinsyca.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
+             <p class="trinsyca" translate="no"><g>Created by </g><a href="../student/TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
          </div>
      </footer>
    </div>

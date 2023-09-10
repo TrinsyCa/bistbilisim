@@ -1,9 +1,6 @@
 <?php
     include("../admin/connection.php");
     include("../admin/linkfunc.php");
-
-    $news = $db->query("SELECT * FROM news ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
-    $l_news = $news[0];
 ?>
 <!DOCTYPE html>
 <html lang="tr-TR">
@@ -51,7 +48,7 @@
 <script>
   gtag('event', 'conversion', {'send_to': 'AW-11208761348/aGvTCMKgt6gYEITA4OAp'});
 </script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div id="preloader">
@@ -79,52 +76,55 @@
            <span style="--i:20;"></span>
         </div>
      </div>
-    <nav>
-        <div class="nav-wrapper">
-           <a href="../" class="logo_img">
-              <img src="../img/logo/BIST_Logo_Beyaz.png">
-           </a>
-           <div class="menu">
-              <!--Translate-->
-              <div class="translate">
-                 <div id="google_translate_element"></div>
-              </div>
-              <hr class="vh_line">
-              <script type="text/javascript">
-              function googleTranslateElementInit() {
-              new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-              }
-              </script>
-              <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-              <!--Translate-->
-              <a class="menu-link" href="../">Anasayfa</a>
-              <a class="menu-link" href="../news/">Haberler</a>
-              <a class="menu-link" href="../students/">Öğrenciler</a>
-              <a class="menu-link" href="../teachers/">Öğretmenler</a>
-              <a class="menu-link" href="../gallery/">Galeri</a>
-              <a class="menu-link" href="../contact/">İletişim</a>
-           </div>
-        </div>
-     </nav>
-     <header class="swiper mySwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="../img/Pictures/Bilisim_Teknolojileri_Laboratuvari.jpg"></div>
-          <div class="swiper-slide">Slide 2</div>
-          <div class="swiper-slide">Slide 3</div>
-        </div>
-        <div class="swiper-pagination"></div>
-    </header>
-    <div class="blue_line" id="sticky_blue_line">
-        <a href="./"><i class="fa-solid fa-grip"></i> Tümü</a>
-        <a href="genel"><i class="fa-solid fa-newspaper"></i> Genel</a>
-        <a href="web"><i class="fa-solid fa-code"></i> Web</a>
-        <a href="grafik"><i class="fa-solid fa-images"></i> Grafik ve Canlandırma</a>
-        <a href="ntp"><i class="fa-solid fa-display"></i> NTP</a>
-        <a href="siber"><i class="fa-solid fa-shield"></i> Siber Güvenlik</a>
-        <a href="robotik"><i class="fa-solid fa-robot"></i> Robotik Kodlama</a>
-        <a href="btt"><i class="fa-solid fa-microchip"></i> BTT</a>
-        <a href="duyuru"><i class="fa-solid fa-bullhorn"></i> Duyuru</a>
-    </div>
+     <nav>
+      <div class="nav-wrapper">
+         <a href="../">
+            <img src="../img/logo/BIST_Logo_Beyaz.png">
+         </a>
+         <i class="fa fa-bars" id="MenuBtn" aria-hidden="true" onclick="showMenu()"></i>
+         <div class="menu" id="menu">
+            <ul>
+               <li class="hider">
+                  <i class="fa fa-times" onclick="hideMenu()" aria-hidden="true"></i>
+               </li>
+               <li>
+                  <!--Translate-->
+                  <div class="translate">
+                     <div id="google_translate_element"></div>
+                  </div>
+                  <script type="text/javascript">
+                  function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,ru,es,ar,ko,zh-CN' ,layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                  }
+                  </script>
+                  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                  <!--Translate-->
+               </li>
+               <li>
+                  <a class="menu-link" href="../">Anasayfa</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="./">Haberler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../students/">Öğrenciler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../teachers/">Öğretmenler</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../gallery/">Galeri</a>
+               </li>
+               <li>
+                  <a class="menu-link" href="../contact/">İletişim</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </nav>
+   <?php
+        include_once("blue_line&slide.php");
+   ?>
     <div class="wrapper">
         <!-- Reklamlar
         <div id="sticky_ads">
@@ -141,426 +141,8 @@
         </div>-->
         <div class="container">
             <div class="row">
-                <div class="news">
-                    <div class="news-2-side">
-                        <a href="p/<?php echo $l_news["link"]; ?>" target="_blank" class="haber_href">
-                            <div class="haber haber_long">
-                                <div class="pic">
-                                    <?php echo empty($l_news["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $l_news["resim"] . '">'; ?>
-                                </div>
-                                <?php echo empty($l_news["baslik"]) ? "<h3></h3>" : '<h3 class="full">'.kisalt($l_news["baslik"] , 90).'</h3>'; ?>
-                            </div>
-                        </a>
-                        <div class="news">
-                            <a href="p/<?php echo $news[1]["link"]; ?>" target="_blank" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                        <?php echo empty($news[1]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[1]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[1]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[1]["baslik"] , 70).'</h3>'; ?>
-                                </div>
-                            </a>
-                            <a href="p/<?php echo $news[2]["link"]; ?>" target="_blank" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                        <?php echo empty($news[2]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[2]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[2]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[2]["baslik"] , 70).'</h3>'; ?>
-                                </div>
-                            </a>
-                            <a href="p/<?php echo $news[3]["link"]; ?>" target="_blank" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                        <?php echo empty($news[3]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[3]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[3]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[3]["baslik"] , 26).'</h3>'; ?>
-                                </div>
-                            </a>
-                            <a href="p/<?php echo $news[4]["link"]; ?>" target="_blank" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                        <?php echo empty($news[4]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[4]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[4]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[4]["baslik"] , 26).'</h3>'; ?>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <a href="p/<?php echo $news[5]["link"]; ?>" target="_blank" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                                <?php echo empty($news[5]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[5]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[5]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[5]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="p/<?php echo $news[6]["link"]; ?>" target="_blank" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                                <?php echo empty($news[6]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[6]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[6]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[6]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="p/<?php echo $news[7]["link"]; ?>" target="_blank" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                                <?php echo empty($news[7]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[7]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[7]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[7]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                                <?php echo empty($news[8]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[8]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[8]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[8]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                                <?php echo empty($news[9]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[9]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[9]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[9]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                                <?php echo empty($news[10]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[10]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[10]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[10]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href empty_news">
-                        <div class="haber haber_short">
-                        </div>
-                    </a>
-                    <div class="news-cube-side">
-                        <a href="" class="haber_href">
-                            <div class="haber haber_cube">
-                                <div class="pic">
-                                <?php echo empty($news[11]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[11]["resim"] . '">'; ?>
-                                </div>
-                                <?php echo empty($news[11]["baslik"]) ? "<h3></h3>" : '<h3 class="full">'.kisalt($news[11]["baslik"] , 90).'</h3>'; ?>
-                            </div>
-                        </a>
-                        <div class="news">
-                        <a href="" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                        <?php echo empty($news[12]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[12]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[12]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[12]["baslik"] , 26).'</h3>'; ?>
-                                </div>
-                            </a>
-                            <a href="" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                    <?php echo empty($news[13]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[13]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[13]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[13]["baslik"] , 26).'</h3>'; ?>
-                                </div>
-                            </a>
-                            <a href="" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                        <?php echo empty($news[14]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[14]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[14]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[14]["baslik"] , 26).'</h3>'; ?>
-                                </div>
-                            </a>
-                            <a href="" class="haber_href">
-                                <div class="haber haber_short">
-                                    <div class="pic">
-                                    <?php echo empty($news[15]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[15]["resim"] . '">'; ?>
-                                    </div>
-                                    <?php echo empty($news[15]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[15]["baslik"] , 26).'</h3>'; ?>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <a href="" class="haber_href empty_news">
-                        <div class="haber haber_short">
-                        </div>
-                    </a>
-                    <a href="" class="haber_href empty_news">
-                        <div class="haber haber_short">
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[16]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[16]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[16]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[16]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[17]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[17]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[17]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[17]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[18]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[18]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[18]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[18]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[19]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[19]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[19]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[19]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[20]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[20]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[20]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[20]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[21]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[21]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[21]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[21]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[22]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[22]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[22]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[22]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[23]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[23]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[23]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[23]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <div class="news-add-side">
-                        <a href="" class="haber_href">
-                            <div class="ads" id="size_300x600">
-                                <div class="pic">
-                                    <p><i class='fa-solid fa-x'></i></p>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="news">
-                            <div class="news-cube-side">
-                                <a href="" class="haber_href">
-                                    <div class="haber haber_cube">
-                                        <div class="pic">
-                                        <?php echo empty($news[24]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[24]["resim"] . '">'; ?>
-                                        </div>
-                                        <?php echo empty($news[24]["baslik"]) ? "<h3></h3>" : '<h3 class="full">'.kisalt($news[24]["baslik"] , 90).'</h3>'; ?>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="news-w305">
-                                <a href="" class="haber_href">
-                                    <div class="haber haber_short">
-                                        <div class="pic">
-                                        <?php echo empty($news[25]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[25]["resim"] . '">'; ?>
-                                        </div>
-                                        <?php echo empty($news[25]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[25]["baslik"] , 26).'</h3>'; ?>
-                                    </div>
-                                </a>
-                                <a href="" class="haber_href">
-                                    <div class="haber haber_short">
-                                        <div class="pic">
-                                        <?php echo empty($news[26]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[26]["resim"] . '">'; ?>
-                                        </div>
-                                        <?php echo empty($news[26]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[26]["baslik"] , 26).'</h3>'; ?>
-                                    </div>
-                                </a>
-                                <a href="" class="haber_href">
-                                    <div class="haber haber_short">
-                                        <div class="pic">
-                                        <?php echo empty($news[27]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[27]["resim"] . '">'; ?>
-                                        </div>
-                                        <?php echo empty($news[27]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[27]["baslik"] , 26).'</h3>'; ?>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[26]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[28]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[26]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[28]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[29]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[29]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[29]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[29]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[30]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[30]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[30]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[30]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[31]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[31]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[31]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[31]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[32]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[32]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[32]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[32]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[33]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[33]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[33]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[33]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[34]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[34]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[34]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[34]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[35]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[35]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[35]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[35]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[36]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[36]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[36]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[36]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[37]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[37]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[37]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[37]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[38]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[38]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[38]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[38]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[39]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[39]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[39]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[39]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[40]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[40]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[40]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[40]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[41]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[41]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[41]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[41]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[42]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[42]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[42]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[42]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[43]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[43]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[43]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[43]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[44]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[44]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[44]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[44]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[45]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[45]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[45]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[45]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[46]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[46]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[46]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[46]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
-                    <a href="" class="haber_href">
-                        <div class="haber haber_short">
-                            <div class="pic">
-                            <?php echo empty($news[47]["resim"]) ? "<p><i class='fa-solid fa-x'></i></p>" : '<img src="../img/news/' . $news[47]["resim"] . '">'; ?>
-                            </div>
-                            <?php echo empty($news[47]["baslik"]) ? "<h3 class='empty_title'></h3>" : '<h3>'.kisalt($news[47]["baslik"] , 26).'</h3>'; ?>
-                        </div>
-                    </a>
+                <div class="news" id="news">
+                    
                 </div>
             </div>
         </div>
@@ -583,77 +165,21 @@
               <span>
               <a href="../">Anasayfa</a>
               <a href="./">Haberler</a>
-              <a href="students/">Öğrenciler</a>
+              <a href="../students/">Öğrenciler</a>
               </span>
               <span>
-              <a href="contact/">İletişim</a>
-              <a href="teachers/">Öğretmenler</a>
-              <a href="gallery/">Galeri</a>
+              <a href="../contact/">İletişim</a>
+              <a href="../teachers/">Öğretmenler</a>
+              <a href="../gallery/">Galeri</a>
               </span>
           </div>
           <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> | Bilişim Teknolojileri Bölümü</p>
-          <p class="trinsyca"><a href="https://trinsyca.bistbilisim.com/" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
+          <p class="trinsyca"><g>Created by </g><a href="../student/TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
       </div>
   </footer>
       <script src="../scripts/page.js"></script>
+      <script src="../scripts/news.js"></script>
       <script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
-  <!-- Initialize Swiper -->
-  <script>
-    const nav = document.querySelector('nav');
-    const blue_line = document.getElementById("sticky_blue_line");
-    //const sticky_ads = document.getElementById('sticky_ads');
-    
-
-    window.addEventListener('scroll' , () =>
-    {
-        nav.classList.toggle('nav-anim',window.scrollY > 50);
-        /*if(window.pageYOffset > 200)
-        {
-            sticky_ads.style.position = "fixed";
-            sticky_ads.style.top = "23%";
-        }
-        else
-        {
-            sticky_ads.style.position = "absolute";
-            sticky_ads.style.top = "";
-            sticky_ads.style.transform = "";
-        }*/
-        if(window.pageYOffset > 365)
-        {
-            nav.style.display = "none";
-            blue_line.style.position = "fixed";
-            blue_line.style.top = "2.2%";
-        }
-        else
-        {
-            nav.style.display = "block";
-            blue_line.style.position = "absolute";
-            blue_line.style.top = "41%";
-        }
-    });
-    
-    window.addEventListener('load' , () =>
-    {
-        var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 30,
-      centeredSlides: true,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
-    });
-  </script>
 </body>
 </html>

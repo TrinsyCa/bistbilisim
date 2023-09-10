@@ -2,7 +2,8 @@
    session_start();
    if(!isset($_SESSION["giris"]))
    {
-      header("Refresh: 0; url=login.php");
+      header("HTTP/1.0 404 Not Found");
+      include($_SERVER['DOCUMENT_ROOT'] . "/bistbilisim.com/404.html");
       return;
    }
 ?>
@@ -62,7 +63,21 @@
    <div class="content">
       <div class="title">
          <h1>Yöneticiler</h1>
-         <a href="adduser.php"><i class="fa-solid fa-plus"></i>&nbsp; Yönetici Ekle</a>
+         <?php
+            if(@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici")
+            {
+               echo '<div style="display:flex; justify-content:center; gap:5px;">
+               <a href="addadmin.php"><i class="fa-solid fa-plus"></i>&nbsp; Yönetici Ekle</a>';
+            }
+            if(@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici" || @$_SESSION["role"] === "Moderatör")
+            {
+               echo '<a href="editadmin.php?id='.$_SESSION["id"].'"><i class="fa-solid fa-user"></i>&nbsp; Bilgilerini Güncelle</a>';
+            }
+            if(@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici")
+            {
+               echo '</div>';
+            }
+         ?>
       </div>
       <div class="row">
          <table class="table table-primary">
@@ -70,45 +85,73 @@
                <tr>
                   <th scope="col">Kullanıcı Adı</th>
                   <th scope="col" style="text-align:center;">Ad Soyad</th>
+                  <th scope="col" style="text-align:center;">Rol</th>
                   <th scope="col" style="text-align:center;">Şifre</th>
                   <th scope="col" style="text-align:center;">Sil / Düzenle</th>
                </tr>
             </thead>
             <tbody>
-               <?php
-                  include("connection.php");
-                  include("linkfunc.php");
-                  if(isset($_SESSION["giris"]))
-                  {
-                     $veri = $db->prepare("SELECT * FROM admin ORDER BY id DESC");
-                     $veri->execute();
-                     $islem = $veri->fetchAll(PDO::FETCH_ASSOC);
-                  
-                     foreach($islem as $row)
-                     {
-                        if($row["isim"] == null)
-                        {
+            <?php
+               include("connection.php");
+               include("linkfunc.php");
+
+               function gizliSifre($sifre) {
+                  $gizli = str_repeat('*', strlen($sifre));
+                  return $gizli;
+               }
+
+               if (isset($_SESSION["giris"])) {
+                  $veri = $db->prepare("SELECT * FROM admin ORDER BY CASE role
+                         WHEN 'rooter' THEN 1
+                         WHEN 'Yönetici' THEN 2
+                         WHEN 'Moderatör' THEN 3
+                         ELSE 4
+                      END");
+                  $veri->execute();
+                  $islem = $veri->fetchAll(PDO::FETCH_ASSOC);
+
+                  foreach ($islem as $row) {
+                     if ($row["isim"] == null) {
                            $row["isim"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
-                        }
-                        if($row["adsoyad"] == null)
-                        {
-                           $row["adsoyad"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
-                        }
-                        if($row["sifre"] == null)
-                        {
-                           $row["sifre"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
-                        }
-                        echo '<tr>
-                                    <th><a>'.kisalt($row["isim"], 55).'</a></th>
-                                    <td style="text-align:center;"><a>'.kisalt($row["adsoyad"], 55).'</a></td>
-                                    <td style="text-align:center;"><input type="password" value="'.kisalt($row["sifre"] , 25).'"></td>
-                                    <td style="text-align:center;">
-                                       <button class="do-btn edit-btn" onclick="duzenle('.$row["id"].')"><i class="fa-solid fa-pen-to-square"></i></button>
-                                       <button class="do-btn trash-btn" onclick="sil('.$row["id"].', \''.$row["isim"].'\' , \''.kisalt($row["isim"], 50).'\')"><i class="fa-solid fa-trash"></i></button>
-                                    </td>
-                              </tr>';
                      }
+                     if ($row["adsoyad"] == null) {
+                           $row["adsoyad"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
+                     }
+                     if ($row["role"] == null) {
+                        $row["role"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
                   }
+                     if ($row["sifre"] == null) {
+                           $row["sifre"] = '<i style="color:grey;" class="fa-solid fa-question"></i>';
+                     }
+                     echo '<tr class="table-content">
+                           <th><a>' . kisalt($row["isim"], 55) . '</a></th>
+                           <td style="text-align:center;"><a>' . kisalt($row["adsoyad"], 55) . '</a></td>
+                           <td style="text-align:center;"><a>' . $row["role"] . '</a></td>
+                           <td style="text-align:center;"><input type="password" value="' . gizliSifre(kisalt($row["sifre"], 25)) . '"></td>';
+                           if((@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici") && @$_SESSION["role"] != @$row["role"] || @$_SESSION["id"] == $row["id"] || @$_SESSION["id"] == 0)
+                           {
+                              if(@$_SESSION["role"] == "Yönetici" && @$row["role"] == "rooter")
+                              {
+                                 echo '<td style="text-align:center;"></td>'; 
+                              }
+                              else
+                              {
+                                 echo '<td style="text-align:center;">
+                              <button class="do-btn edit-btn" onclick="duzenle(' . $row["id"] . ')"><i class="fa-solid fa-pen-to-square"></i></button>';
+                              if(@$_SESSION["id"] != @$row["id"])
+                              {
+                                 echo '<button class="do-btn trash-btn" onclick="sil(' . $row["id"] . ', \'' . $row["isim"] . '\' , \'' . kisalt($row["isim"], 50) . '\')"><i class="fa-solid fa-trash"></i></button>';
+                              }
+                              echo '</td>';
+                              }
+                           }
+                           else if(@$_SESSION["role"] == @$row["role"])
+                           {
+                              echo '<td style="text-align:center;"></td>'; 
+                           }
+                     echo'</tr>';
+                  }
+               }
                ?>
             </tbody>
          </table>
@@ -118,7 +161,7 @@
 <script>
    function duzenle(id)
    {
-      window.location.href = 'admin.php?id=' + id;
+      window.location.href = 'editadmin.php?id=' + id;
    }
 
    function sil(sutunId,haber_baslik,haber_baslik_short) {
