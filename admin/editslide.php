@@ -58,8 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(empty(trim(@$resim)))
     {
-        echo '<p class="alert alert-warning">Lütfen Resim Ekleyiniz..</p>';
-        header("Refresh:2; url=editslide.php?id="+@$id);
+      echo '<p class="alert alert-warning">Lütfen Bir Resim Ekleyiniz..</p>';
+       header("Refresh:2; url=editslide.php?id="+@$id);
     }
 
     else

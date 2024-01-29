@@ -1,9 +1,9 @@
 <?php
    $host = "localhost";
-   $dbname = "bistbilisim";
+   $dbname = "bistbili_db";
    $charset = "utf8";
-   $root = "root";
-   $password = "";
+   $root = "bistbili";
+   $password = "9bozwibo";
 
    try {
       $db = new PDO("mysql:host=$host;dbname=$dbname;charset=$charset;", $root , $password);

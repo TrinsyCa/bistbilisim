@@ -87,7 +87,7 @@
                   <th scope="col" style="text-align:center;">Ad Soyad</th>
                   <th scope="col" style="text-align:center;">Rol</th>
                   <th scope="col" style="text-align:center;">Şifre</th>
-                  <th scope="col" style="text-align:center;">Sil / Düzenle</th>
+                 <th scope="col" style="text-align:center;">Sil / Düzenle</th>
                </tr>
             </thead>
             <tbody>
@@ -127,29 +127,24 @@
                            <th><a>' . kisalt($row["isim"], 55) . '</a></th>
                            <td style="text-align:center;"><a>' . kisalt($row["adsoyad"], 55) . '</a></td>
                            <td style="text-align:center;"><a>' . $row["role"] . '</a></td>
-                           <td style="text-align:center;"><input type="password" value="' . gizliSifre(kisalt($row["sifre"], 25)) . '"></td>';
+                           <td style="text-align:center;"><input type="password" value="' . gizliSifre(kisalt($row["sifre"], 25)) . '"></td>
+                           <td style="text-align:center;">';
                            if((@$_SESSION["role"] === "rooter" || @$_SESSION["role"] === "Yönetici") && @$_SESSION["role"] != @$row["role"] || @$_SESSION["id"] == $row["id"] || @$_SESSION["id"] == 0)
                            {
-                              if(@$_SESSION["role"] == "Yönetici" && @$row["role"] == "rooter")
+                              if(@$_SESSION["role"] != "Yönetici" && @$row["role"] != "rooter" || @$_SESSION["id"] == $row["id"])
                               {
-                                 echo '<td style="text-align:center;"></td>'; 
-                              }
-                              else
-                              {
-                                 echo '<td style="text-align:center;">
-                              <button class="do-btn edit-btn" onclick="duzenle(' . $row["id"] . ')"><i class="fa-solid fa-pen-to-square"></i></button>';
-                              if(@$_SESSION["id"] != @$row["id"])
-                              {
-                                 echo '<button class="do-btn trash-btn" onclick="sil(' . $row["id"] . ', \'' . $row["isim"] . '\' , \'' . kisalt($row["isim"], 50) . '\')"><i class="fa-solid fa-trash"></i></button>';
-                              }
-                              echo '</td>';
+                                echo '<button class="do-btn edit-btn" onclick="duzenle(' . $row["id"] . ')"><i class="fa-solid fa-pen-to-square"></i></button>';
+                                if(@$_SESSION["id"] != @$row["id"])
+                                {
+                                   echo '<button class="do-btn trash-btn" onclick="sil(' . $row["id"] . ', \'' . $row["isim"] . '\' , \'' . kisalt($row["isim"], 50) . '\')"><i class="fa-solid fa-trash"></i></button>';
+                                }
                               }
                            }
                            else if(@$_SESSION["role"] == @$row["role"])
                            {
                               echo '<td style="text-align:center;"></td>'; 
                            }
-                     echo'</tr>';
+                     echo'</td></tr>';
                   }
                }
                ?>

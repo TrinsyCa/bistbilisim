@@ -394,7 +394,7 @@
    {
       event.stopPropagation();
 
-      var text = name + '\n\nKullanıcı Adı: ' + username + '\nŞifre: ' + password;
+      var text = 'https://bistbilisim.com/admin/\n\n'+ name + '\nKullanıcı Adı: ' + username + '\nŞifre: ' + password;
    
       navigator.clipboard.writeText(text)
          .then(function() {

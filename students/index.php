@@ -64,7 +64,8 @@
       <span style="--i:20;"></span>
       </div>
    </div>
-   <nav>
+   <div class="wrapper">
+      <nav>
          <div class="nav-wrapper">
             <a href="/">
                <img src="../img/logo/BIST_Logo_Beyaz.png">
@@ -111,7 +112,6 @@
             </div>
          </div>
       </nav>
-   <div class="wrapper">
       <div class="content-border">
          <div class="content">
             <div class="classes">

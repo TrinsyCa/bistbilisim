@@ -129,7 +129,7 @@
                         echo '<tr class="table-content openTab" onclick="window.open(\'../news/p/'.$row["link"].'\', \'_blank\')">
                                     <th style="width:140px;"><img src="../img/news/'.$row["resim"].'"></th>
                                     <th style="text-align:center;"><a>'.kisalt($row["baslik"], 20).'</a></th>
-                                    <td style="text-align:center;"><a>'.kisalt($row["alt_baslik"], 20).'</a></td>
+                                    <td style="text-align:center;"><a>'.kisalt($row["alt_baslik"], 25).'</a></td>
                                     <td style="text-align:center;"><a>'.kisalt($row["kategori"] , 25).'</a></td>
                                     <td style="text-align:center;"><a>'.kisalt($row["tiklanma"] , 10).'</a></td>
                                     <td style="text-align:center;"><a>'.kisalt($row["yazar"] , 30).'</a></td>

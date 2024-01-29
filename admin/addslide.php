@@ -102,7 +102,7 @@
 
                   if(empty(@$resim))
                   {
-                     echo '<p class="alert alert-warning">Lütfen Resim Ekleyiniz..</p>';
+                     echo '<p class="alert alert-warning">Lütfen Bir Resim Ekleyiniz..</p>';
                      header("Refresh:1; url=addslide.php");
                   }
                   else

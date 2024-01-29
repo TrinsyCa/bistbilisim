@@ -256,7 +256,7 @@
                                  }
                               }
                               if(@$cv) {
-                                 echo '<a class="mycv" target="_blank" href="../img/students/cv/'.$cv.'" download="'.$name_surname.' CV.pdf"><g translate="no">CV</g></a>';
+                                 echo '<a class="mycv" target="_blank" href="../img/students/cv/'.$cv.'"><g translate="no">CV</g></a>';
                               }                              
                            ?>
                         </div>

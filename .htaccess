@@ -4,5 +4,4 @@ RewriteRule ^news/p/([^/]+)$ p.php?link=$1 [L]
 RewriteRule ^student/admin/([^/]+)$ useradmin.php?username=$1 [L]
 RewriteRule ^student/([^/]+)$ user.php?username=$1 [L]
 RewriteRule ^news/c/([^/]+)$ news/c.php?category=$1 [L]
-
-ErrorDocument 404 /bistbilisim.com/404.html
+ErrorDocument 404 /404.html

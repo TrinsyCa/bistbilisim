@@ -311,7 +311,7 @@
                            @$_SESSION["username"] = @$a["username"];
                            @$_SESSION["pass"] = @$a["pass"];
                            echo "<p class='alert alert-info' style='text-align:center; padding:7px; width:335px; margin:auto;'>Öğrenci Girişi</p>";
-                           header("Refresh: 1; url=../student/".@$_SESSION["username"]);
+                           header("Refresh: 1; url=../student/admin/".@$_SESSION["username"]);
                            exit;
                         }
                         else
