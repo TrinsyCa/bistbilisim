@@ -320,7 +320,7 @@
       if(@$id != 0)
       {
          echo '<footer>
-                  <p class="trinsyca"><g>Created by </g><a href="TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
+                  <p class="trinsyca"><g>Created by </g><a href="TrinsyCa">TrinsyCa </a></p> <!-- Signature : Ömer İslamoğlu ~ https://trinsyca.com -->
                </footer>';
       }
    ?>

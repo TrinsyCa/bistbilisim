@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Bist Bilişim</title>
+    <link rel="shortcut icon" href="https://www.bistbilisim.com/img/logo/BIST_Icon.png">
+    <!--Google Fonts-->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+   <!--Google Fonts-->
+    <style>
+    *
+    {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Nunito', sans-serif;
+    }
+    body
+    {
+        background: url("https://www.bistbilisim.com/img/tools/404.jpg");
+        height: 100vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        overflow: hidden;
+    }
+    .content
+    {
+        position:absolute;
+        top:27.5%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        width: 400px;
+        height: 5.5%;
+        backdrop-filter:blur(18px);
+        border-radius:100px;
+        border: 1px solid rgba(0,0,0,0.15);
+        transition: 0.3s;
+    }
+    @media (max-width:1300px)
+    {
+        .content
+        {
+            width: 30%;
+        }
+    }
+    @media (max-width:1000px)
+    {
+        .content
+        {
+            width: 300px;
+        }
+    }
+    @media (max-width:420px)
+    {
+        .content
+        {
+            top: 32%;
+            width: 260px;
+        }
+    }
+    .content .text
+    {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        width:100%;
+        height:100%;
+        gap:10%;
+        padding: 10px;
+    }
+    .btns
+    {
+        width:100%;
+        height: 100%;
+        display:flex;
+    }
+    .btns button
+    {
+        border:none;
+        outline:none;
+        background: #FFCBCF;
+        width:50%;
+        height:100%;
+        border-radius:50px 0 0 50px;
+        font-size:16px;
+        text-align:center;
+        transition:0.35s;
+    }
+    .btns button:nth-child(2)
+    {
+        border-radius:0 50px 50px 0;
+    }
+    .btns button:hover
+    {
+        background: #FC5157;
+        color:white;
+    }
+    .btns button:active
+    {
+        background: #1B2E35;
+        color:white;
+    }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="text">
+            <div class="btns">
+            <button onclick="goBack()">Geri Dön</button>
+            <button onclick="goToHomePage()">Anasayfaya Dön</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function goToHomePage() {
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>

@@ -17,6 +17,10 @@ html
 body
 {
    overflow-x: hidden;
+   top: 0 !important;
+}
+.skiptranslate iframe {
+   display: none !important;
 }
 .us
 {
@@ -733,6 +737,34 @@ footer .bist
 .trinsyca a:active
 {
    text-shadow: 0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red,0 0 10px red;
+}
+.spayai {
+   text-align: center;
+   font-size: 16px;
+   color: white;
+}
+
+.spayai g {
+   opacity: 0.6;
+}
+
+.spayai a {
+   color: #000;
+   font-size: 18px;
+   letter-spacing: 1px;
+   text-shadow: 0 0 10px #000, 0 0 10px #000;
+   opacity: 1;
+   text-decoration: none;
+   transition: all 0.2s ease-in-out;
+}
+
+.spayai a:hover {
+   color: #000;
+   text-shadow: 0 0 10px #000, 0 0 10px #000, 0 0 10px #000;
+}
+
+.spayai a:active {
+   text-shadow: 0 0 10px #000, 0 0 10px #000, 0 0 10px #000, 0 0 10px #000;
 }
 footer .wave
 {

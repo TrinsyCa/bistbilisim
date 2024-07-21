@@ -372,7 +372,7 @@
               </span>
           </div>
           <p class="bist"><g translate="no">© Borsa İstanbul Başakşehir MTAL </g> Bilişim Teknolojileri Bölümü</p>
-          <p class="trinsyca"><a href="../../student/TrinsyCa" target="_blank">TrinsyCa </a> <g> Tarafından Oluşturuldu</g></p> <!--imza : Ömer İslamoğlu-->
+          <p class="trinsyca" translate="no"><g>Created by</g><a href="../../student/TrinsyCa" target="_blank">TrinsyCa </a></p> <!-- Signature : Ömer İslamoğlu ~ https://trinsyca.com -->
       </div>
   </footer>
     <?php echo '<img class="bg-img" src="../../img/news/'.$resim.'">'; ?>

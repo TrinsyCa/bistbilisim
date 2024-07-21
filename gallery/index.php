@@ -118,7 +118,7 @@
          <div class="txt">
             <p>© Borsa İstanbul Başakşehir MTAL Bilişim Teknolojileri Bölümü</p>
          </div>
-         <p class="trinsyca" translate="no"><g>Created by </g><a href="../student/TrinsyCa">TrinsyCa </a></p> <!--imza : Ömer İslamoğlu-->
+         <p class="trinsyca" translate="no"><g>Created by </g><a href="../student/TrinsyCa">TrinsyCa </a></p> <!-- Signature : Ömer İslamoğlu ~ https://trinsyca.com -->
    </div>
 
   <script src="https://kit.fontawesome.com/b40b33d160.js" crossorigin="anonymous"></script>

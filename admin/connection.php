@@ -1,12 +1,13 @@
 <?php
    $host = "localhost";
-   $dbname = "bistbili_db";
+   $dbname = "bistbilisim";
    $charset = "utf8";
-   $root = "bistbili";
-   $password = "9bozwibo";
+   $port = "3307";
+   $root = "root";
+   $password = "";
 
    try {
-      $db = new PDO("mysql:host=$host;dbname=$dbname;charset=$charset;", $root , $password);
+      $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=$charset;", $root , $password);
    } catch (PDOExeption $error) {
       echo $error->getMessage();
    }
